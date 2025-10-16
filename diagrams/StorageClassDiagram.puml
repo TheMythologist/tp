@@ -1,0 +1,43 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor STORAGE_COLOR
+skinparam classBackgroundColor STORAGE_COLOR
+
+package Storage as StoragePackage {
+
+package "UserPrefs Storage" #F4F6F6{
+Class "<<interface>>\nUserPrefsStorage" as UserPrefsStorage
+Class JsonUserPrefsStorage
+}
+
+Class "<<interface>>\nStorage" as Storage
+Class StorageManager
+
+package "GreyBook Storage" #F4F6F6{
+Class "<<interface>>\nGreyBookStorage" as GreyBookStorage
+Class JsonGreyBookStorage
+Class JsonSerializableGreyBook
+Class JsonAdaptedPerson
+Class JsonAdaptedTag
+}
+
+}
+
+Class HiddenOutside #FFFFFF
+HiddenOutside ..> Storage
+
+StorageManager .up.|> Storage
+StorageManager -up-> "1" UserPrefsStorage
+StorageManager -up-> "1" GreyBookStorage
+
+Storage -left-|> UserPrefsStorage
+Storage -right-|> GreyBookStorage
+
+JsonUserPrefsStorage .up.|> UserPrefsStorage
+JsonGreyBookStorage .up.|> GreyBookStorage
+JsonGreyBookStorage ..> JsonSerializableGreyBook
+JsonSerializableGreyBook --> "*" JsonAdaptedPerson
+JsonAdaptedPerson --> "*" JsonAdaptedTag
+
+@enduml
