@@ -114,6 +114,8 @@
         "adding-a-person-add": "Adding a person: add",
         "listing-all-persons-list": "Listing all persons : list",
         "editing-a-person-edit": "Editing a person : edit",
+        "marking-a-person-mark": "Marking a person : mark",
+        "unmarking-a-person-unmark": "Unmarking a person : unmark",
         "locating-persons-by-name-find": "Locating persons by name: find",
         "deleting-a-person-delete": "Deleting a person : delete",
         "viewing-a-person-view": "Viewing a person : view",
@@ -122,7 +124,7 @@
         "saving-the-data": "Saving the data",
         "editing-the-data-file": "Editing the data file",
         "archiving-data-files-coming-in-v2-0": "Archiving data files [coming in v2.0]",
-        "faq": "FAQ",
+        "faqs": "FAQs",
         "known-issues": "Known issues",
         "command-summary": "Command summary"
       },
