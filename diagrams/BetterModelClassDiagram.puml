@@ -18,4 +18,5 @@ Person *--> Name
 Person *--> Phone
 Person *--> Email
 Person *--> StudentID
+Person *--> AttendanceStatus
 @enduml
