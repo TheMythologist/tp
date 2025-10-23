@@ -1,0 +1,68 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":GreyBookParser" as GreyBookParser LOGIC_COLOR
+participant ":FindCommandParser" as FindCommandParser LOGIC_COLOR
+participant "f:FindCommand" as FindCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("find alice bob charlie")
+activate LogicManager
+
+LogicManager -> GreyBookParser : parseCommand("find alice bob charlie")
+activate GreyBookParser
+
+create FindCommandParser
+GreyBookParser -> FindCommandParser
+activate FindCommandParser
+
+FindCommandParser --> GreyBookParser
+deactivate FindCommandParser
+
+GreyBookParser -> FindCommandParser : parse("alice bob charlie")
+activate FindCommandParser
+
+create FindCommand
+FindCommandParser -> FindCommand
+activate FindCommand
+
+FindCommand --> FindCommandParser :
+deactivate FindCommand
+
+FindCommandParser --> GreyBookParser : f
+deactivate FindCommandParser
+
+FindCommandParser -[hidden]-> GreyBookParser
+destroy FindCommandParser
+
+GreyBookParser --> LogicManager : f
+deactivate GreyBookParser
+
+LogicManager -> FindCommand : execute(m)
+activate FindCommand
+
+FindCommand -> Model : updateFilteredPersonList(predicate)
+activate Model
+Model --> FindCommand
+deactivate Model
+
+create CommandResult
+FindCommand -> CommandResult : "3 persons listed!"
+activate CommandResult
+CommandResult --> FindCommand
+deactivate CommandResult
+
+FindCommand --> LogicManager : r
+deactivate FindCommand
+
+[<-- LogicManager
+deactivate LogicManager
+@enduml
