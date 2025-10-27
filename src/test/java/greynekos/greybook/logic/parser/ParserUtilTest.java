@@ -3,6 +3,7 @@ package greynekos.greybook.logic.parser;
 import static greynekos.greybook.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static greynekos.greybook.testutil.Assert.assertThrows;
 import static greynekos.greybook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -48,12 +49,12 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseIndex_validInput_success() throws Exception {
+    public void parseIndex_validInput_success() {
         // No whitespaces
-        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("1"));
+        assertEquals(INDEX_FIRST_PERSON, assertDoesNotThrow(() -> ParserUtil.parseIndex("1")));
 
         // Leading and trailing whitespaces
-        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
+        assertEquals(INDEX_FIRST_PERSON, assertDoesNotThrow(() -> ParserUtil.parseIndex("  1  ")));
     }
 
     @Test
@@ -67,16 +68,16 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseName_validValueWithoutWhitespace_returnsName() throws Exception {
+    public void parseName_validValueWithoutWhitespace_returnsName() {
         Name expectedName = new Name(VALID_NAME);
-        assertEquals(expectedName, ParserUtil.parseName(VALID_NAME));
+        assertEquals(expectedName, assertDoesNotThrow(() -> ParserUtil.parseName(VALID_NAME)));
     }
 
     @Test
-    public void parseName_validValueWithWhitespace_returnsTrimmedName() throws Exception {
+    public void parseName_validValueWithWhitespace_returnsTrimmedName() {
         String nameWithWhitespace = WHITESPACE + VALID_NAME + WHITESPACE;
         Name expectedName = new Name(VALID_NAME);
-        assertEquals(expectedName, ParserUtil.parseName(nameWithWhitespace));
+        assertEquals(expectedName, assertDoesNotThrow(() -> ParserUtil.parseName(nameWithWhitespace)));
     }
 
     @Test
@@ -90,16 +91,16 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parsePhone_validValueWithoutWhitespace_returnsPhone() throws Exception {
+    public void parsePhone_validValueWithoutWhitespace_returnsPhone() {
         Phone expectedPhone = new Phone(VALID_PHONE);
-        assertEquals(expectedPhone, ParserUtil.parsePhone(VALID_PHONE));
+        assertEquals(expectedPhone, assertDoesNotThrow(() -> ParserUtil.parsePhone(VALID_PHONE)));
     }
 
     @Test
-    public void parsePhone_validValueWithWhitespace_returnsTrimmedPhone() throws Exception {
+    public void parsePhone_validValueWithWhitespace_returnsTrimmedPhone() {
         String phoneWithWhitespace = WHITESPACE + VALID_PHONE + WHITESPACE;
         Phone expectedPhone = new Phone(VALID_PHONE);
-        assertEquals(expectedPhone, ParserUtil.parsePhone(phoneWithWhitespace));
+        assertEquals(expectedPhone, assertDoesNotThrow(() -> ParserUtil.parsePhone(phoneWithWhitespace)));
     }
 
     @Test
@@ -113,16 +114,16 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseEmail_validValueWithoutWhitespace_returnsEmail() throws Exception {
+    public void parseEmail_validValueWithoutWhitespace_returnsEmail() {
         Email expectedEmail = new Email(VALID_EMAIL);
-        assertEquals(expectedEmail, ParserUtil.parseEmail(VALID_EMAIL));
+        assertEquals(expectedEmail, assertDoesNotThrow(() -> ParserUtil.parseEmail(VALID_EMAIL)));
     }
 
     @Test
-    public void parseEmail_validValueWithWhitespace_returnsTrimmedEmail() throws Exception {
+    public void parseEmail_validValueWithWhitespace_returnsTrimmedEmail() {
         String emailWithWhitespace = WHITESPACE + VALID_EMAIL + WHITESPACE;
         Email expectedEmail = new Email(VALID_EMAIL);
-        assertEquals(expectedEmail, ParserUtil.parseEmail(emailWithWhitespace));
+        assertEquals(expectedEmail, assertDoesNotThrow(() -> ParserUtil.parseEmail(emailWithWhitespace)));
     }
 
     @Test
@@ -136,16 +137,16 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseStudentID_validValueWithoutWhitespace_returnsStudentID() throws Exception {
+    public void parseStudentID_validValueWithoutWhitespace_returnsStudentID() {
         StudentID expectedStudentID = new StudentID(VALID_STUDENTID);
-        assertEquals(expectedStudentID, ParserUtil.parseStudentID(VALID_STUDENTID));
+        assertEquals(expectedStudentID, assertDoesNotThrow(() -> ParserUtil.parseStudentID(VALID_STUDENTID)));
     }
 
     @Test
-    public void parseStudentID_validValueWithWhitespace_returnsTrimmedStudentID() throws Exception {
+    public void parseStudentID_validValueWithWhitespace_returnsTrimmedStudentID() {
         String studentIdWithWhitespace = WHITESPACE + VALID_STUDENTID + WHITESPACE;
         StudentID expectedStudentID = new StudentID(VALID_STUDENTID);
-        assertEquals(expectedStudentID, ParserUtil.parseStudentID(studentIdWithWhitespace));
+        assertEquals(expectedStudentID, assertDoesNotThrow(() -> ParserUtil.parseStudentID(studentIdWithWhitespace)));
     }
 
     @Test
@@ -159,16 +160,16 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseTag_validValueWithoutWhitespace_returnsTag() throws Exception {
+    public void parseTag_validValueWithoutWhitespace_returnsTag() {
         Tag expectedTag = new Tag(VALID_TAG_1);
-        assertEquals(expectedTag, ParserUtil.parseTag(VALID_TAG_1));
+        assertEquals(expectedTag, assertDoesNotThrow(() -> ParserUtil.parseTag(VALID_TAG_1)));
     }
 
     @Test
-    public void parseTag_validValueWithWhitespace_returnsTrimmedTag() throws Exception {
+    public void parseTag_validValueWithWhitespace_returnsTrimmedTag() {
         String tagWithWhitespace = WHITESPACE + VALID_TAG_1 + WHITESPACE;
         Tag expectedTag = new Tag(VALID_TAG_1);
-        assertEquals(expectedTag, ParserUtil.parseTag(tagWithWhitespace));
+        assertEquals(expectedTag, assertDoesNotThrow(() -> ParserUtil.parseTag(tagWithWhitespace)));
     }
 
     @Test
@@ -182,13 +183,13 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseTags_emptyCollection_returnsEmptySet() throws Exception {
-        assertTrue(ParserUtil.parseTags(Collections.emptyList()).isEmpty());
+    public void parseTags_emptyCollection_returnsEmptySet() {
+        assertTrue(assertDoesNotThrow(() -> ParserUtil.parseTags(Collections.emptyList())).isEmpty());
     }
 
     @Test
-    public void parseTags_collectionWithValidTags_returnsTagSet() throws Exception {
-        Set<Tag> actualTagSet = ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, VALID_TAG_2));
+    public void parseTags_collectionWithValidTags_returnsTagSet() {
+        Set<Tag> actualTagSet = assertDoesNotThrow(() -> ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, VALID_TAG_2)));
         Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);

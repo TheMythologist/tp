@@ -1,6 +1,7 @@
 package greynekos.greybook.storage;
 
 import static greynekos.greybook.testutil.TypicalPersons.getTypicalGreyBook;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -34,7 +35,7 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void prefsReadSave() throws Exception {
+    public void prefsReadSave() {
         /*
          * Note: This is an integration test that verifies the StorageManager is
          * properly wired to the {@link JsonUserPrefsStorage} class. More extensive
@@ -43,13 +44,13 @@ public class StorageManagerTest {
          */
         UserPrefs original = new UserPrefs();
         original.setGuiSettings(new GuiSettings(300, 600, 4, 6));
-        storageManager.saveUserPrefs(original);
-        UserPrefs retrieved = storageManager.readUserPrefs().get();
+        assertDoesNotThrow(() -> storageManager.saveUserPrefs(original));
+        UserPrefs retrieved = assertDoesNotThrow(() -> storageManager.readUserPrefs()).get();
         assertEquals(original, retrieved);
     }
 
     @Test
-    public void greyBookReadSave() throws Exception {
+    public void greyBookReadSave() {
         /*
          * Note: This is an integration test that verifies the StorageManager is
          * properly wired to the {@link JsonGreyBookStorage} class. More extensive
@@ -57,8 +58,8 @@ public class StorageManagerTest {
          * class.
          */
         GreyBook original = getTypicalGreyBook();
-        storageManager.saveGreyBook(original);
-        ReadOnlyGreyBook retrieved = storageManager.readGreyBook().get();
+        assertDoesNotThrow(() -> storageManager.saveGreyBook(original));
+        ReadOnlyGreyBook retrieved = assertDoesNotThrow(() -> storageManager.readGreyBook()).get();
         assertEquals(original, new GreyBook(retrieved));
     }
 

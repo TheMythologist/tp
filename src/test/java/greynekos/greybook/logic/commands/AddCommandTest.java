@@ -2,6 +2,7 @@ package greynekos.greybook.logic.commands;
 
 import static greynekos.greybook.testutil.Assert.assertThrows;
 import static java.util.Objects.requireNonNull;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.file.Path;
@@ -28,12 +29,12 @@ import javafx.collections.ObservableList;
 public class AddCommandTest {
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
+    public void execute_personAcceptedByModel_addSuccessful() {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
         Person validPerson = new PersonBuilder().build();
         AddPersonArgumentParseResultStub argStub = new AddPersonArgumentParseResultStub(validPerson);
 
-        CommandResult commandResult = new AddCommand().execute(modelStub, argStub);
+        CommandResult commandResult = assertDoesNotThrow(() -> new AddCommand().execute(modelStub, argStub));
 
         assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
                 commandResult.getFeedbackToUser());

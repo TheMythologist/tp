@@ -5,6 +5,7 @@ import static greynekos.greybook.testutil.TypicalPersons.ALICE;
 import static greynekos.greybook.testutil.TypicalPersons.HOON;
 import static greynekos.greybook.testutil.TypicalPersons.IDA;
 import static greynekos.greybook.testutil.TypicalPersons.getTypicalGreyBook;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -30,7 +31,7 @@ public class JsonGreyBookStorageTest {
         assertThrows(NullPointerException.class, () -> readGreyBook(null));
     }
 
-    private java.util.Optional<ReadOnlyGreyBook> readGreyBook(String filePath) throws Exception {
+    private java.util.Optional<ReadOnlyGreyBook> readGreyBook(String filePath) throws DataLoadingException {
         return new JsonGreyBookStorage(Paths.get(filePath)).readGreyBook(addToTestDataPathIfNotNull(filePath));
     }
 
@@ -39,8 +40,8 @@ public class JsonGreyBookStorageTest {
     }
 
     @Test
-    public void read_missingFile_emptyResult() throws Exception {
-        assertFalse(readGreyBook("NonExistentFile.json").isPresent());
+    public void read_missingFile_emptyResult() {
+        assertFalse(assertDoesNotThrow(() -> readGreyBook("NonExistentFile.json")).isPresent());
     }
 
     @Test
@@ -59,27 +60,27 @@ public class JsonGreyBookStorageTest {
     }
 
     @Test
-    public void readAndSaveGreyBook_allInOrder_success() throws Exception {
+    public void readAndSaveGreyBook_allInOrder_success() {
         Path filePath = testFolder.resolve("TempGreyBook.json");
         GreyBook original = getTypicalGreyBook();
         JsonGreyBookStorage jsonGreyBookStorage = new JsonGreyBookStorage(filePath);
 
         // Save in new file and read back
-        jsonGreyBookStorage.saveGreyBook(original, filePath);
-        ReadOnlyGreyBook readBack = jsonGreyBookStorage.readGreyBook(filePath).get();
+        assertDoesNotThrow(() -> jsonGreyBookStorage.saveGreyBook(original, filePath));
+        ReadOnlyGreyBook readBack = assertDoesNotThrow(() -> jsonGreyBookStorage.readGreyBook(filePath)).get();
         assertEquals(original, new GreyBook(readBack));
 
         // Modify data, overwrite exiting file, and read back
         original.addPerson(HOON);
         original.removePerson(ALICE);
-        jsonGreyBookStorage.saveGreyBook(original, filePath);
-        readBack = jsonGreyBookStorage.readGreyBook(filePath).get();
+        assertDoesNotThrow(() -> jsonGreyBookStorage.saveGreyBook(original, filePath));
+        readBack = assertDoesNotThrow(() -> jsonGreyBookStorage.readGreyBook(filePath)).get();
         assertEquals(original, new GreyBook(readBack));
 
         // Save and read without specifying file path
         original.addPerson(IDA);
-        jsonGreyBookStorage.saveGreyBook(original); // file path not specified
-        readBack = jsonGreyBookStorage.readGreyBook().get(); // file path not specified
+        assertDoesNotThrow(() -> jsonGreyBookStorage.saveGreyBook(original)); // file path not specified
+        readBack = assertDoesNotThrow(() -> jsonGreyBookStorage.readGreyBook()).get(); // file path not specified
         assertEquals(original, new GreyBook(readBack));
 
     }

@@ -5,6 +5,7 @@ import static greynekos.greybook.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static greynekos.greybook.logic.parser.CliSyntax.PREFIX_PRESENT;
 import static greynekos.greybook.testutil.Assert.assertThrows;
 import static greynekos.greybook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -44,72 +45,81 @@ public class GreyBookParserTest {
     }
 
     @Test
-    public void parseCommand_add() throws Exception {
+    public void parseCommand_add() {
         Person person = new PersonBuilder().build();
 
-        ArgumentParseResult argResult = PARSER.parse(PersonUtil.getAddCommand(person));
+        ArgumentParseResult argResult = assertDoesNotThrow(() -> PARSER.parse(PersonUtil.getAddCommand(person)));
         assertEquals(person, argResult.getCommand().getParseResult(argResult));
     }
 
     @Test
-    public void parseCommand_clear() throws Exception {
-        assertTrue(PARSER.parse(ClearCommand.COMMAND_WORD).getCommand() instanceof ClearCommand);
-        assertTrue(PARSER.parse(ClearCommand.COMMAND_WORD + " 3").getCommand() instanceof ClearCommand);
+    public void parseCommand_clear() {
+        assertTrue(
+                assertDoesNotThrow(() -> PARSER.parse(ClearCommand.COMMAND_WORD)).getCommand() instanceof ClearCommand);
+        assertTrue(assertDoesNotThrow(() -> PARSER.parse(ClearCommand.COMMAND_WORD + " 3"))
+                .getCommand() instanceof ClearCommand);
     }
 
     @Test
-    public void parseCommand_delete() throws Exception {
-        ArgumentParseResult argResult =
-                PARSER.parse(DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+    public void parseCommand_delete() {
+        ArgumentParseResult argResult = assertDoesNotThrow(
+                () -> PARSER.parse(DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()));
         PersonIdentifier result = (PersonIdentifier) argResult.getCommand().getParseResult(argResult);
         assertEquals(INDEX_FIRST_PERSON, result);
     }
 
     @Test
-    public void parseCommand_edit() throws Exception {
+    public void parseCommand_edit() {
         Person person = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
-        ArgumentParseResult argResult = PARSER.parse(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
-                + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
+        ArgumentParseResult argResult = assertDoesNotThrow(() -> PARSER.parse(EditCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor)));
         assertEquals(descriptor, argResult.getCommand().getParseResult(argResult));
     }
 
     @Test
-    public void parseCommand_exit() throws Exception {
-        assertTrue(PARSER.parse(ExitCommand.COMMAND_WORD).getCommand() instanceof ExitCommand);
-        assertTrue(PARSER.parse(ExitCommand.COMMAND_WORD + " 3").getCommand() instanceof ExitCommand);
+    public void parseCommand_exit() {
+        assertTrue(
+                assertDoesNotThrow(() -> PARSER.parse(ExitCommand.COMMAND_WORD)).getCommand() instanceof ExitCommand);
+        assertTrue(assertDoesNotThrow(() -> PARSER.parse(ExitCommand.COMMAND_WORD + " 3"))
+                .getCommand() instanceof ExitCommand);
     }
 
     @Test
-    public void parseCommand_find() throws Exception {
+    public void parseCommand_find() {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        ArgumentParseResult argResult =
-                PARSER.parse(FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        ArgumentParseResult argResult = assertDoesNotThrow(() -> PARSER
+                .parse(FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" "))));
         assertEquals(new NameContainsKeywordsPredicate(keywords), argResult.getCommand().getParseResult(argResult));
     }
 
     @Test
-    public void parseCommand_help() throws Exception {
-        assertTrue(PARSER.parse(HelpCommand.COMMAND_WORD).getCommand() instanceof HelpCommand);
-        assertTrue(PARSER.parse(HelpCommand.COMMAND_WORD + " 3").getCommand() instanceof HelpCommand);
-    }
-
-    @Test
-    public void parseCommand_list() throws Exception {
-        assertTrue(PARSER.parse(ListCommand.COMMAND_WORD).getCommand() instanceof ListCommand);
-        assertTrue(PARSER.parse(ListCommand.COMMAND_WORD + " 3").getCommand() instanceof ListCommand);
-    }
-
-    @Test
-    public void parseCommand_mark() throws Exception {
+    public void parseCommand_help() {
         assertTrue(
-                PARSER.parse(MarkCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_PRESENT)
-                        .getCommand() instanceof MarkCommand);
+                assertDoesNotThrow(() -> PARSER.parse(HelpCommand.COMMAND_WORD)).getCommand() instanceof HelpCommand);
+        assertTrue(assertDoesNotThrow(() -> PARSER.parse(HelpCommand.COMMAND_WORD + " 3"))
+                .getCommand() instanceof HelpCommand);
     }
 
     @Test
-    public void parseCommand_unmark() throws Exception {
-        assertTrue(PARSER.parse(UnmarkCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased())
+    public void parseCommand_list() {
+        assertTrue(
+                assertDoesNotThrow(() -> PARSER.parse(ListCommand.COMMAND_WORD)).getCommand() instanceof ListCommand);
+        assertTrue(assertDoesNotThrow(() -> PARSER.parse(ListCommand.COMMAND_WORD + " 3"))
+                .getCommand() instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_mark() {
+        assertTrue(assertDoesNotThrow(() -> PARSER
+                .parse(MarkCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_PRESENT))
+                .getCommand() instanceof MarkCommand);
+    }
+
+    @Test
+    public void parseCommand_unmark() {
+        assertTrue(assertDoesNotThrow(
+                () -> PARSER.parse(UnmarkCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()))
                 .getCommand() instanceof UnmarkCommand);
     }
 

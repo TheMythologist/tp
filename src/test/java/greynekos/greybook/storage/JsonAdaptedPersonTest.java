@@ -3,6 +3,7 @@ package greynekos.greybook.storage;
 import static greynekos.greybook.storage.JsonAdaptedPerson.MISSING_FIELD_MESSAGE_FORMAT;
 import static greynekos.greybook.testutil.Assert.assertThrows;
 import static greynekos.greybook.testutil.TypicalPersons.BENSON;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
@@ -35,9 +36,9 @@ public class JsonAdaptedPersonTest {
             BENSON.getTags().stream().map(JsonAdaptedTag::new).collect(Collectors.toList());
 
     @Test
-    public void toModelType_validPersonDetails_returnsPerson() throws Exception {
+    public void toModelType_validPersonDetails_returnsPerson() {
         JsonAdaptedPerson person = new JsonAdaptedPerson(BENSON);
-        assertEquals(BENSON, person.toModelType());
+        assertEquals(BENSON, assertDoesNotThrow(() -> person.toModelType()));
     }
 
     @Test

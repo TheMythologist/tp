@@ -1,6 +1,7 @@
 package greynekos.greybook.commons.util;
 
 import static greynekos.greybook.testutil.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -29,8 +30,8 @@ public class ConfigUtilTest {
     }
 
     @Test
-    public void read_missingFile_emptyResult() throws DataLoadingException {
-        assertFalse(read("NonExistentFile.json").isPresent());
+    public void read_missingFile_emptyResult() {
+        assertFalse(assertDoesNotThrow(() -> read("NonExistentFile.json")).isPresent());
     }
 
     @Test
@@ -39,24 +40,24 @@ public class ConfigUtilTest {
     }
 
     @Test
-    public void read_fileInOrder_successfullyRead() throws DataLoadingException {
+    public void read_fileInOrder_successfullyRead() {
 
         Config expected = getTypicalConfig();
 
-        Config actual = read("TypicalConfig.json").get();
+        Config actual = assertDoesNotThrow(() -> read("TypicalConfig.json")).get();
         assertEquals(expected, actual);
     }
 
     @Test
-    public void read_valuesMissingFromFile_defaultValuesUsed() throws DataLoadingException {
-        Config actual = read("EmptyConfig.json").get();
+    public void read_valuesMissingFromFile_defaultValuesUsed() {
+        Config actual = assertDoesNotThrow(() -> read("EmptyConfig.json")).get();
         assertEquals(new Config(), actual);
     }
 
     @Test
-    public void read_extraValuesInFile_extraValuesIgnored() throws DataLoadingException {
+    public void read_extraValuesInFile_extraValuesIgnored() {
         Config expected = getTypicalConfig();
-        Config actual = read("ExtraValuesConfig.json").get();
+        Config actual = assertDoesNotThrow(() -> read("ExtraValuesConfig.json")).get();
 
         assertEquals(expected, actual);
     }

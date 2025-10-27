@@ -7,6 +7,7 @@ import static greynekos.greybook.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static greynekos.greybook.logic.commands.CommandTestUtil.STUDENTID_DESC_AMY;
 import static greynekos.greybook.testutil.Assert.assertThrows;
 import static greynekos.greybook.testutil.TypicalPersons.AMY;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
@@ -64,7 +65,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_validCommand_success() throws Exception {
+    public void execute_validCommand_success() {
         String listCommand = ListCommand.COMMAND_WORD;
         assertCommandSuccess(listCommand, ListCommand.MESSAGE_SUCCESS, model);
     }
@@ -94,9 +95,8 @@ public class LogicManagerTest {
      *
      * @see #assertCommandFailure(String, Class, String, Model)
      */
-    private void assertCommandSuccess(String inputCommand, String expectedMessage, Model expectedModel)
-            throws CommandException, ParseException {
-        CommandResult result = logic.execute(inputCommand);
+    private void assertCommandSuccess(String inputCommand, String expectedMessage, Model expectedModel) {
+        CommandResult result = assertDoesNotThrow(() -> logic.execute(inputCommand));
         assertEquals(expectedMessage, result.getFeedbackToUser());
         assertEquals(expectedModel, model);
     }

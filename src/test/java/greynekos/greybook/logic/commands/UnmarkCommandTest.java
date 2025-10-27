@@ -92,27 +92,27 @@ public class UnmarkCommandTest {
     }
 
     @Test
-    public void execute_unmarkAllEmptyList_success() throws Exception {
+    public void execute_unmarkAllEmptyList_success() {
         Model emptyModel = new ModelManager(new GreyBook(), new UserPrefs());
         UnmarkCommand unmarkCommand = new UnmarkCommand();
         GreyBookParser parser = new GreyBookParser();
         unmarkCommand.addToParser(parser);
 
         String userInput = "unmark all";
-        ArgumentParseResult arg = parser.parse(userInput);
+        ArgumentParseResult arg = assertDoesNotThrow(() -> parser.parse(userInput));
 
         assertCommandSuccess(unmarkCommand, emptyModel, arg, String.format(UnmarkCommand.MESSAGE_UNMARK_ALL_SUCCESS),
                 emptyModel);
     }
 
     @Test
-    public void execute_invalidIndex_throwsCommandException() throws Exception {
+    public void execute_invalidIndex_throwsCommandException() {
         UnmarkCommand unmarkCommand = new UnmarkCommand();
         GreyBookParser parser = new GreyBookParser();
         unmarkCommand.addToParser(parser);
 
         String userInput = "unmark 999";
-        ArgumentParseResult arg = parser.parse(userInput);
+        ArgumentParseResult arg = assertDoesNotThrow(() -> parser.parse(userInput));
 
         assertCommandFailure(unmarkCommand, model, arg, MESSAGE_PERSON_NOT_FOUND);
     }

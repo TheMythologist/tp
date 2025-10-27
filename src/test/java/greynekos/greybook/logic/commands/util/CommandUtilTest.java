@@ -1,6 +1,7 @@
 package greynekos.greybook.logic.commands.util;
 
 import static greynekos.greybook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -33,11 +34,11 @@ public class CommandUtilTest {
     }
 
     @Test
-    public void resolvePersonByIndex_success() throws Exception {
+    public void resolvePersonByIndex_success() {
         // one-based index "1" should resolve to the first person in the currently
         // filtered list
         Person expected = model.getFilteredPersonList().get(0);
-        Person resolved = CommandUtil.resolvePerson(model, INDEX_FIRST_PERSON);
+        Person resolved = assertDoesNotThrow(() -> CommandUtil.resolvePerson(model, INDEX_FIRST_PERSON));
         assertEquals(expected, resolved);
     }
 
@@ -50,10 +51,10 @@ public class CommandUtilTest {
     }
 
     @Test
-    public void resolvePersonByStudentId_success() throws Exception {
+    public void resolvePersonByStudentId_success() {
         Person expected = model.getFilteredPersonList().get(0);
 
-        Person resolved = CommandUtil.resolvePerson(model, expected.getStudentID());
+        Person resolved = assertDoesNotThrow(() -> CommandUtil.resolvePerson(model, expected.getStudentID()));
         assertEquals(expected, resolved);
     }
 
