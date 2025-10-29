@@ -37,6 +37,10 @@ public class ParserUtil {
             "Person identifier is invalid. It should be either a positive integer index or a valid Student ID "
                     + "(format: A0000000Y).";
 
+    public static final String MESSAGE_INVALID_PERSON_IDENTIFIER_OR_ALL =
+            "Person identifier or \"all\" keyword is invalid. It should be either a positive integer index,"
+                    + " a valid Student ID (format: A0000000Y), or the keyword \"all\".";
+
     /**
      * Record class used by Find command.
      */
@@ -98,7 +102,11 @@ public class ParserUtil {
         if (trimmed.equals(All.ALL_KEYWORD)) {
             return new All();
         }
-        return parsePersonIdentifier(input);
+        try {
+            return parsePersonIdentifier(input);
+        } catch (ParseException pe) {
+            throw new ParseException(MESSAGE_INVALID_PERSON_IDENTIFIER_OR_ALL);
+        }
     }
 
     /**

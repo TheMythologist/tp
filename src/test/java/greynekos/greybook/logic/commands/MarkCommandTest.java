@@ -3,12 +3,13 @@ package greynekos.greybook.logic.commands;
 import static greynekos.greybook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static greynekos.greybook.logic.commands.CommandTestUtil.assertCommandFailure;
 import static greynekos.greybook.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static greynekos.greybook.logic.commands.MarkCommand.MESSAGE_MARK_ALL_SUCCESS;
 import static greynekos.greybook.logic.commands.MarkCommand.MESSAGE_USAGE;
 import static greynekos.greybook.logic.commands.util.CommandUtil.MESSAGE_PERSON_NOT_FOUND;
 import static greynekos.greybook.logic.parser.CliSyntax.PREFIX_ABSENT;
 import static greynekos.greybook.logic.parser.CliSyntax.PREFIX_PRESENT;
 import static greynekos.greybook.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static greynekos.greybook.logic.parser.ParserUtil.MESSAGE_INVALID_PERSON_IDENTIFIER;
+import static greynekos.greybook.logic.parser.ParserUtil.MESSAGE_INVALID_PERSON_IDENTIFIER_OR_ALL;
 import static greynekos.greybook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static greynekos.greybook.testutil.TypicalPersons.getTypicalGreyBook;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -41,7 +42,6 @@ public class MarkCommandTest {
         Person targetPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         MarkCommand markCommand = new MarkCommand();
 
-        // Build parser and arguments for command
         GreyBookParser parser = new GreyBookParser();
         markCommand.addToParser(parser);
 
@@ -106,6 +106,41 @@ public class MarkCommandTest {
     }
 
     @Test
+    public void execute_markAll_success() throws Exception {
+        MarkCommand markCommand = new MarkCommand();
+        GreyBookParser parser = new GreyBookParser();
+        markCommand.addToParser(parser);
+
+        String userInput = "mark all p/";
+        ArgumentParseResult arg = parser.parse(userInput);
+
+        Model expectedModel = new ModelManager(new GreyBook(model.getGreyBook()), new UserPrefs(), new History());
+        for (Person person : expectedModel.getFilteredPersonList()) {
+            Person markedPerson =
+                    new PersonBuilder(person).withAttendanceStatus(AttendanceStatus.Status.PRESENT).build();
+            expectedModel.setPerson(person, markedPerson);
+        }
+
+        assertCommandSuccess(markCommand, model, arg,
+                String.format(MESSAGE_MARK_ALL_SUCCESS, AttendanceStatus.Status.PRESENT), expectedModel);
+
+    }
+
+    @Test
+    public void execute_markAllEmptyList_success() throws Exception {
+        Model emptyModel = new ModelManager(new GreyBook(), new UserPrefs(), new History());
+        MarkCommand markCommand = new MarkCommand();
+        GreyBookParser parser = new GreyBookParser();
+        markCommand.addToParser(parser);
+
+        String userInput = "mark all p/";
+        ArgumentParseResult arg = parser.parse(userInput);
+
+        assertCommandSuccess(markCommand, emptyModel, arg,
+                String.format(MESSAGE_MARK_ALL_SUCCESS, AttendanceStatus.Status.PRESENT), emptyModel);
+    }
+
+    @Test
     public void execute_invalidIndex_throwsCommandException() {
         MarkCommand markCommand = new MarkCommand();
         GreyBookParser parser = new GreyBookParser();
@@ -149,7 +184,7 @@ public class MarkCommandTest {
 
         String userInput = "mark 1 x/";
 
-        assertParseFailure(parser, userInput, MESSAGE_INVALID_PERSON_IDENTIFIER);
+        assertParseFailure(parser, userInput, MESSAGE_INVALID_PERSON_IDENTIFIER_OR_ALL);
     }
 
     @Test
@@ -173,7 +208,7 @@ public class MarkCommandTest {
         String userInput =
                 String.format("mark %d %s p/", INDEX_FIRST_PERSON.getOneBased(), targetPerson.getStudentID().value);
 
-        assertParseFailure(parser, userInput, MESSAGE_INVALID_PERSON_IDENTIFIER);
+        assertParseFailure(parser, userInput, MESSAGE_INVALID_PERSON_IDENTIFIER_OR_ALL);
     }
 
     @Test

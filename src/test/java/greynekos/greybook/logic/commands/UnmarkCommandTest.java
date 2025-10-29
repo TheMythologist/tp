@@ -6,6 +6,7 @@ import static greynekos.greybook.logic.commands.CommandTestUtil.assertCommandSuc
 import static greynekos.greybook.logic.commands.UnmarkCommand.MESSAGE_USAGE;
 import static greynekos.greybook.logic.commands.util.CommandUtil.MESSAGE_PERSON_NOT_FOUND;
 import static greynekos.greybook.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static greynekos.greybook.logic.parser.ParserUtil.MESSAGE_INVALID_PERSON_IDENTIFIER_OR_ALL;
 import static greynekos.greybook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static greynekos.greybook.testutil.TypicalPersons.getTypicalGreyBook;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -14,7 +15,6 @@ import org.junit.jupiter.api.Test;
 
 import greynekos.greybook.logic.parser.ArgumentParseResult;
 import greynekos.greybook.logic.parser.GreyBookParser;
-import greynekos.greybook.logic.parser.ParserUtil;
 import greynekos.greybook.model.GreyBook;
 import greynekos.greybook.model.History;
 import greynekos.greybook.model.Model;
@@ -155,6 +155,6 @@ public class UnmarkCommandTest {
         String userInput =
                 String.format("unmark %d %s", INDEX_FIRST_PERSON.getOneBased(), targetPerson.getStudentID().value);
 
-        assertParseFailure(parser, userInput, ParserUtil.MESSAGE_INVALID_PERSON_IDENTIFIER);
+        assertParseFailure(parser, userInput, MESSAGE_INVALID_PERSON_IDENTIFIER_OR_ALL);
     }
 }
