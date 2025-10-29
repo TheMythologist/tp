@@ -20,7 +20,7 @@ activate LogicManager
 
 LogicManager -> GreyBookParser : parse("delete 1")
 activate GreyBookParser
-note right: Gets 'delete' CommandParser (cp)
+note right: Gets 'delete' CommandParser
 
 GreyBookParser -> CommandParser : parse(" 1")
 activate CommandParser

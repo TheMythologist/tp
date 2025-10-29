@@ -20,7 +20,7 @@ activate LogicManager
 
 LogicManager -> GreyBookParser : parse("undo")
 activate GreyBookParser
-note right: Gets 'undo' CommandParser (cp)
+note right: Gets 'undo' CommandParser
 
 GreyBookParser -> CommandParser : parse("")
 activate CommandParser
