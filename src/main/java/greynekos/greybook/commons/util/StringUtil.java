@@ -5,7 +5,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Arrays;
 
 /**
  * Helper functions for handling strings.
@@ -13,33 +12,31 @@ import java.util.Arrays;
 public class StringUtil {
 
     /**
-     * Returns true if the {@code sentence} contains the {@code word}. Ignores case,
-     * but a full word match is required. <br>
-     * examples:
+     * Returns true if {@code sentence} contains {@code term} as a substring,
+     * ignoring case. This does NOT require a full word match.
+     * <p>
+     * Examples:
      *
      * <pre>
-     *       containsWordIgnoreCase("ABc def", "abc") == true
-     *       containsWordIgnoreCase("ABc def", "DEF") == true
-     *       containsWordIgnoreCase("ABc def", "AB") == false //not a full word match
+     *   containsSubstringIgnoreCase("ABc def", "abc") == true
+     *   containsSubstringIgnoreCase("ABc def", "DEF") == true
+     *   containsSubstringIgnoreCase("ABc def", "AB")  == true
      * </pre>
      *
      * @param sentence
      *            cannot be null
-     * @param word
+     * @param term
      *            cannot be null, cannot be empty, must be a single word
      */
-    public static boolean containsWordIgnoreCase(String sentence, String word) {
+    public static boolean containsSubstringIgnoreCase(String sentence, String term) {
         requireNonNull(sentence);
-        requireNonNull(word);
+        requireNonNull(term);
 
-        String preppedWord = word.trim();
-        checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
-        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+        String preppedTerm = term.trim();
+        checkArgument(!preppedTerm.isEmpty(), "Word parameter cannot be empty");
+        checkArgument(preppedTerm.split("\\s+").length == 1, "Word parameter should be a single word");
 
-        String preppedSentence = sentence;
-        String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
-
-        return Arrays.stream(wordsInPreppedSentence).anyMatch(preppedWord::equalsIgnoreCase);
+        return sentence.toLowerCase().contains(preppedTerm.toLowerCase());
     }
 
     /**

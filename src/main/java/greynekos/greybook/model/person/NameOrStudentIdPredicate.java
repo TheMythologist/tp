@@ -30,7 +30,7 @@ public class NameOrStudentIdPredicate implements Predicate<Person> {
         String fullName = person.getName().fullName;
 
         boolean matchesName = !keywords.isEmpty() && keywords.stream().filter(kw -> !kw.isBlank())
-                .anyMatch(kw -> StringUtil.containsWordIgnoreCase(fullName, kw));
+                .anyMatch(kw -> StringUtil.containsSubstringIgnoreCase(fullName, kw));
 
         String idUp = person.getStudentID().toString().toUpperCase();
 

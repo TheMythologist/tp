@@ -2,7 +2,7 @@ package greynekos.greybook.logic.commands;
 
 import static greynekos.greybook.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static greynekos.greybook.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static greynekos.greybook.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static greynekos.greybook.logic.commands.CommandTestUtil.VALID_TAG_CONTRIBUTOR;
 import static greynekos.greybook.logic.commands.CommandTestUtil.assertCommandFailure;
 import static greynekos.greybook.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static greynekos.greybook.logic.commands.CommandTestUtil.showPersonAtIndex;
@@ -57,11 +57,11 @@ public class EditCommandTest {
         Person lastPerson = model.getFilteredPersonList().get(indexLastPerson.getZeroBased());
 
         PersonBuilder personInList = new PersonBuilder(lastPerson);
-        Person editedPerson =
-                personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
+        Person editedPerson = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+                .withTags(VALID_TAG_CONTRIBUTOR).build();
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
+                .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_CONTRIBUTOR).build();
         EditPersonArgumentParseResultStub argStub = new EditPersonArgumentParseResultStub(indexLastPerson, descriptor);
         EditCommand editCommand = new EditCommand();
 

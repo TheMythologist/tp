@@ -31,6 +31,9 @@ public class NameOrStudentIdPredicateTest {
         predicate = new NameOrStudentIdPredicate(Arrays.asList("ALICE"), Collections.emptyList());
         assertTrue(predicate.test(ALICE));
 
+        predicate = new NameOrStudentIdPredicate(Arrays.asList("ALI"), Collections.emptyList());
+        assertTrue(predicate.test(ALICE));
+
         predicate = new NameOrStudentIdPredicate(Arrays.asList("zzz", "alice"), Collections.emptyList());
         assertTrue(predicate.test(ALICE));
     }

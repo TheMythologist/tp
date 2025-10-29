@@ -1,6 +1,6 @@
 package greynekos.greybook.model;
 
-import static greynekos.greybook.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static greynekos.greybook.logic.commands.CommandTestUtil.VALID_TAG_CONTRIBUTOR;
 import static greynekos.greybook.testutil.Assert.assertThrows;
 import static greynekos.greybook.testutil.TypicalPersons.ALICE;
 import static greynekos.greybook.testutil.TypicalPersons.getTypicalGreyBook;
@@ -45,7 +45,7 @@ public class GreyBookTest {
     @Test
     public void resetData_withDuplicatePersons_throwsDuplicatePersonException() {
         // Two persons with the same identity fields
-        Person editedAlice = new PersonBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
+        Person editedAlice = new PersonBuilder(ALICE).withTags(VALID_TAG_CONTRIBUTOR).build();
         List<Person> newPersons = Arrays.asList(ALICE, editedAlice);
         GreyBookStub newData = new GreyBookStub(newPersons);
 

@@ -5,7 +5,7 @@
     "phone" : "94351253",
     "email" : "alice@example.com",
     "studentID" : "A1234567X",
-    "tags" : [ "friends" ],
+    "tags" : [ "member" ],
     "attendanceStatus" : "PRESENT"
 
   }, {
@@ -13,7 +13,7 @@
     "phone" : "98765432",
     "email" : "johnd@example.com",
     "studentID" : "A2345678L",
-    "tags" : [ "owesMoney", "friends" ],
+    "tags" : [ "owesMoney", "member" ],
     "attendanceStatus" : "NONE"
   }, {
     "name" : "Carl Kurz",
@@ -27,12 +27,12 @@
     "phone" : "87652533",
     "email" : "cornelia@example.com",
     "studentID" : "A4567890H",
-    "tags" : [ "friends" ],
+    "tags" : [ "member" ],
     "attendanceStatus" : "ABSENT"
 
   }, {
     "name" : "Elle Meyer",
-    "phone" : "9482224",
+    "phone" : "94822249",
     "email" : "werner@example.com",
     "studentID" : "A5678901N",
     "tags" : [ ],
@@ -40,7 +40,7 @@
 
   }, {
     "name" : "Fiona Kunz",
-    "phone" : "9482427",
+    "phone" : "94824277",
     "email" : "lydia@example.com",
     "studentID" : "A6789012X",
     "tags" : [ ],
@@ -48,7 +48,7 @@
 
   }, {
     "name" : "George Best",
-    "phone" : "9482442",
+    "phone" : "94824428",
     "email" : "anna@example.com",
     "studentID" : "A7890123E",
     "tags" : [ ],
