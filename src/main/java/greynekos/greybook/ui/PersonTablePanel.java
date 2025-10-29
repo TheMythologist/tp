@@ -49,9 +49,16 @@ public class PersonTablePanel extends UiPart<Region> {
     @FXML
     private TableColumn<Person, String> attendanceStatusColumn;
 
+    /**
+     * Implements a custom table cell with a tooltip.
+     */
     public class PersonTableCellWithTooltip extends TableCell<Person, String> {
         private final Tooltip tooltip = new Tooltip();
 
+        /**
+         * Immediately sets the tooltip to a showDelay of 500 miliseconds Note that
+         * `setTooltip` should not be repeatedly called in `updateItem`
+         */
         public PersonTableCellWithTooltip() {
             super();
             tooltip.setShowDelay(Duration.millis(500));
