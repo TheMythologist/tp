@@ -1,8 +1,7 @@
 package greynekos.greybook.model.person;
 
-import static java.util.Objects.requireNonNull;
-
 import static greynekos.greybook.commons.util.AppUtil.checkArgument;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a Person's student ID in the GreyBook. Guarantees: immutable; is
@@ -41,17 +40,19 @@ public class StudentID implements PersonIdentifier {
 
     /**
      * Calculates the checksum character, given the student ID digits.
-     * 
-     * @param test the student ID string (without checksum character)
+     *
+     * @param test
+     *            the student ID string (without checksum character)
      * @return the calculated checksum character
-     * @throws IllegalArgumentException if the input is invalid
+     * @throws IllegalArgumentException
+     *             if the input is invalid
      */
     public static char calculateStudentIdChecksum(String test) {
         requireNonNull(test);
         if (test.length() < 7) {
             throw new IllegalArgumentException("Student ID must be at least 7 characters long");
         }
-        
+
         int[] weights;
         if (test.charAt(0) == 'U') {
             weights = new int[]{
