@@ -31,7 +31,7 @@ GreyBookParser .right.> CommandParser : <<create>>
 CommandParser -up-> XYZCommand : stores instance
 
 ' 2. Command Options structure
-CommandOption -up-|> Option
+CommandOption .up.|> Option
 
 CommandParser --> "0..*" Option : uses
 CommandOption ..> Prefix : uses
