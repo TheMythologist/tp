@@ -33,7 +33,7 @@ CommandParser -up-> XYZCommand : stores instance
 ' 2. Command Options structure
 CommandOption -up-|> Option
 
-CommandParser *-- Option : stores 1..*
+CommandParser --> "0..*" Option : uses
 CommandOption ..> Prefix : uses
 
 ' 3. Parsing flow (Execution phase)
