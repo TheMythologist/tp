@@ -1,6 +1,5 @@
 package greynekos.greybook.logic.commands;
 
-import static greynekos.greybook.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
@@ -14,7 +13,6 @@ import greynekos.greybook.logic.parser.ParserUtil;
 import greynekos.greybook.logic.parser.commandoption.SinglePreambleOption;
 import greynekos.greybook.model.Model;
 import greynekos.greybook.model.person.All;
-import greynekos.greybook.model.person.AttendanceStatus;
 import greynekos.greybook.model.person.Person;
 import greynekos.greybook.model.person.PersonIdentifier;
 import greynekos.greybook.model.person.PersonIdentifierOrAll;
@@ -59,30 +57,20 @@ public class UnmarkCommand extends Command {
 
         Person personToUnmark = CommandUtil.resolvePerson(model, (PersonIdentifier) identifier);
 
-        Person unmarkedPerson = createUnmarkedPerson(personToUnmark);
-        model.setPerson(personToUnmark, unmarkedPerson);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.unmarkPerson(personToUnmark);
 
-        return new CommandResult(String.format(MESSAGE_UNMARK_PERSON_SUCCESS, unmarkedPerson.getName(),
-                Messages.format(unmarkedPerson)));
+        return new CommandResult(String.format(MESSAGE_UNMARK_PERSON_SUCCESS, personToUnmark.getName(),
+                Messages.format(personToUnmark)));
     }
 
     private CommandResult executeUnmarkAll(Model model) {
         List<Person> personList = model.getFilteredPersonList();
 
         for (Person person : personList) {
-            Person resetPerson = createUnmarkedPerson(person);
-            model.setPerson(person, resetPerson);
+            model.unmarkPerson(person);
         }
 
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(MESSAGE_UNMARK_ALL_SUCCESS);
-    }
-
-    private static Person createUnmarkedPerson(Person person) {
-        assert person != null;
-        return new Person(person.getName(), person.getPhone(), person.getEmail(), person.getStudentID(),
-                person.getTags(), new AttendanceStatus());
     }
 
     @Override

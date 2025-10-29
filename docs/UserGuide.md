@@ -361,9 +361,9 @@ GreyBook helps you keep track of students' attendance efficiently.
 
 **Notes:**
 
-- Provide **either** an index **or** a student ID — not both
+- Provide **either** an index, a student ID **or** "all" — not both nor all
 - Only one attendance flag can be used at a time
-- Attendance status replaces any previous mark
+- Marking a student with the same attendance status will have no effect
 
 **Examples:**
 #### 1. Mark Student by Index or Student ID
@@ -391,6 +391,12 @@ mark all a/
 
 **Command:**
 `unmark (INDEX | STUDENTID | all)`
+
+
+**Notes:**
+
+- Provide **either** an index, a student ID **or** "all" — not both nor all
+- Unmarking a student with no attendance status will have no effect
 
 **Examples:**
 #### 1. Mark Student by Index or Student ID

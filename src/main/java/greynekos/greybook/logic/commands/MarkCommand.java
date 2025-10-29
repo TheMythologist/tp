@@ -1,12 +1,9 @@
 package greynekos.greybook.logic.commands;
 
-import static greynekos.greybook.logic.commands.UnmarkCommand.MESSAGE_USAGE;
 import static greynekos.greybook.logic.parser.CliSyntax.PREFIX_ABSENT;
 import static greynekos.greybook.logic.parser.CliSyntax.PREFIX_EXCUSED;
 import static greynekos.greybook.logic.parser.CliSyntax.PREFIX_LATE;
 import static greynekos.greybook.logic.parser.CliSyntax.PREFIX_PRESENT;
-import static greynekos.greybook.logic.parser.CliSyntax.PREFIX_STUDENTID;
-import static greynekos.greybook.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
@@ -39,8 +36,8 @@ public class MarkCommand extends Command {
     public static final String MESSAGE_MARK_ALL_SUCCESS = "All attendance status have been marked as \"%1$s\".";
     public static final String MESSAGE_MARK_FLAGS_AND_EXAMPLES = "Flags: " + PREFIX_PRESENT + " for Present, "
             + PREFIX_ABSENT + " for Absent, " + PREFIX_LATE + " for Late, " + PREFIX_EXCUSED + " for Excused\n"
-            + "Example: " + COMMAND_WORD + " 1 " + PREFIX_PRESENT + " OR " + COMMAND_WORD + " " + PREFIX_STUDENTID
-            + "A0123456X " + PREFIX_ABSENT + " OR " + COMMAND_WORD + " all" + PREFIX_LATE;
+            + "Example: " + COMMAND_WORD + " 1 " + PREFIX_PRESENT + " OR " + COMMAND_WORD + " A0123456X "
+            + PREFIX_ABSENT + " OR " + COMMAND_WORD + " all " + PREFIX_EXCUSED;
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Marks a club member's attendance.\n"
             + "Parameters: INDEX (must be a positive integer) OR STUDENT_ID (format: A0000000Y)\n"
             + MESSAGE_MARK_FLAGS_AND_EXAMPLES;
@@ -94,23 +91,19 @@ public class MarkCommand extends Command {
 
         Person personToMark = CommandUtil.resolvePerson(model, (PersonIdentifier) identifier);
 
-        Person markedPerson = createMarkedPerson(personToMark, attendanceStatus);
-        model.setPerson(personToMark, markedPerson);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.markPerson(personToMark, attendanceStatus);
 
-        return new CommandResult(String.format(MESSAGE_MARK_PERSON_SUCCESS, markedPerson.getName(), attendanceStatus,
-                Messages.format(markedPerson)));
+        return new CommandResult(String.format(MESSAGE_MARK_PERSON_SUCCESS, personToMark.getName(), attendanceStatus,
+                Messages.format(personToMark)));
     }
 
     private CommandResult executeMarkAll(Model model, AttendanceStatus.Status attendanceStatus) {
         List<Person> personList = model.getFilteredPersonList();
 
         for (Person person : personList) {
-            Person markedPerson = createMarkedPerson(person, attendanceStatus);
-            model.setPerson(person, markedPerson);
+            model.markPerson(person, attendanceStatus);
         }
 
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_MARK_ALL_SUCCESS, attendanceStatus));
     }
 
@@ -135,22 +128,6 @@ public class MarkCommand extends Command {
             return AttendanceStatus.Status.EXCUSED;
         }
         return null;
-    }
-
-    /**
-     * Creates a copy of the given person with the new attendance status.
-     *
-     * @param personToEdit
-     *            the original person
-     * @param attendanceStatus
-     *            the new attendance status
-     * @return a new Person instance with updated attendance
-     */
-    private static Person createMarkedPerson(Person personToEdit, AttendanceStatus.Status attendanceStatus) {
-        assert personToEdit != null;
-        AttendanceStatus newAttendanceStatus = new AttendanceStatus(attendanceStatus);
-        return new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getStudentID(), personToEdit.getTags(), newAttendanceStatus);
     }
 
     @Override
