@@ -14,10 +14,10 @@ box Model MODEL_COLOR_T1
 participant "m:Model" as Model MODEL_COLOR
 end box
 
-[-> LogicManager : execute("find alice bob charlie")
+[-> LogicManager : execute("find alice i/A1111111M charlie")
 activate LogicManager
 
-LogicManager -> GreyBookParser : parseCommand("find alice bob charlie")
+LogicManager -> GreyBookParser : parseCommand("find alice i/A1111111M charlie")
 activate GreyBookParser
 
 create FindCommandParser
@@ -27,7 +27,7 @@ activate FindCommandParser
 FindCommandParser --> GreyBookParser
 deactivate FindCommandParser
 
-GreyBookParser -> FindCommandParser : parse("alice bob charlie")
+GreyBookParser -> FindCommandParser : parse("alice i/A1111111M charlie")
 activate FindCommandParser
 
 create FindCommand
