@@ -183,8 +183,8 @@ Refer to the [Command Format Summary](#command-format-summary) for the full list
 | `delete` | Remove a student             | `delete (INDEX \| STUDENTID)`                                    |
 | `list`   | Show all students            | `list`                                                           |
 | `find`   | Search by name or student ID | `find KEYWORD [MORE_KEYWORDS]…​ [i/ID_FRAGMENT]…​`                 |
-| `mark`   | Mark attendance              | `mark (INDEX \| STUDENTID) (p/ \|\| a/ \|\| l/ \|\| e/)`         |
-| `unmark` | Unmark attendance            | `unmark (INDEX \| STUDENTID \| 'ALL')`                           |
+| `mark`   | Mark attendance              | `mark (INDEX \| STUDENTID \| all) (p/ \|\| a/ \|\| l/ \|\| e/)`         |
+| `unmark` | Unmark attendance            | `unmark (INDEX \| STUDENTID \| all)`                           |
 | `clear`  | Delete **all** students      | `clear`                                                          |
 | `help`   | Open the help window         | `help`                                                           |
 | `exit`   | Quit the app                 | `exit`                                                           |
@@ -348,7 +348,7 @@ GreyBook helps you keep track of students' attendance efficiently.
 #### Marking Attendance: `mark`
 
 **Command:**
-`mark (INDEX | STUDENTID) (p/ | a/ | l/ | e/)`
+`mark (INDEX | STUDENTID | all) (p/ | a/ | l/ | e/)`
 
 **Flags:**
 
@@ -366,38 +366,51 @@ GreyBook helps you keep track of students' attendance efficiently.
 - Attendance status replaces any previous mark
 
 **Examples:**
-
+#### 1. Mark Student by Index or Student ID
 ```
 mark 1 p/
-mark A0000000Y e/
+mark A1234567X p/
 ```
 
-**Expected Output:**
+##### Expected Output:
+![result for 'mark 1 p/' or 'mark A1234567X p/'](images/markIndexOrStudentIdResult.png)
 
+
+#### 2. Mark Student by Index or Student ID
 ```
-Marked student A0000000Y as Present.
+mark all a/
 ```
+
+##### Expected Output:
+![result for 'mark all a/'](images/markAllResult.png)
+
 
 ---
 
 #### Unmarking Attendance: `unmark`
 
 **Command:**
-`unmark (INDEX | STUDENTID | 'ALL')`
+`unmark (INDEX | STUDENTID | all)`
 
 **Examples:**
-
+#### 1. Mark Student by Index or Student ID
 ```
-unmark 2
-unmark A0000000Y
+unmark 1
+unmark A1234567X
+```
+
+##### Expected Output:
+![result for 'unmark 1' or 'unmark A1234567X'](images/unmarkIndexOrStudentIdResult.png)
+
+
+#### 2. Mark Student by Index or Student ID
+```
 unmark all
 ```
 
-**Expected Output:**
+##### Expected Output:
+![result for 'unmark all'](images/unmarkAllResult.png)
 
-```
-Unmarked attendance for A0000000Y.
-```
 
 ---
 
