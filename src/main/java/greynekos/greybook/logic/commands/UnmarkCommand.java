@@ -31,8 +31,8 @@ public class UnmarkCommand extends Command {
      * Unmark Command Usage and Error Messages
      */
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Clears a person's attendance status.\n"
-            + "Parameters: INDEX (must be a positive integer) or  STUDENT_ID (format: A0000000Y)\n" + "Example: "
-            + COMMAND_WORD + " 1 OR " + COMMAND_WORD + " A0123456J OR " + COMMAND_WORD + " all";
+            + "Parameters: INDEX (must be a positive integer) or STUDENT_ID (format: A0000000Y)\n" + "Examples:\n"
+            + "  " + COMMAND_WORD + " 1\n" + "  " + COMMAND_WORD + " A0123456J\n" + "  " + COMMAND_WORD + " all";
 
     /**
      * Unmark Command Preamble and Prefix Options

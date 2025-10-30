@@ -48,7 +48,7 @@ public class EditCommand extends Command {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) " + "[" + PREFIX_NAME + "NAME] " + "[" + PREFIX_PHONE
             + "PHONE] " + "[" + PREFIX_EMAIL + "EMAIL] " + "[" + PREFIX_STUDENTID + "STUDENTID] " + "[" + PREFIX_TAG
-            + "TAG]...\n" + "Example: " + COMMAND_WORD + " 1 " + PREFIX_PHONE + "91234567 " + PREFIX_EMAIL
+            + "TAG]...\n" + "Example:\n" + "  " + COMMAND_WORD + " 1 " + PREFIX_PHONE + "91234567 " + PREFIX_EMAIL
             + "johndoe@example.com";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
