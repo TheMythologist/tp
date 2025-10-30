@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import greynekos.greybook.commons.core.GuiSettings;
 import greynekos.greybook.commons.core.LogsCenter;
+import greynekos.greybook.model.person.AttendanceStatus;
 import greynekos.greybook.model.person.Person;
 import greynekos.greybook.model.person.StudentID;
 import javafx.collections.ObservableList;
@@ -129,6 +130,25 @@ public class ModelManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         greyBook.setPerson(target, editedPerson);
+    }
+
+    @Override
+    public void markPerson(Person target, AttendanceStatus.Status attendanceStatus) {
+        requireAllNonNull(target, attendanceStatus);
+
+        AttendanceStatus newAttendanceStatus = new AttendanceStatus(attendanceStatus);
+        Person markedPerson = new Person(target.getName(), target.getPhone(), target.getEmail(), target.getStudentID(),
+                target.getTags(), newAttendanceStatus);
+        setPerson(target, markedPerson);
+    }
+
+    @Override
+    public void unmarkPerson(Person target) {
+        requireAllNonNull(target);
+
+        Person unmarkedPerson = new Person(target.getName(), target.getPhone(), target.getEmail(),
+                target.getStudentID(), target.getTags(), new AttendanceStatus());
+        setPerson(target, unmarkedPerson);
     }
 
     @Override

@@ -15,54 +15,10 @@ Optimized for users who prefer typing commands, GreyBook enables fast, streamlin
 **New to a CLI?** It simply means typing short commands (like `add` or `list`) instead of clicking through menus and buttons. No need to use a mouse!
 </box>
 
+# Table of Contents
 <!-- * Table of Contents -->
 <page-nav-print />
 
-# Table of Contents
-
-1. [User Guide](#user-guide)
-    - [About This Guide](#about-this-guide)
-        - [Target Users](#target-users)
-        - [What You'll Need](#what-youll-need)
-        - [How to Use This Guide](#how-to-use-this-guide)
-2. [Quick Start](#quick-start)
-    - [Installation](#installation)
-    - [Your First Commands](#your-first-commands)
-3. [Command Format Summary](#command-format-summary)
-4. [Core Features](#core-features)
-    - [Managing Students](#managing-students)
-        - [Adding Students: `add`](#adding-students-add)
-        - [Editing Students: `edit`](#editing-students-edit)
-        - [Finding Students: `find`](#finding-students-find)
-        - [Listing All Students: `list`](#listing-all-students-list)
-        - [Deleting Students: `delete`](#deleting-students-delete)
-        - [Clearing All Students: `clear`](#clearing-all-students-clear)
-    - [Managing Attendance](#managing-attendance)
-        - [Marking Attendance: `mark`](#marking-attendance-mark)
-        - [Unmarking Attendance: `unmark`](#unmarking-attendance-unmark)
-    - [Application Controls](#application-controls)
-        - [Getting Help: `help`](#getting-help-help)
-        - [Exiting the Application: `exit`](#exiting-the-application-exit)
-    - [Miscellaneous Features](#miscellaneous-features)
-        - [Terminal-like Behaviour](#terminal-like-behaviour)
-        - [Automatic Saving of Data](#automatic-saving-of-data)
-5. [Recommended Workflows (for experienced users)](#recommended-workflows-for-experienced-users)
-6. [Full Command Format Details](#full-command-format-details)
-7. [Command Summary](#command-summary)
-8. [Parameter Details](#parameter-details)
-9. [FAQs](#faqs)
-    - [Installation & Requirements](#installation--requirements)
-    - [Updating & Migration](#updating--migration)
-    - [Data Location, Saving & Backup](#data-location-saving--backup)
-    - [Search Behaviour](#search-behaviour)
-    - [Limits & Performance](#limits--performance)
-    - [Name Related Issues](#name-related-issues)
-10. [Appendix](#appendix)
-    - [Glossary](#glossary)
-    - [Technical Specifications](#technical-specifications)
-    - [Contact Information](#contact-information)
-
----
 
 ## About This Guide
 
@@ -102,14 +58,10 @@ This guide is designed for **leaders and committee members of NUS clubs or socie
 
    Open a terminal and ensure you have Java `17` or above installed on your computer.
 
-<details>
-   <summary>How do I open/use a terminal? (click to expand)</summary>
-   <ul>
-   <li><b>Mac Users:</b> Press <code>Cmd + Space</code>, type Terminal in search bar to open.</li>
-   <li><b>Windows Users:</b> In the Windows Start menu search bar, type Terminal to open.</li>
-   <li><b>Linux Users:</b> Press <code>Ctrl + Alt + T</code> to instantly open a terminal window</li>
-   </ul>
-</details>
+   How do I open/use a terminal?</br>
+   - Mac Users: Press `Cmd + Space`, type Terminal in search bar to open.
+   - Windows Users: In the Windows Start menu search bar, type Terminal to open.
+   - Linux Users: Press `Ctrl + Alt + T` to instantly open a terminal window
 
 Type the following command exactly as you see it and press enter.
    ```
@@ -375,7 +327,7 @@ GreyBook helps you keep track of students' attendance efficiently.
 #### Marking Attendance: `mark`
 
 **Command:**
-`mark (INDEX | STUDENTID) (p/ | a/ | l/ | e/)`
+`mark (INDEX | STUDENTID | all) (p/ | a/ | l/ | e/)`
 
 **Flags:**
 
@@ -388,43 +340,62 @@ GreyBook helps you keep track of students' attendance efficiently.
 
 **Notes:**
 
-- Provide **either** an index **or** a student ID — not both
+- Provide **either** an index, a student ID **or** "all" — not both nor all
 - Only one attendance flag can be used at a time
-- Attendance status replaces any previous mark
+- Marking a student with the same attendance status will have no effect
 
 **Examples:**
-
+#### 1. Mark Student by Index or Student ID
 ```
 mark 1 p/
-mark A0000000Y e/
+mark A1234567X p/
 ```
 
-**Expected Output:**
+##### Expected Output:
+![result for 'mark 1 p/' or 'mark A1234567X p/'](images/markIndexOrStudentIdResult.png)
 
+
+#### 2. Mark Student by Index or Student ID
 ```
-Marked student A0000000Y as Present.
+mark all a/
 ```
+
+##### Expected Output:
+![result for 'mark all a/'](images/markAllResult.png)
+
 
 ---
 
 #### Unmarking Attendance: `unmark`
 
 **Command:**
-`unmark (INDEX | STUDENTID | 'ALL')`
+`unmark (INDEX | STUDENTID | all)`
+
+
+**Notes:**
+
+- Provide **either** an index, a student ID **or** "all" — not both nor all
+- Unmarking a student with no attendance status will have no effect
 
 **Examples:**
-
+#### 1. Mark Student by Index or Student ID
 ```
-unmark 2
-unmark A0000000Y
+unmark 1
+unmark A1234567X
+```
+
+##### Expected Output:
+![result for 'unmark 1' or 'unmark A1234567X'](images/unmarkIndexOrStudentIdResult.png)
+
+
+#### 2. Mark Student by Index or Student ID
+```
 unmark all
 ```
 
-**Expected Output:**
+##### Expected Output:
+![result for 'unmark all'](images/unmarkAllResult.png)
 
-```
-Unmarked attendance for A0000000Y.
-```
 
 ---
 
@@ -554,8 +525,8 @@ For advanced users who wish to use special characters like quotation marks (`"`)
 | `delete` | Remove a student             | `delete (INDEX \| STUDENTID)`                                    |
 | `list`   | Show all students            | `list`                                                           |
 | `find`   | Search by name or student ID | `find KEYWORD [MORE_KEYWORDS]…​ [i/ID_FRAGMENT]…​`                 |
-| `mark`   | Mark attendance              | `mark (INDEX \| STUDENTID) (p/ \|\| a/ \|\| l/ \|\| e/)`         |
-| `unmark` | Unmark attendance            | `unmark (INDEX \| STUDENTID \| 'ALL')`                           |
+| `mark`   | Mark attendance              | `mark (INDEX \| STUDENTID \| all) (p/ \|\| a/ \|\| l/ \|\| e/)`  |
+| `unmark` | Unmark attendance            | `unmark (INDEX \| STUDENTID \| all)`                             |
 | `clear`  | Delete **all** students      | `clear`                                                          |
 | `help`   | Open the help window         | `help`                                                           |
 | `exit`   | Quit the app                 | `exit`                                                           |
