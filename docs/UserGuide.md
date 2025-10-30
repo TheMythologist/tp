@@ -15,54 +15,10 @@ Optimized for users who prefer typing commands, GreyBook enables fast, streamlin
 **New to a CLI?** It simply means typing short commands (like `add` or `list`) instead of clicking through menus and buttons. No need to use a mouse!
 </box>
 
+# Table of Contents
 <!-- * Table of Contents -->
 <page-nav-print />
 
-# Table of Contents
-
-1. [User Guide](#user-guide)
-    - [About This Guide](#about-this-guide)
-        - [Target Users](#target-users)
-        - [What You'll Need](#what-youll-need)
-        - [How to Use This Guide](#how-to-use-this-guide)
-2. [Quick Start](#quick-start)
-    - [Installation](#installation)
-    - [Your First Commands](#your-first-commands)
-3. [Command Format Summary](#command-format-summary)
-4. [Core Features](#core-features)
-    - [Managing Students](#managing-students)
-        - [Adding Students: `add`](#adding-students-add)
-        - [Editing Students: `edit`](#editing-students-edit)
-        - [Finding Students: `find`](#finding-students-find)
-        - [Listing All Students: `list`](#listing-all-students-list)
-        - [Deleting Students: `delete`](#deleting-students-delete)
-        - [Clearing All Students: `clear`](#clearing-all-students-clear)
-    - [Managing Attendance](#managing-attendance)
-        - [Marking Attendance: `mark`](#marking-attendance-mark)
-        - [Unmarking Attendance: `unmark`](#unmarking-attendance-unmark)
-    - [Application Controls](#application-controls)
-        - [Getting Help: `help`](#getting-help-help)
-        - [Exiting the Application: `exit`](#exiting-the-application-exit)
-    - [Miscellaneous Features](#miscellaneous-features)
-        - [Terminal-like Behaviour](#terminal-like-behaviour)
-        - [Automatic Saving of Data](#automatic-saving-of-data)
-5. [Recommended Workflows (for experienced users)](#recommended-workflows-for-experienced-users)
-6. [Full Command Format Details](#full-command-format-details)
-7. [Command Summary](#command-summary)
-8. [Parameter Details](#parameter-details)
-9. [FAQs](#faqs)
-    - [Installation & Requirements](#installation--requirements)
-    - [Updating & Migration](#updating--migration)
-    - [Data Location, Saving & Backup](#data-location-saving--backup)
-    - [Search Behaviour](#search-behaviour)
-    - [Limits & Performance](#limits--performance)
-    - [Name Related Issues](#name-related-issues)
-10. [Appendix](#appendix)
-    - [Glossary](#glossary)
-    - [Technical Specifications](#technical-specifications)
-    - [Contact Information](#contact-information)
-
----
 
 ## About This Guide
 
@@ -102,14 +58,10 @@ This guide is designed for **leaders and committee members of NUS clubs or socie
 
    Open a terminal and ensure you have Java `17` or above installed on your computer.
 
-<details>
-   <summary>How do I open/use a terminal? (click to expand)</summary>
-   <ul>
-   <li><b>Mac Users:</b> Press <code>Cmd + Space</code>, type Terminal in search bar to open.</li>
-   <li><b>Windows Users:</b> In the Windows Start menu search bar, type Terminal to open.</li>
-   <li><b>Linux Users:</b> Press <code>Ctrl + Alt + T</code> to instantly open a terminal window</li>
-   </ul>
-</details>
+   How do I open/use a terminal?</br>
+   - Mac Users: Press `Cmd + Space`, type Terminal in search bar to open.
+   - Windows Users: In the Windows Start menu search bar, type Terminal to open.
+   - Linux Users: Press `Ctrl + Alt + T` to instantly open a terminal window
 
 Type the following command exactly as you see it and press enter.
    ```
