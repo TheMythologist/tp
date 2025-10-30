@@ -19,7 +19,6 @@ Optimized for users who prefer typing commands, GreyBook enables fast, streamlin
 <!-- * Table of Contents -->
 <page-nav-print />
 
-
 ## About This Guide
 
 ### Target Users
@@ -60,42 +59,38 @@ This guide is designed for **leaders and committee members of NUS clubs or socie
 
    How do I open/use a terminal?</br>
    - Mac Users: Press `Cmd + Space`, type Terminal in search bar to open.
-   - Windows Users: In the Windows Start menu search bar, type Terminal to open.
+   - Windows Users: In the Windows Start menu search bar, type "Command Prompt" to open.
    - Linux Users: Press `Ctrl + Alt + T` to instantly open a terminal window
 
 Type the following command exactly as you see it and press enter.
+
    ```
    java -version
    ```
-If you have Java installed, you should see the following:
+
+If you have Java 17 installed, you should see something similar to the following:
+
 ```
 java version "17.0.12" 2024-07-16 LTS
 Java(TM) SE Runtime Environment (build 17.0.12+8-LTS-286)
 Java HotSpot(TM) 64-Bit Server VM (build 17.0.12+8-LTS-286, mixed mode, sharing)
 ```
+
 If you see a version number of 17 or above, you're all set.
 
-
 **Don't have the correct version of Java installed?** <br>
-Mac users: Follow [this guide](https://se-education.org/guides/tutorials/javaInstallationMac.html).<br>
-Windows users: Follow [this guide](https://se-education.org/guides/tutorials/javaInstallationWindows.html).<br>
-Linux users: Follow [this guide](https://se-education.org/guides/tutorials/javaInstallationLinux.html).<br>
+Mac users: Follow <a href="https://se-education.org/guides/tutorials/javaInstallationMac.html" target="_blank">this guide</a>.<br>
+Windows users: Follow <a href="https://se-education.org/guides/tutorials/javaInstallationWindows.html" target="_blank">this guide</a>.<br>
+Linux users: Follow <a href="https://se-education.org/guides/tutorials/javaInstallationLinux.html" target="_blank">this guide</a>.<br>
 
-<box type="tip" seamless>
+1. **Download GreyBook**
 
-**Tip:** Click on hyperlinks with your mouse scroll wheel to open links in new tabs!
-
-</box>
-
-2. **Download GreyBook**
-
-   Download the latest `.jar` file from the [Releases Page](https://github.com/AY2526S1-CS2103T-F13-4/tp/releases).<br>
+   Download the latest `.jar` file from the <a href="https://github.com/AY2526S1-CS2103T-F13-4/tp/releases/latest" target="_blank">latest release page</a>.<br>
    ![Where to download](images/githubDownload.png)<br>
    By default, this will download `greybook.jar` to your **Downloads** folder. This will be your **home folder**, or in other words, where your GreyBook data is stored.<br>
    If you wish, you can copy or move `greybook.jar` anywhere you like to change its **home folder**.
 
-
-3. **Launch the Application**
+2. **Launch the Application**
 
    If you did not move `greybook.jar`, it will be in your **Downloads** folder. Navigate (`cd`) to it by running the following commands in your terminal:<br>
 
@@ -103,12 +98,13 @@ Linux users: Follow [this guide](https://se-education.org/guides/tutorials/javaI
    cd Downloads
    java -jar greybook.jar
    ```
+
    **Note**: These are two separate commands! Press enter after each line to run them individually.<br>
    If you had moved `greybook.jar` elsewhere, replace `Downloads` with `greybook.jar`'s new filepath.
 
    > **macOS users:** If you see a security prompt the first time, right-click the `.jar` → **Open** → confirm.
 
-4. **First Look**
+3. **First Look**
 
    GreyBook should launch within a few seconds.
    A few sample students are preloaded so you can try out basic commands immediately.
@@ -144,7 +140,9 @@ Let's try a few essential commands. Remember to press enter after typing each co
    ```
    find i/A0000000Y
    ```
+
 5. **List All Students**
+
     ```
     list
     ```
@@ -161,6 +159,9 @@ Here is some important information you need to understand the rest of the guide!
 
 - Words in `UPPER_CASE` are called **parameters**, things you replace.<br>
   e.g. in `add n/NAME`, replace `NAME` with a student's name, like `add n/John Doe`.
+
+- Words in `"double quotation marks"` are called **literals**, things you type as-is (without the quotation marks).<br>
+  e.g. in the command format of `mark "all"`, make sure you type out exactly `mark all`.
 
 - Items in square brackets are optional.<br>
   e.g. `n/NAME [t/TAG]` can be used as `n/John Doe t/member` or as `n/John Doe`.
@@ -327,7 +328,7 @@ GreyBook helps you keep track of students' attendance efficiently.
 #### Marking Attendance: `mark`
 
 **Command:**
-`mark (INDEX | STUDENTID | all) (p/ | a/ | l/ | e/)`
+`mark (INDEX | STUDENTID | "all") (p/ | a/ | l/ | e/)`
 
 **Flags:**
 
@@ -340,62 +341,77 @@ GreyBook helps you keep track of students' attendance efficiently.
 
 **Notes:**
 
-- Provide **either** an index, a student ID **or** "all" — not both nor all
+- Provide **either** an index, a student ID **or** "all" — not both nor "all"
 - Only one attendance flag can be used at a time
 - Marking a student with the same attendance status will have no effect
 
 **Examples:**
+
 #### 1. Mark Student by Index or Student ID
+
 ```
 mark 1 p/
 mark A1234567X p/
 ```
 
-##### Expected Output:
+<box type="tip" seamless>
+
+**Tip:** When marking students by their Student ID, they do not have to be displayed in your filtered list of students.
+</box>
+
+##### Expected Output
+
 ![result for 'mark 1 p/' or 'mark A1234567X p/'](images/markIndexOrStudentIdResult.png)
 
+#### 2. Mark All Students
 
-#### 2. Mark Student by Index or Student ID
 ```
 mark all a/
 ```
 
-##### Expected Output:
-![result for 'mark all a/'](images/markAllResult.png)
+##### Expected Output
 
+![result for 'mark all a/'](images/markAllResult.png)
 
 ---
 
 #### Unmarking Attendance: `unmark`
 
 **Command:**
-`unmark (INDEX | STUDENTID | all)`
-
+`unmark (INDEX | STUDENTID | "all")`
 
 **Notes:**
 
-- Provide **either** an index, a student ID **or** "all" — not both nor all
+- Provide **either** an index, a student ID **or** "all" — not both nor "all"
 - Unmarking a student with no attendance status will have no effect
 
 **Examples:**
-#### 1. Mark Student by Index or Student ID
+
+#### 1. Unmark Student by Index or Student ID
+
 ```
 unmark 1
 unmark A1234567X
 ```
 
-##### Expected Output:
+<box type="tip" seamless>
+
+**Tip:** When unmarking students by their Student ID, they do not have to be displayed in your filtered list of students.
+</box>
+
+##### Expected Output
+
 ![result for 'unmark 1' or 'unmark A1234567X'](images/unmarkIndexOrStudentIdResult.png)
 
+#### 2. Unmark All Students
 
-#### 2. Mark Student by Index or Student ID
 ```
 unmark all
 ```
 
-##### Expected Output:
-![result for 'unmark all'](images/unmarkAllResult.png)
+##### Expected Output
 
+![result for 'unmark all'](images/unmarkAllResult.png)
 
 ---
 
@@ -435,7 +451,7 @@ Want to rerun a command you typed before? Similar to a typical CLI application, 
 <box type="warning" seamless>
 
 **Caution! For advanced users**
-The command history is saved in the hard disk automatically after every successful command as a JSON file at: `[JAR file location]/history.json`. 
+The command history is saved in the hard disk automatically after every successful command as a JSON file at: `[JAR file location]/history.json`.
 It is not recommended to modify this file to alter your command history. If your changes to the history file makes it invalid, GreyBook will discard all history and start fresh on the next run. Before you edit, make a backup copy of the file.
 </box>
 
@@ -463,8 +479,9 @@ Some changes can cause the GreyBook to behave in unexpected ways (e.g., if a val
 
 Here are some unique ways to combine commands to increase your efficiency with GreyBook. <br>
 
-Scenario 1: I know the expected headcount and one person is excused. My on-site count matches that.<br>
+**Scenario 1**: I know the expected headcount and one person is excused. My on-site count matches that.<br>
 Recommended Flow: `mark` all students as present, `find` the excused student and `mark` accordingly. <br>
+
 ```
 mark all p/
 find Jason
@@ -472,32 +489,34 @@ mark 1 e/
 list
 ```
 
-Scenario 2: I have late arrivals that I need to mark.<br>
+---
+
+**Scenario 2**: I have late arrivals that I need to mark.<br>
 Recommended Flow: `find` the late arrivals and `mark all l/`. No need to look for latecomers manually! <br>
+
 ```
 find jack jill
 mark all l/
 list
 ```
 
-Scenario 3: Students are trickling in and I need to mark them as present one by one.<br>
+---
+
+**Scenario 3**: Students are trickling in and I need to mark them as present one by one.<br>
 Recommended Flow: Type a `find` command followed by student names as they arrive. When you have the time, execute the `find` command and `mark all p/` to mark those that arrived so far.<br>
+
 ```
 find john sally jason maria
 mark all p/
-list
 find tommy larry
 ...
 ```
 
-
-
 ---
+
 ## Full Command Format Details
 
 For advanced users who wish to use special characters like quotation marks (`"`) in your arguments, do take note of these advanced command formats.
-
-**Notes about the command format:**
 
 - Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -556,7 +575,7 @@ For advanced users who wish to use special characters like quotation marks (`"`)
 ### Installation & Requirements
 
 **Q: What operating systems does GreyBook support?**<br>
-**A:** Any system that can run Java 17+ (Windows, macOS, Linux). If Java runs, GreyBook runs.
+**A:** Any system that can run Java 17+ (Windows, macOS, Linux). If Java 17 runs, GreyBook runs.
 
 **Q: Do I need to install anything besides GreyBook?**<br>
 **A:** Yes, **Java 17 or newer**. Check with `java -version`. If it's older, install a current Long Term Support Java version.
@@ -570,7 +589,7 @@ For advanced users who wish to use special characters like quotation marks (`"`)
 **A:** No. The data file is separate from the app. Keep `data/greybook.json` with the `.jar` and you're good.
 
 **Q: Can I move GreyBook to another computer (or a USB drive)?**<br>
-**A:** Yes. Copy the `.jar` **and** the `data` folder together, as well the config and preferences files, `config.json` and `preferences.json` respectively. If you would to copy the command history as well, copy over the file `history.json`. On the new computer, double-click the `.jar`.
+**A:** Yes. Copy the `.jar` **and** the `data` folder together, as well the config and preferences files, `config.json` and `preferences.json` respectively. If you would to copy the command history as well, copy over the file `history.json`. On the new computer, simply run `java -jar greybook.jar`.
 
 ### Data Location, Saving & Backup
 
@@ -593,9 +612,6 @@ For advanced users who wish to use special characters like quotation marks (`"`)
 
 **Q: Are name searches case-sensitive?**<br>
 **A:** No. `hans` matches `Hans`.
-
-**Q: Why doesn't `find Han` match `Hans`?**<br>
-**A:** `find` matches **full words**. Use the full word or multiple keywords.
 
 **Q: How do tags work?**<br>
 **A:** Add any number: `t/member t/colleague`. Editing tags **replaces** the old set. Use `t/` (empty) to clear all tags.
@@ -622,7 +638,7 @@ For example, if your name is "محمد", you can enter it as "Mohamed". If your 
 Similarly, if your name contains special characters such as accents or diacritics (e.g. "José", "Strauß"), please remove them — e.g. "Jose", "Straus".
 
 **Q: Why are some special characters allowed but not others?**<br>
-**A:** This is due to the limitation of the program, as we are unable to support every single possible unicode character. We defer this decision to [Singapore's Myinfo](https://partnersupport.singpass.gov.sg/hc/en-sg/articles/32733563138585-What-are-the-special-characters-allowed-in-Myinfo-Name-data-item) for supported special characters.
+**A:** This is due to the limitation of the program, as we are unable to support every single possible unicode character. We defer this decision to <a href="https://partnersupport.singpass.gov.sg/hc/en-sg/articles/32733563138585-What-are-the-special-characters-allowed-in-Myinfo-Name-data-item" target="_blank">Singapore's Myinfo</a> for supported special characters.
 
 ---
 
@@ -662,9 +678,8 @@ Similarly, if your name contains special characters such as accents or diacritic
 
 ### Contact Information
 
-**Development Team:**
-Project maintained by **CS2103T-F13-4** team
-GitHub: [AY2526S1-CS2103T-F13-4/tp](https://github.com/AY2526S1-CS2103T-F13-4/tp)
+**Development Team:** Project maintained by **CS2103T-F13-4** team<br>
+**GitHub**: <a href="https://github.com/AY2526S1-CS2103T-F13-4/tp" target="_blank">AY2526S1-CS2103T-F13-4/tp</a>
 
 **Support:**
 
