@@ -70,8 +70,9 @@ public class PersonTablePanel extends UiPart<Region> {
             // If the user moves off the cell, make sure any scheduled/visible tooltip goes
             // away
             hoverProperty().addListener((obs, wasHover, isHover) -> {
-                if (!isHover)
+                if (!isHover) {
                     tooltip.hide();
+                }
             });
         }
 
