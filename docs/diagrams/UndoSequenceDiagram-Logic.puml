@@ -5,29 +5,45 @@ skinparam ArrowFontStyle plain
 box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
 participant ":GreyBookParser" as GreyBookParser LOGIC_COLOR
+participant "cp:CommandParser" as CommandParser LOGIC_COLOR
+participant "arg:ArgumentParseResult" as ArgumentParseResult LOGIC_COLOR
 participant "u:UndoCommand" as UndoCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
 end box
 
 box Model MODEL_COLOR_T1
-participant ":Model" as Model MODEL_COLOR
+participant "m:Model" as Model MODEL_COLOR
 end box
-[-> LogicManager : execute(undo)
+
+[-> LogicManager : execute("undo")
 activate LogicManager
 
-LogicManager -> GreyBookParser : parseCommand(undo)
+LogicManager -> GreyBookParser : parse("undo")
 activate GreyBookParser
+note right: Gets 'undo' CommandParser
 
-create UndoCommand
-GreyBookParser -> UndoCommand
-activate UndoCommand
+GreyBookParser -> CommandParser : parse("")
+activate CommandParser
 
-UndoCommand --> GreyBookParser
-deactivate UndoCommand
+create ArgumentParseResult
+CommandParser -> ArgumentParseResult
+activate ArgumentParseResult
 
-GreyBookParser --> LogicManager : u
+ArgumentParseResult --> CommandParser : arg
+deactivate ArgumentParseResult
+
+CommandParser --> GreyBookParser : arg
+deactivate CommandParser
+
+GreyBookParser --> LogicManager : arg
 deactivate GreyBookParser
 
-LogicManager -> UndoCommand : execute()
+' Execution is delegated to the ArgumentParseResult wrapper
+LogicManager -> ArgumentParseResult : execute(m)
+activate ArgumentParseResult
+
+' ArgumentParseResult internally calls the command execution
+ArgumentParseResult -> UndoCommand : execute(m, arg)
 activate UndoCommand
 
 UndoCommand -> Model : undoGreyBook()
@@ -36,10 +52,18 @@ activate Model
 Model --> UndoCommand
 deactivate Model
 
-UndoCommand --> LogicManager : result
+create CommandResult
+UndoCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> UndoCommand : r
+deactivate CommandResult
+
+UndoCommand --> ArgumentParseResult : r
 deactivate UndoCommand
-UndoCommand -[hidden]-> LogicManager : result
-destroy UndoCommand
+
+ArgumentParseResult --> LogicManager : r
+deactivate ArgumentParseResult
 
 [<--LogicManager
 deactivate LogicManager

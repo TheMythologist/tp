@@ -6,8 +6,8 @@ skinparam classBackgroundColor LOGIC_COLOR
 
 package Logic as LogicPackage {
 
-package "Parser Classes" as ParserClasses{
-}
+Class GreyBookParser
+Class CommandRegistry
 Class XYZCommand
 Class CommandResult
 Class "{abstract}\nCommand" as Command
@@ -28,20 +28,32 @@ Class HiddenOutside #FFFFFF
 HiddenOutside ..> Logic
 
 LogicManager .right.|> Logic
-LogicManager -right->"1" ParserClasses
-ParserClasses ..> XYZCommand : <<create>>
 
+' LogicManager dependencies
+LogicManager -right->"1" GreyBookParser : uses >
+LogicManager .left.> Command : calls execute() >
+
+' Command setup flow
+CommandRegistry .down.> GreyBookParser : registers commands >
+CommandRegistry ..> XYZCommand : declares >
+
+' Parsing flow
+GreyBookParser ..> Command : stores command instances >
+
+' Command structure
 XYZCommand -up-|> Command
-LogicManager .left.> Command : <<call>>
+note right of XYZCommand: XYZCommand = AddCommand, \nFindCommand, etc
 
 LogicManager --> Model
 LogicManager --> Storage
-Storage --[hidden] Model
-Command .[hidden]up.> Storage
 Command .right.> Model
-note right of XYZCommand: XYZCommand = AddCommand, \nFindCommand, etc
 
+' Command result creation
 Logic ..> CommandResult
 LogicManager .down.> CommandResult
 Command .up.> CommandResult : <<create>>
+
+' Hidden link
+Storage --[hidden] Model
+
 @enduml
