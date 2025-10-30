@@ -56,25 +56,45 @@ public class PersonTablePanel extends UiPart<Region> {
         private final Tooltip tooltip = new Tooltip();
 
         /**
-         * Immediately sets the tooltip to a showDelay of 500 miliseconds Note that
+         * Immediately sets the tooltip to a showDelay of 500 miliseconds. Note that
          * `setTooltip` should not be repeatedly called in `updateItem`
          */
         public PersonTableCellWithTooltip() {
             super();
             tooltip.setShowDelay(Duration.millis(500));
-            setTooltip(tooltip);
+
+            // Re-evaluate whenever the item or empty flag changes
+            itemProperty().addListener((obs, o, n) -> refreshTooltip());
+            emptyProperty().addListener((obs, o, n) -> refreshTooltip());
+
+            // If the user moves off the cell, make sure any scheduled/visible tooltip goes
+            // away
+            hoverProperty().addListener((obs, wasHover, isHover) -> {
+                if (!isHover)
+                    tooltip.hide();
+            });
         }
 
         @Override
         protected void updateItem(String item, boolean empty) {
             super.updateItem(item, empty);
+            setText(empty ? null : item);
+            refreshTooltip();
+        }
 
-            if (empty || item == null || item.isEmpty()) {
-                setText(null);
-                tooltip.setText(null);
+        /**
+         * Evaluates whether tooltip should be installed or removed
+         */
+        private void refreshTooltip() {
+            String val = getItem();
+            boolean show = !isEmpty() && val != null && !val.isBlank();
+
+            if (show) {
+                tooltip.setText(val);
+                Tooltip.install(this, tooltip);
             } else {
-                setText(item);
-                tooltip.setText(item);
+                tooltip.hide();
+                Tooltip.uninstall(this, tooltip);
             }
         }
     }
