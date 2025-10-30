@@ -318,8 +318,6 @@ Examples:
 
 ---
 
-<div style="page-break-after: always;"></div>
-
 #### Clearing all Students: `clear`
 
 **Command:** `clear`
