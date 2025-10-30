@@ -6,33 +6,52 @@ skinparam classBackgroundColor LOGIC_COLOR
 
 Class "{abstract}\nCommand" as Command
 Class XYZCommand
+Class ArgumentParseResult
 
 package "Parser classes"{
-Class "<<interface>>\nParser" as Parser
 Class GreyBookParser
-Class XYZCommandParser
-Class CliSyntax
-Class ParserUtil
+Class CommandParser
 Class ArgumentMultimap
 Class ArgumentTokenizer
+Class CliSyntax
+Class ParserUtil
 Class Prefix
+
+Class "{interface}\nOption" as Option
+Class "{abstract}\nCommandOption" as CommandOption
+Class "<<interface>>\nArgumentParser" as ArgumentParser
 }
 
 Class HiddenOutside #FFFFFF
 HiddenOutside ..> GreyBookParser
 
-GreyBookParser .down.> XYZCommandParser: <<create>>
+' 1. Command Registration (Setup phase)
+XYZCommand .up.> GreyBookParser : registers via newCommand()
+GreyBookParser .right.> CommandParser : <<create>>
+CommandParser -up-> XYZCommand : stores instance
 
-XYZCommandParser ..> XYZCommand : <<create>>
-GreyBookParser ..> Command : <<use>>
-XYZCommandParser .up.|> Parser
-XYZCommandParser ..> ArgumentMultimap
-XYZCommandParser ..> ArgumentTokenizer
-ArgumentTokenizer .left.> ArgumentMultimap
-XYZCommandParser ..> CliSyntax
-CliSyntax ..> Prefix
-XYZCommandParser ..> ParserUtil
-ParserUtil .down.> Prefix
+' 2. Command Options structure
+CommandOption .up.|> Option
+
+CommandParser --> "0..*" Option : uses
+CommandOption ..> Prefix : uses
+
+' 3. Parsing flow (Execution phase)
+GreyBookParser .down.> CommandParser : uses
+GreyBookParser ..> ArgumentParseResult : <<create>> (stores result)
+
+' 4. Argument processing
+CommandParser ..> ArgumentTokenizer
+ArgumentTokenizer .left.> ArgumentMultimap : <<create>>
 ArgumentTokenizer .down.> Prefix
+
+CommandParser ..> ArgumentMultimap
+CommandParser ..> CommandOption : delegates parsing
+ParserUtil .up.|> ArgumentParser : provides implementations
+
+' 5. Utilities/Definitions
+CommandOption ..> ParserUtil : uses
+ParserUtil .down.> Prefix
 XYZCommand -up-|> Command
+CliSyntax ..> Prefix
 @enduml
