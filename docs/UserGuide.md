@@ -29,6 +29,8 @@ This guide is designed for **leaders and committee members of NUS clubs or socie
 - Track attendance for meetings and events
 - Prefer efficient, keyboard-driven workflows
 
+<div style="page-break-after: always;"></div>
+
 ### What You'll Need
 
 **Prior Knowledge:**
@@ -83,10 +85,13 @@ Mac users: Follow <a href="https://se-education.org/guides/tutorials/javaInstall
 Windows users: Follow <a href="https://se-education.org/guides/tutorials/javaInstallationWindows.html" target="_blank">this guide</a>.<br>
 Linux users: Follow <a href="https://se-education.org/guides/tutorials/javaInstallationLinux.html" target="_blank">this guide</a>.<br>
 
+<div style="page-break-after: always;"></div>
+
 1. **Download GreyBook**
 
    Download the latest `.jar` file from the <a href="https://github.com/AY2526S1-CS2103T-F13-4/tp/releases/latest" target="_blank">latest release page</a>.<br>
-   ![Where to download](images/githubDownload.png)<br>
+   ![Where to download](images/githubDownload.png)
+
    By default, this will download `greybook.jar` to your **Downloads** folder. This will be your **home folder**, or in other words, where your GreyBook data is stored.<br>
    If you wish, you can copy or move `greybook.jar` anywhere you like to change its **home folder**.
 
@@ -112,6 +117,8 @@ Linux users: Follow <a href="https://se-education.org/guides/tutorials/javaInsta
    ![Initial Window](images/initialWindow.png)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 ### Your First Commands
 
@@ -173,6 +180,8 @@ Here is some important information you need to understand the rest of the guide!
   e.g. `[t/TAG]…​` can be used as ` ` (0 times), `t/member` (1 time), `t/member t/exco` (2 times) etc.
 
 - If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines,type them out manually instead!
+
+<div style="page-break-after: always;"></div>
 
 ## Core Features
 
@@ -251,6 +260,8 @@ edit 2 n/Betsy Crower t/
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 #### Finding Students: `find`
 
 **Command:** `find KEYWORD [MORE_KEYWORDS]…​ [i/ID_FRAGMENT]…​`
@@ -307,6 +318,8 @@ Examples:
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 #### Clearing all Students: `clear`
 
 **Command:** `clear`
@@ -345,6 +358,8 @@ GreyBook helps you keep track of students' attendance efficiently.
 - Only one attendance flag can be used at a time
 - Marking a student with the same attendance status will have no effect
 
+<div style="page-break-after: always;"></div>
+
 **Examples:**
 
 #### 1. Mark Student by Index or Student ID
@@ -374,6 +389,8 @@ mark all a/
 ![result for 'mark all a/'](images/markAllResult.png)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 #### Unmarking Attendance: `unmark`
 
@@ -414,6 +431,8 @@ unmark all
 ![result for 'unmark all'](images/unmarkAllResult.png)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 ### Application Controls
 
@@ -475,6 +494,8 @@ Editing this file is recommended for advanced users only. If your changes to the
 Some changes can cause the GreyBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
+<div style="page-break-after: always;"></div>
+
 ## Recommended Workflows (for experienced users)
 
 Here are some unique ways to combine commands to increase your efficiency with GreyBook. <br>
@@ -535,6 +556,8 @@ For advanced users who wish to use special characters like quotation marks (`"`)
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 ### Command Summary
 
 | Command  | Description                  | Syntax                                                           |
@@ -569,6 +592,8 @@ For advanced users who wish to use special characters like quotation marks (`"`)
 </box>
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 ## FAQs
 
