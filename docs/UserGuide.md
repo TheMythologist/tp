@@ -573,8 +573,8 @@ For advanced users who wish to use special characters like quotation marks (`"`)
 | `delete` | Remove a student             | `delete (INDEX \| STUDENTID)`                                    |
 | `list`   | Show all students            | `list`                                                           |
 | `find`   | Search by name or student ID | `find KEYWORD [MORE_KEYWORDS]…​ [i/ID_FRAGMENT]…​`                 |
-| `mark`   | Mark attendance              | `mark (INDEX \| STUDENTID) (p/ \|\| a/ \|\| l/ \|\| e/)`         |
-| `unmark` | Unmark attendance            | `unmark (INDEX \| STUDENTID \| 'ALL')`                           |
+| `mark`   | Mark attendance              | `mark (INDEX \| STUDENTID \| all) (p/ \|\| a/ \|\| l/ \|\| e/)`  |
+| `unmark` | Unmark attendance            | `unmark (INDEX \| STUDENTID \| all)`                             |
 | `clear`  | Delete **all** students      | `clear`                                                          |
 | `help`   | Open the help window         | `help`                                                           |
 | `exit`   | Quit the app                 | `exit`                                                           |
