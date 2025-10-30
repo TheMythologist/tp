@@ -8,7 +8,7 @@
 [![Java CI](https://github.com/AY2526S1-CS2103T-F13-4/tp/actions/workflows/gradle.yml/badge.svg)](https://github.com/AY2526S1-CS2103T-F13-4/tp/actions/workflows/gradle.yml)
 [![codecov](https://codecov.io/github/AY2526S1-CS2103T-F13-4/tp/graph/badge.svg)](https://codecov.io/github/AY2526S1-CS2103T-F13-4/tp)
 
-![Ui](images/Ui.png)
+![Ui](images/initialWindow.png)
 
 **GreyBook is a desktop application for managing your contact details.** While it has a GUI, most of the user interactions happen using a CLI (Command Line Interface).
 
