@@ -8,7 +8,7 @@
 
 **GreyBook** is a desktop application that helps **NUS clubs and societies efficiently manage students' contacts and track attendance**. It combines the speed and precision of a Command Line Interface (CLI) with the convenience of a Graphical User Interface (GUI).
 
-Optimized for users who prefer typing commands, GreyBook enables fast, streamlined management — letting you accomplish more in less time than with traditional GUI-based applications.
+Optimised for users who prefer typing commands, GreyBook enables fast, streamlined management — letting you accomplish more in less time than with traditional GUI-based applications.
 
 <box type="tip" seamless>
 
@@ -66,7 +66,7 @@ This guide is designed for **leaders and committee members of NUS clubs or socie
    - Windows Users: In the Windows Start menu search bar, type "Command Prompt" to open.
    - Linux Users: Press `Ctrl + Alt + T` to instantly open a terminal window
 
-Type the following command exactly as you see it and press enter.
+Type the following command exactly as you see it and press `Enter`.
 
    ```
    java -version
@@ -106,7 +106,7 @@ Linux users: Follow <a href="https://se-education.org/guides/tutorials/javaInsta
    java -jar greybook.jar
    ```
 
-   **Note**: These are two separate commands! Press enter after each line to run them individually.<br>
+   **Note**: These are two separate commands! Press `Enter` after each line to run them individually.<br>
    If you had moved `greybook.jar` elsewhere, replace `Downloads` with `greybook.jar`'s new filepath.
 
    > **macOS users:** If you see a security prompt the first time, right-click the `.jar` → **Open** → confirm.
@@ -124,7 +124,7 @@ Linux users: Follow <a href="https://se-education.org/guides/tutorials/javaInsta
 
 ### Your First Commands
 
-Let's try a few essential commands. Remember to press enter after typing each command to run it!
+Let's try a few essential commands. Remember to press `Enter` after typing each command to run it!
 
 1. **Add a Student**<br>
 
@@ -178,10 +178,13 @@ Here is some important information you need to understand the rest of the guide!
 - Items in round brackets are mutually exclusive. Pick only one!<br>
   e.g. `(INDEX | STUDENTID)` can be used as `1` or as `A0000000Y`.
 
-- Items with `…`​ after them can be used multiple times, including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (0 times), `t/member` (1 time), `t/member t/exco` (2 times) etc.
+- Items in **square** brackets with `…`​ after them can be used multiple times, including zero times.<br>
+  e.g. `[t/TAG]…​` can be used as ` ` (0 times), `t/member` (1 time), `t/member t/exco` (2 times), etc.
 
-- If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines,type them out manually instead!
+- Items in **curly** brackets with `+`​ after them can be used once or more times.<br>
+  e.g. `{t/TAG}+​` can be used as `t/member` (1 time), `t/member t/exco` (2 times), etc.
+
+- If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines. Type them out manually instead!
 
 <div style="page-break-after: always;"></div>
 
@@ -198,31 +201,36 @@ GreyBook helps you store, edit, and track students' details with precision.
 
 **Parameters:**
 
-- `n/NAME`: Student's full name (letters, spaces, and certain special characters allowed)
-- `p/PHONE`: 8-digit Singapore phone number or International phone numbers (following E.164 Standards)
+- `n/NAME`: Student's full name
+
+  <box type="warning" seamless>
+
+  Note: A name can only contain letters, spaces, and certain special characters (`,`, `(`, `)`, `/`, `.`, `@`, `-`, `'`). Refer to the [Name Related Issues](#name-related-issues) in the FAQ for more details!
+
+  </box>
+
+- `p/PHONE`: 8-digit Singapore phone number or International phone numbers (following E.164 standard)
 - `e/EMAIL`: Valid email address following RFC 5321/5322 email format standards
+
+  <box type="warning" seamless>
+
+  Note: Email validation follows <a href="https://datatracker.ietf.org/doc/html/rfc5321" target="_blank">RFC 5321</a> and <a href="https://datatracker.ietf.org/doc/html/rfc5322" target="_blank">RFC 5322</a> standards.
+
+  </box>
+
 - `i/STUDENTID`: Student's NUS ID (e.g., A0000000Y)
+
+  <box type="warning" seamless>
+
+  Note: We use a special checksum to validate the `STUDENTID` field, so only **valid** NUS Student IDs will be accepted!
+
+  </box>
+
 - `t/TAG`: Optional categories (e.g., `t/committee` or `t/freshman`)
 
   <box type="warning" seamless>
-  Note: Only alphanumeric characters and `-` (dash) is allowed.
+  Note: Only alphanumeric characters and `-` (dash) are allowed.
   </box>
-
-<box type="tip" seamless>
-
-**Tip:** A name can only contain letters, spaces, and certain special characters (`,`, `(`, `)`, `/`, `.`, `@`, `-`, `'`). Refer to the [Parameter Details](#parameter-details) for more details!
-
-</box>
-
-<box type="tip" seamless>
-
-**Tip:** We use a special checksum to validate `STUDENTID` field so only **valid** NUS Student IDs will be accepted!
-</box>
-
-<box type="tip" seamless>
-
-**Tip:** Email validation follows <a href="https://datatracker.ietf.org/doc/html/rfc5322" target="_blank">RFC 5322</a> standards for internet message format.
-</box>
 
 <box type="warning" seamless>
 
@@ -231,7 +239,7 @@ GreyBook helps you store, edit, and track students' details with precision.
 Each student is uniquely identified by their **Student ID**. Two contacts with the same Student ID are considered duplicates and are not allowed.
 
 **Example:**
-- If `A0123456X` already exists in GreyBook, attempting to add another student with `i/A0123456X`, with all other fields different, will fail.
+- If `A0123456J` already exists in GreyBook, attempting to add another student with `i/A0123456J`, with all other fields different, will fail.
 - Error message: `This person already exists in GreyBook`
 
 **Note:** Students may share the same name, phone number, or email, but Student IDs must be unique.
@@ -255,6 +263,31 @@ add n/Betsy Crowe p/87654321 e/betsycrowe@example.com i/A1111111M t/operations-t
 
 ---
 
+#### Finding Students: `find`
+
+**Command:** `find ​{(KEYWORD | i/ID_FRAGMENT | t/TAG_FRAGMENT)}+`
+
+**Parameters:**
+
+- `KEYWORD`: The name of the student
+- `i/ID_FRAGMENT`: A substring of a student ID (e.g. `0Y` from `A0000000Y`)
+- `t/TAG_FRAGMENT`: A substring of a tag (e.g. `ember` from `member`)
+- You can provide any number of keywords, ID fragments and tag fragments
+- The search is case-insensitive. e.g. `hans` will match `Hans`
+
+Students matching at least one keyword or one student ID fragment will be returned.
+e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+
+Examples:
+
+- `find John` returns `john` and `John Doe`
+- `find i/12345` returns anyone with student IDs containing `12345` (e.g. `A0123456J`)
+- `find t/op` returns anyone with a tag containing `op` (e.g. `operations`)
+- `find alex i/8L david t/cont` returns `Alex Yeoh`, `David Li`, anyone with student IDs containing `8L`, anyone with the tag containing `cont`<br>
+  ![result for 'find alex i/8L david'](images/findAlexDavidResult.png)
+
+---
+
 #### Editing Students: `edit`
 
 **Command:**
@@ -265,7 +298,7 @@ add n/Betsy Crowe p/87654321 e/betsycrowe@example.com i/A1111111M t/operations-t
 - `INDEX`: The index number in the displayed student list (must be positive)
 - Any combination of optional fields can be updated
 
-**Behavior:**
+**Behaviour:**
 
 - Updates replace existing values
 - When editing tags, the old tags are replaced entirely
@@ -287,33 +320,6 @@ edit 2 n/Betsy Crower t/
 **Expected Output:**
 
 ![result for adding Betsy Crowe](images/editResult.png)
-
----
-
-<div style="page-break-after: always;"></div>
-
-#### Finding Students: `find`
-
-**Command:** `find [KEYWORD [MORE_KEYWORDS]…​] [i/ID_FRAGMENT] [t/TAG_FRAGMENT]…​`
-
-**Parameters:**
-
-- `KEYWORD`: The name of the student
-- `i/ID_FRAGMENT`: A substring of a student ID (e.g. `0Y` from `A0000000Y`)
-- `t/TAG_FRAGMENT`: A substring of a tag (e.g. `ember` from `member`)
-- You can provide any number of keywords, ID fragments and tag fragments
-- The search is case-insensitive. e.g. `hans` will match `Hans`
-
-Students matching at least one keyword or one student ID fragment will be returned.
-e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-
-Examples:
-
-- `find John` returns `john` and `John Doe`
-- `find i/12345` returns anyone with student IDs containing `12345` (e.g. `A0123456J`)
-- `find t/op` returns anyone with tag containing `op` (e.g. `operations`)
-- `find alex i/8L david t/cont` returns `Alex Yeoh`, `David Li`, anyone with student IDs containing `8L`, anyone with the tag containing `cont`<br>
-  ![result for 'find alex i/8L david'](images/findAlexDavidResult.png)
 
 ---
 
@@ -501,7 +507,7 @@ Want to rerun a command you typed before? Similar to a typical CLI application, 
 
 **Caution! For advanced users**
 The command history is saved in the hard disk automatically after every successful command as a JSON file at: `[JAR file location]/history.json`.
-It is not recommended to modify this file to alter your command history. If your changes to the history file makes it invalid, GreyBook will discard all history and start fresh on the next run. Before you edit, make a backup copy of the file.
+It is not recommended to modify this file to alter your command history. If your changes to the history file make it invalid, GreyBook will discard all history and start fresh on the next run. Before you edit, make a backup copy of the file.
 </box>
 
 ---
@@ -520,7 +526,7 @@ Open the Downloads folder in your preferred File Explorer to check it out!
 <box type="warning" seamless>
 
 **Caution!**
-Editing this file is recommended for advanced users only. If your changes to the data file makes it invalid, GreyBook will discard all data and start fresh on the next run. Before you edit, make a backup copy of the file.
+Editing this file is recommended for advanced users only. If your changes to the data file make it invalid, GreyBook will discard all data and start fresh on the next run. Before you edit, make a backup copy of the file.
 Some changes can cause the GreyBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
@@ -530,7 +536,7 @@ Some changes can cause the GreyBook to behave in unexpected ways (e.g., if a val
 
 Here are some unique ways to combine commands to increase your efficiency with GreyBook. <br>
 
-**Scenario 1**: I know the expected headcount and one person is excused. My on-site count matches that.<br>
+**Scenario 1**: I know the expected headcount, and one person is excused. My on-site count matches that.<br>
 Recommended Flow: `mark` all students as present, `find` the excused student and `mark` accordingly. <br>
 
 ```
@@ -578,10 +584,10 @@ For advanced users who wish to use special characters like quotation marks (`"`)
 - If a prefix for the command occurs in the argument, you may use quotation marks `"` to escape it.
   e.g. `SomeCommandName p/"p-Slash t/ contains t-Slash" t/tag`
 
-- If you want to use quotation marks `"` in your argument, you have to escape it with a backslash `\`
+- If you want to use quotation marks `"` in your argument, you have to escape them with a backslash `\`
   e.g. `SomeCommandName t/Quote: \"`
 
-- Likewise, if you wanted to use backslashes `\` in your argument, you have to escape it with a backslash.
+- Likewise, if you want to use backslashes `\` in your argument, you have to escape them with a backslash.
   e.g. `SomeCommandName t/Backslash: \\`
 
 ---
@@ -609,11 +615,11 @@ For advanced users who wish to use special characters like quotation marks (`"`)
 
 | Parameter   | Description                                              |
 | ----------- | -------------------------------------------------------- |
-| `NAME`      | Letters, spaces, and certain special characters allowed. |
-| `PHONE`     | 8-digit Singapore phone number or International phone numbers (following E.164 Standards)                          |
+| `NAME`      | Letters, spaces, and certain special characters (`,`, `(`, `)`, `/`, `.`, `@`, `-`, `'`) allowed. |
+| `PHONE`     | 8-digit Singapore phone number or International phone numbers (following E.164 standard)                          |
 | `EMAIL`     | Must follow RFC 5321/5322 email format standards.        |
-| `STUDENTID` | NUS Student ID (e.g., A0123456X).                        |
-| `TAG`       | Optional label for categorizing students (only alphanumeric and `-` (dash) allowed)                 |
+| `STUDENTID` | Valid NUS Student ID (e.g., A0123456J).                        |
+| `TAG`       | Optional label for categorising students (only alphanumeric characters and `-` (dash) allowed)                 |
 | `INDEX`     | Positive integer (1, 2, 3, …).                           |
 
 <box type="tip" seamless>
@@ -644,7 +650,7 @@ For advanced users who wish to use special characters like quotation marks (`"`)
 **A:** No. The data file is separate from the app. Keep `data/greybook.json` with the `.jar` and you're good.
 
 **Q: Can I move GreyBook to another computer (or a USB drive)?**<br>
-**A:** Yes. Copy the `.jar` **and** the `data` folder together, as well the config and preferences files, `config.json` and `preferences.json` respectively. If you would to copy the command history as well, copy over the file `history.json`. On the new computer, simply run `java -jar greybook.jar`.
+**A:** Yes. Copy the `.jar` **and** the `data` folder together, as well as the config and preferences files, `config.json` and `preferences.json` respectively. If you want to transfer the command history as well, copy over the file `history.json`. On the new computer, simply run `java -jar greybook.jar`.
 
 ### Data Location, Saving & Backup
 
@@ -693,7 +699,7 @@ For example, if your name is "محمد", you can enter it as "Mohamed". If your 
 Similarly, if your name contains special characters such as accents or diacritics (e.g. "José", "Strauß"), please remove them — e.g. "Jose", "Straus".
 
 **Q: Why are some special characters allowed but not others?**<br>
-**A:** This is due to the limitation of the program, as we are unable to support every single possible unicode character. We defer this decision to <a href="https://partnersupport.singpass.gov.sg/hc/en-sg/articles/32733563138585-What-are-the-special-characters-allowed-in-Myinfo-Name-data-item" target="_blank">Singapore's Myinfo</a> for supported special characters.
+**A:** This is due to the limitation of the program, as we are unable to support every single possible Unicode character. We defer this decision to <a href="https://partnersupport.singpass.gov.sg/hc/en-sg/articles/32733563138585-What-are-the-special-characters-allowed-in-Myinfo-Name-data-item" target="_blank">Singapore's Myinfo</a> for supported special characters.
 
 ---
 
@@ -701,7 +707,7 @@ Similarly, if your name contains special characters such as accents or diacritic
 
 ### Glossary
 
-**Tag**: A label used to categorize students (e.g., "committee", "freshman"). <br>
+**Tag**: A label used to categorise students (e.g., "committee", "freshman"). <br>
 **Attendance**: Record of presence, absence, lateness, or excused status at an event. <br>
 **Mutually Exclusive**: Two items that cannot be selected at the same time.<br>
 **CLI (Command-Line Interface)**: Typing commands to use an app instead of clicking menus/buttons with a mouse.<br>
@@ -740,7 +746,7 @@ Similarly, if your name contains special characters such as accents or diacritic
 
 - Technical issues: Submit a GitHub Issue
 - Feature requests: Open a Discussion
-- General questions: Refer to FAQ or contact via GitHub Discussions
+- General questions: Refer to the [FAQ](#faqs) or contact via GitHub Discussions
 
 **Version Information:**
 
