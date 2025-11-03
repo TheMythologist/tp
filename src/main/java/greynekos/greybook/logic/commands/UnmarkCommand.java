@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
-import greynekos.greybook.logic.Messages;
 import greynekos.greybook.logic.commands.exceptions.CommandException;
 import greynekos.greybook.logic.commands.util.CommandUtil;
 import greynekos.greybook.logic.parser.ArgumentParseResult;
@@ -60,13 +59,12 @@ public class UnmarkCommand extends Command {
         Person personToUnmark = CommandUtil.resolvePerson(model, (PersonIdentifier) identifier);
 
         if (personToUnmark.getAttendance().value.equals(AttendanceStatus.Status.NONE)) {
-            throw new CommandException(String.format(MESSAGE_SAME_STATUS_ATTEMPTED, personToUnmark.getName()));
+            return new CommandResult(String.format(MESSAGE_SAME_STATUS_ATTEMPTED, personToUnmark.getName()));
         }
 
         model.unmarkPerson(personToUnmark);
 
-        return new CommandResult(String.format(MESSAGE_UNMARK_PERSON_SUCCESS, personToUnmark.getName(),
-                Messages.format(personToUnmark)));
+        return new CommandResult(String.format(MESSAGE_UNMARK_PERSON_SUCCESS, personToUnmark.getName()));
     }
 
     private CommandResult executeUnmarkAll(Model model) {

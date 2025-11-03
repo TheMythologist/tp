@@ -8,7 +8,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
-import greynekos.greybook.logic.Messages;
 import greynekos.greybook.logic.commands.exceptions.CommandException;
 import greynekos.greybook.logic.commands.util.CommandUtil;
 import greynekos.greybook.logic.parser.ArgumentParseResult;
@@ -95,14 +94,13 @@ public class MarkCommand extends Command {
         Person personToMark = CommandUtil.resolvePerson(model, (PersonIdentifier) identifier);
 
         if (personToMark.getAttendance().value.equals(attendanceStatus)) {
-            throw new CommandException(
+            return new CommandResult(
                     String.format(MESSAGE_SAME_STATUS_ATTEMPTED, personToMark.getName(), attendanceStatus));
         }
 
         model.markPerson(personToMark, attendanceStatus);
 
-        return new CommandResult(String.format(MESSAGE_MARK_PERSON_SUCCESS, personToMark.getName(), attendanceStatus,
-                Messages.format(personToMark)));
+        return new CommandResult(String.format(MESSAGE_MARK_PERSON_SUCCESS, personToMark.getName(), attendanceStatus));
     }
 
     private CommandResult executeMarkAll(Model model, AttendanceStatus.Status attendanceStatus) {
