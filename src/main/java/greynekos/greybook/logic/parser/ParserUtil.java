@@ -38,7 +38,8 @@ public class ParserUtil {
             "Person identifier is invalid. It should be either a positive integer index or a valid Student ID "
                     + "(format: A0000000Y).";
 
-    private static final String VALID_NUMBER_REGEX = "0|[1-9]\\d*";
+    public static final String VALID_NUMBER_REGEX = "0|[1-9]\\d*";
+
     public static final String MESSAGE_INVALID_PERSON_IDENTIFIER_OR_ALL =
             "Person identifier or \"all\" keyword is invalid. It should be either a positive integer index,"
                     + " a valid Student ID (format: A0000000Y), or the keyword \"all\".";
