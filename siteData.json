@@ -52,6 +52,7 @@
         "storage-component": "Storage component",
         "common-classes": "Common classes",
         "implementation": "Implementation",
+        "implemented-find-command": "[Implemented] Find command",
         "implemented-command-history-feature": "[Implemented] Command history feature",
         "proposed-undo-redo-feature": "[Proposed] Undo/redo feature",
         "documentation-logging-testing-configuration-dev-ops": "Documentation, logging, testing, configuration, dev-ops",
@@ -68,7 +69,8 @@
         "apendix-planned-enhancements": "Apendix: Planned Enhancements",
         "1-add-more-details-for-each-user": "1. Add more details for each user",
         "2-confirmation-dialog-for-clear-command": "2. Confirmation dialog for clear command",
-        "3-more-robust-checking-for-phone-numbers": "3. More robust checking for phone numbers"
+        "3-more-robust-checking-for-phone-numbers": "3. More robust checking for phone numbers",
+        "4-more-robust-duplicate-checking": "4. More robust duplicate checking"
       },
       "headingKeywords": {}
     },
