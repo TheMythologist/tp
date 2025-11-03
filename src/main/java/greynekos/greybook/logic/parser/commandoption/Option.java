@@ -9,5 +9,7 @@ import greynekos.greybook.logic.parser.exceptions.ParseException;
 public interface Option<T> {
     Prefix getPrefix();
 
+    String getName();
+
     T parseOptionArgument(String argument) throws ParseException;
 }
