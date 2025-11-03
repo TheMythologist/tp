@@ -198,7 +198,7 @@ GreyBook helps you store, edit, and track students' details with precision.
 
 - `n/NAME`: Student's full name (letters, spaces, and certain special characters allowed)
 - `p/PHONE`: 8-digit Singapore phone number or International phone numbers (following E.164 Standards)
-- `e/EMAIL`: Valid email address
+- `e/EMAIL`: Valid email address following RFC 5321/5322 email format standards
 - `i/STUDENTID`: Student's NUS ID (e.g., A0000000Y)
 - `t/TAG`: Optional categories (e.g., `t/committee` or `t/freshman`)
 
@@ -211,6 +211,11 @@ GreyBook helps you store, edit, and track students' details with precision.
 <box type="tip" seamless>
 
 **Tip:** We use a special checksum to validate `STUDENTID` field so only **valid** NUS Student IDs will be accepted!
+</box>
+
+<box type="tip" seamless>
+
+**Tip:** Email validation follows <a href="https://datatracker.ietf.org/doc/html/rfc5322" target="_blank">RFC 5322</a> standards for internet message format.
 </box>
 
 **Examples:**
@@ -579,7 +584,7 @@ For advanced users who wish to use special characters like quotation marks (`"`)
 | ----------- | -------------------------------------------------------- |
 | `NAME`      | Letters, spaces, and certain special characters allowed. |
 | `PHONE`     | 8-digit Singapore phone number.                          |
-| `EMAIL`     | Must follow valid email format (case-insensitive).       |
+| `EMAIL`     | Must follow RFC 5321/5322 email format standards.        |
 | `STUDENTID` | NUS Student ID (e.g., A0123456X).                        |
 | `TAG`       | Optional label for categorizing members.                 |
 | `INDEX`     | Positive integer (1, 2, 3, …).                           |
