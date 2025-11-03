@@ -176,7 +176,7 @@ This section describes some noteworthy details on how certain features are imple
 
 ### \[Implemented\] Find command
 
-The `find` command allows users to search for specific students either using `name` substrings or `studentID` fragments. The search is case-insensitive. 
+The `find` command allows users to search for specific students either using `name` substrings or `studentID` fragments. The search is case-insensitive.
 
 After creating a `NameOrStudentIDPredicate`, it temporarily filters the displayed list on GreyBook.
 
@@ -189,7 +189,7 @@ Upon execution, the command:
 4. Constructs a `CommandResult` reporting how many students were matched.
 
 <puml src="diagrams/FindSequenceDiagram.puml" alt="Find Command Diagram" />
-  
+
 ### \[Implemented\] Command history feature
 
 The **command history** feature allows users to navigate through previously executed commands using the **Up** and **Down** arrow keys, similar to standard terminal behavior. It provides an intuitive way for users to recall, reuse, or edit recent commands without retyping them. This helps to boost the efficiency of users who are well-versed in CLI or terminal applications.
