@@ -49,7 +49,7 @@ public class StudentID implements PersonIdentifier {
      */
     public static char calculateStudentIdChecksum(String test) {
         requireNonNull(test);
-        if (test.length() != 8 && test.length() != 9) {
+        if (test.length() != 7 && test.length() != 8) {
             throw new IllegalArgumentException("Student ID must be exactly 8 or 9 characters long");
         }
 

@@ -24,7 +24,7 @@ public class FindCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds persons by name keywords and/or student ID.\n"
             + "Parameters: [KEYWORD [MORE_KEYWORDS]...] [" + PREFIX_STUDENTID + "ID_FRAGMENT]...\n" + "Examples:\n"
-            + "  " + COMMAND_WORD + " alice bob\n" + "  " + COMMAND_WORD + " i/12345 i/A0123456X\n" + "  "
+            + "  " + COMMAND_WORD + " alice bob\n" + "  " + COMMAND_WORD + " i/12345 i/A0123456J\n" + "  "
             + COMMAND_WORD + " i/12345 alex\n" + "  " + COMMAND_WORD + " alex i/12345";
 
     public static final String MESSAGE_EMPTY_COMMAND = "Invalid command format!\n" + MESSAGE_USAGE;

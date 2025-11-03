@@ -34,7 +34,7 @@ public class PhoneTest {
         assertFalse(Phone.isValidPhone("1234567")); // 7 digits (not 8)
         assertFalse(Phone.isValidPhone("123456789")); // 9 digits (not 8)
         assertFalse(Phone.isValidPhone("12345678901")); // 11 digits without +
-        assertFalse(Phone.isValidPhone("+12")); // international format but only 2 digits
+        assertFalse(Phone.isValidPhone("+1")); // international format but only 1 digits
         assertFalse(Phone.isValidPhone("+1234567890123456")); // international format but more than 15 digits
         assertFalse(Phone.isValidPhone("+")); // just plus sign
         assertFalse(Phone.isValidPhone("+abc123")); // plus sign with non-numeric

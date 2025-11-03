@@ -29,8 +29,10 @@ public class StudentIdTest {
         assertFalse(StudentID.isValidStudentID(" ")); // spaces only
         assertFalse(StudentID.isValidStudentID("B1234567A")); // first letter not 'A' or 'U'
         assertFalse(StudentID.isValidStudentID("a1234567A")); // lowercase 'a' at start
+        assertFalse(StudentID.isValidStudentID("u1234567A")); // lowercase 'u' at start
         assertFalse(StudentID.isValidStudentID("A123456A")); // only 6 digits
         assertFalse(StudentID.isValidStudentID("A12345678A")); // 8 digits
+        assertFalse(StudentID.isValidStudentID("U12345678A")); // 8 digits
         assertFalse(StudentID.isValidStudentID("A1234567")); // missing last letter
         assertFalse(StudentID.isValidStudentID("A12345671")); // last character is digit
         assertFalse(StudentID.isValidStudentID("A123456AA")); // two letters at end
@@ -44,12 +46,17 @@ public class StudentIdTest {
 
     @Test
     public void isValidStudentID_validStudentID_returnsTrue() {
+        // Student IDs starting with A
         assertTrue(StudentID.isValidStudentID("A1234567X")); // uppercase last letter
         assertTrue(StudentID.isValidStudentID("A0000000Y")); // all zeros
         assertTrue(StudentID.isValidStudentID("A9999999W")); // all nines
         assertTrue(StudentID.isValidStudentID("A1111111M"));
         assertTrue(StudentID.isValidStudentID("A2222222B"));
         assertTrue(StudentID.isValidStudentID("A1234567X"));
+
+        // Student IDs starting with U
+        assertTrue(StudentID.isValidStudentID("U123456W"));
+        assertTrue(StudentID.isValidStudentID("U1234567W"));
     }
 
     @Test
