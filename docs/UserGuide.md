@@ -286,7 +286,7 @@ edit 2 n/Betsy Crower t/
 
 #### Finding Students: `find`
 
-**Command:** `find KEYWORD [MORE_KEYWORDS]…​ [i/ID_FRAGMENT]…​`
+**Command:** `find [KEYWORD [MORE_KEYWORDS]…​] [i/ID_FRAGMENT]…​`
 
 **Parameters:**
 
@@ -581,12 +581,12 @@ For advanced users who wish to use special characters like quotation marks (`"`)
 ### Command Summary
 
 | Command  | Description                  | Syntax                                                           |
-| -------- | ---------------------------- | ---------------------------------------------------------------- |
+| -------- | ---------------------------- |------------------------------------------------------------------|
 | `add`    | Create a new student         | `add n/NAME p/PHONE e/EMAIL i/STUDENTID [t/TAG]…`                |
 | `edit`   | Update details               | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [i/STUDENTID] [t/TAG]…` |
 | `delete` | Remove a student             | `delete (INDEX \| STUDENTID)`                                    |
 | `list`   | Show all students            | `list`                                                           |
-| `find`   | Search by name or student ID | `find KEYWORD [MORE_KEYWORDS]…​ [i/ID_FRAGMENT]…​`                 |
+| `find`   | Search by name or student ID | `find [KEYWORD [MORE_KEYWORDS]…]​ [i/ID_FRAGMENT]…​`             |
 | `mark`   | Mark attendance              | `mark (INDEX \| STUDENTID \| all) (p/ \|\| a/ \|\| l/ \|\| e/)`  |
 | `unmark` | Unmark attendance            | `unmark (INDEX \| STUDENTID \| all)`                             |
 | `clear`  | Delete **all** students      | `clear`                                                          |
