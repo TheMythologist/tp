@@ -43,9 +43,9 @@ public class MarkCommand extends Command {
             + MESSAGE_MARK_FLAGS_AND_EXAMPLES;
 
     public static final String MESSAGE_MISSING_ATTENDANCE_FLAG =
-            "Missing attendance flag. Please provide a valid flag\n" + MESSAGE_MARK_FLAGS_AND_EXAMPLES;
+            "Missing attendance flag. Please provide a valid flag.\n" + MESSAGE_MARK_FLAGS_AND_EXAMPLES;
 
-    public static final String MESSAGE_SAME_STATUS_ATTEMPTED = "%s is already marked as \"%s\"";
+    public static final String MESSAGE_SAME_STATUS_ATTEMPTED = "%s is already marked as \"%s\".";
 
     private static final String PREFIX_GROUP_STRING = "ATTENDANCE";
 
