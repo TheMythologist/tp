@@ -203,7 +203,7 @@ GreyBook helps you store, edit, and track students' details with precision.
 - `e/EMAIL`: Valid email address following RFC 5321/5322 email format standards
 - `i/STUDENTID`: Student's NUS ID (e.g., A0000000Y)
 - `t/TAG`: Optional categories (e.g., `t/committee` or `t/freshman`)
-  
+
   <box type="warning" seamless>
   Note: Only alphanumeric characters and `-` (dash) is allowed.
   </box>
