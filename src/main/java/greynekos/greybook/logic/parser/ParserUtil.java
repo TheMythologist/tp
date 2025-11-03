@@ -37,6 +37,8 @@ public class ParserUtil {
             "Person identifier is invalid. It should be either a positive integer index or a valid Student ID "
                     + "(format: A0000000Y).";
 
+    public static final String VALID_NUMBER_REGEX = "\\d+";
+
     public static final String MESSAGE_INVALID_PERSON_IDENTIFIER_OR_ALL =
             "Person identifier or \"all\" keyword is invalid. It should be either a positive integer index,"
                     + " a valid Student ID (format: A0000000Y), or the keyword \"all\".";
@@ -77,6 +79,10 @@ public class ParserUtil {
 
         if (StringUtil.isNonZeroUnsignedInteger(trimmed)) {
             return parseIndex(trimmed);
+        }
+
+        if (trimmed.matches(VALID_NUMBER_REGEX)) {
+            throw new ParseException(MESSAGE_INVALID_INDEX);
         }
 
         if (StudentID.isValidStudentID(trimmed.toUpperCase())) {
