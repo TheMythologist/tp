@@ -105,7 +105,6 @@ public class ParserUtil {
     public static PersonIdentifierOrAll parsePersonIdentifierOrAll(String input) throws ParseException {
         requireNonNull(input);
         String trimmed = input.trim();
-
         if (trimmed.equals(All.ALL_KEYWORD)) {
             return new All();
         }
