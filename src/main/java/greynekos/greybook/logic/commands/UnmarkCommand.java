@@ -24,7 +24,7 @@ public class UnmarkCommand extends Command {
 
     public static final String COMMAND_WORD = "unmark";
 
-    public static final String MESSAGE_UNMARK_PERSON_SUCCESS = "Cleared %1$s's attendance status";
+    public static final String MESSAGE_UNMARK_PERSON_SUCCESS = "Cleared %1$s's attendance status.";
     public static final String MESSAGE_UNMARK_ALL_SUCCESS = "All attendance statuses have been successfully cleared.";
 
     /**
@@ -34,7 +34,7 @@ public class UnmarkCommand extends Command {
             + "Parameters: INDEX (must be a positive integer) or STUDENT_ID (format: A0000000Y)\n" + "Examples:\n"
             + "  " + COMMAND_WORD + " 1\n" + "  " + COMMAND_WORD + " A0123456J\n" + "  " + COMMAND_WORD + " all";
 
-    public static final String MESSAGE_SAME_STATUS_ATTEMPTED = "%s already has no attendance status";
+    public static final String MESSAGE_SAME_STATUS_ATTEMPTED = "%s already has no attendance status.";
 
     /**
      * Unmark Command Preamble and Prefix Options
