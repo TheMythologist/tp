@@ -655,6 +655,31 @@ testers are expected to do more _exploratory_ testing.
    1. Test case: `find Alice i/000 t/member`<br>
       Expected: Students who match the name keyword "Alice" OR the ID fragment "000" OR the tag fragment "member" are shown in the displayed list.
 
+### Getting Help
+
+1. Finding the user guide using help
+   1. Prerequisites: The help window has not been shown to the user.
+   1. Test case: `help`
+      Expected: The help window pops up with a link to the user guide
+
+   1. Test case: `help blablabla`
+      Expected: The help window pops up with a link to the user guide
+
+1. Reopening the help window
+   1. Prerequisites: The help window has already been shown but has been minimized by the user
+   1. Test case: `help`
+      Expected: The help window pops up with a link to the user guide
+
+### Listing all students
+
+1. Listing all students in the full list
+   1. Prerequisites: There are a few students in the full list. The displayed list has been filtered using `find`.
+   1. Test case: `list`
+      Expected: The full list of students is shown
+
+   1. Test case: `list blablabla`
+      Expected: The full list of students is shown
+
 ### Marking attendance
 
 1. Marking attendance using index
@@ -670,6 +695,11 @@ testers are expected to do more _exploratory_ testing.
 
    1. Test case: `mark 4 e/`<br>
       Expected: The attendance status of the fourth student is updated to 'Excused'. The status message confirms the successful mark.
+
+1. Marking present for a student who is already marked as present
+   1. Prerequisites: There is at least 1 student in the displayed list. The first student in the list is already marked as present.
+   1. Test case: `mark 1 p/`
+      Expected: The attendance status is not changed. A status message explaining that the student is already marked as present appears.
 
 1. Marking attendance using Student ID
    1. Prerequisites: A student with ID "A0123456J" exists in the full list.
@@ -702,6 +732,34 @@ testers are expected to do more _exploratory_ testing.
    1. Test case: `mark 1 A0123456J p/`<br>
       Expected: Error message appears in the status message explaining that the person identifier provided is invalid.
 
+### Unmarking attendance
+
+1. Unmark attendance using index
+   1. Prerequisites: There is at least 1 student in the displayed list. The first student in the displayed list has their attendance marked.
+   1. Test case: `unmark 1`<br>
+      Expected: The attendance status of the first student in the displayed list is cleared. The status message confirms the successful clearance for the student.
+
+1. Unmark attendance using Student ID
+   1. Test case: `unmark A0123456J`<br>
+      Expected: The attendance status of the student with ID A0123456J is reset to 'None', regardless of whether they are currently shown in the displayed list.
+
+1. Unmark attendance for all students
+   1. Test case: `unmark all`<br>
+      Expected: The attendance status of all students in the displayed list is cleared. The status message indicates that all persons were marked.
+
+1. Invalid unmark commands
+   1. Test case: `unmark 99` (assuming there are less than 99 students in the displayed list)<br>
+      Expected: No student is unmarked. Error message "Error, user does not exist." appears in the status message.
+
+   1. Test case: `unmark A9999999W`<br>
+      Expected: No student is unmarked. Error message "Error, user does not exist." appears in the status message.
+
+   1. Test case: `unmark`<br>
+      Expected: Error message indicating invalid command format appears in the status message
+
+   1. Test case: `unmark 1 all`<br>
+      Expected: Error message appears in the status message explaining that either a person identifier or the all keyword should be provided.
+
 ## **Apendix: Planned Enhancements**
 
 **Team size**: 5
@@ -731,6 +789,7 @@ testers are expected to do more _exploratory_ testing.
 **Planned enhancement:** We plan to tighten the duplicate checking logic beyond just enforcing unique student IDs. To accommodate for situations where students may share phone numbers or emails, the updated duplicate checking logic could potentially check if the combination of name, email and phone number matches, which still allows for individual duplicates (like two differently named students sharing a phone number).
 
 ### 5. Stricter command argument validation
+
 **Current issue:** Certain commands like `mark` and `unmark` assume that users will follow the correct command format and will not include any additional text (e.g. flags, another student identifier, or random input) after a student identifier. Currently, the parser treats everything before a legitimate flag as part of the student identifier or the `all` keyword, resulting in an invalid person identifier or keyword error message. Moreover, the parser currently allows successful execution when a valid command is given but includes invalid trailing text. These issues lead to generic error messages that make it harder for users to understand the cause of the problem, and can even cause confusion when a command appears to succeed despite invalid input.
 
 **Planned enhancement:** We plan to refactor and modularize argument validation to improve error handling. Enhancements to the argument validation layer will enable detection and rejection of unexpected text or trailing flags, allowing the parser to throw more specific and informative errors. This will make error messages clearer for users and make it easier to support future command extensions without requiring changes to existing parser logic.
