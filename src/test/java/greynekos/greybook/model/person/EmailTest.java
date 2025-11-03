@@ -1,10 +1,10 @@
 package greynekos.greybook.model.person;
 
-import static greynekos.greybook.testutil.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Test;
+
+import static greynekos.greybook.testutil.Assert.assertThrows;
 
 public class EmailTest {
 
@@ -48,6 +48,10 @@ public class EmailTest {
         assertFalse(Email.isValidEmail("peterjack@-example.com")); // domain name starts with a hyphen
         assertFalse(Email.isValidEmail("peterjack@example.com-")); // domain name ends with a hyphen
         assertFalse(Email.isValidEmail("PETERJACK@EXAMPLE.COM")); // uppercase not allowed in RFC regex
+        assertFalse(Email.isValidEmail("a@bc")); // domain without dot not allowed
+        assertFalse(Email.isValidEmail("test@localhost")); // domain without dot not allowed
+        assertFalse(Email.isValidEmail("123@145")); // domain without dot not allowed
+        assertFalse(Email.isValidEmail("peter..jack@example.com")); // consecutive periods not allowed
 
         // valid email
         assertTrue(Email.isValidEmail("peterjack_1190@example.com")); // underscore in local part
@@ -56,10 +60,9 @@ public class EmailTest {
         assertTrue(Email.isValidEmail("peterjack-1190@example.com")); // hyphen in local part
         assertTrue(Email.isValidEmail("-peterjack@example.com")); // local part starts with hyphen (valid in RFC)
         assertTrue(Email.isValidEmail("peterjack-@example.com")); // local part ends with hyphen (valid in RFC)
-        assertTrue(Email.isValidEmail("peter..jack@example.com")); // consecutive periods (valid in RFC)
-        assertTrue(Email.isValidEmail("a@bc")); // minimal
-        assertTrue(Email.isValidEmail("test@localhost")); // alphabets only
-        assertTrue(Email.isValidEmail("123@145")); // numeric local part and domain name
+        assertTrue(Email.isValidEmail("a@b.c")); // minimal with dot
+        assertTrue(Email.isValidEmail("test@local.host")); // alphabets only with dot
+        assertTrue(Email.isValidEmail("123@145.67")); // numeric local part and domain name with dot
         assertTrue(Email.isValidEmail("a1+be.d@example1.com")); // mixture of alphanumeric and special characters
         assertTrue(Email.isValidEmail("peter_jack@very-very-very-long-example.com")); // long domain name
         assertTrue(Email.isValidEmail("if.you.dream.it_you.can.do.it@example.com")); // long local part
