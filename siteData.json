@@ -70,7 +70,8 @@
         "1-add-more-details-for-each-user": "1. Add more details for each user",
         "2-confirmation-dialog-for-clear-command": "2. Confirmation dialog for clear command",
         "3-more-robust-checking-for-phone-numbers": "3. More robust checking for phone numbers",
-        "4-more-robust-duplicate-checking": "4. More robust duplicate checking"
+        "4-more-robust-duplicate-checking": "4. More robust duplicate checking",
+        "5-more-strict-command-argument-validation": "5. More strict command argument validation"
       },
       "headingKeywords": {}
     },
