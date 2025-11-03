@@ -1,6 +1,7 @@
 package greynekos.greybook.logic.commands;
 
 import static greynekos.greybook.logic.parser.CliSyntax.PREFIX_STUDENTID;
+import static greynekos.greybook.logic.parser.CliSyntax.PREFIX_TAG;
 import static java.util.Objects.requireNonNull;
 
 import greynekos.greybook.logic.Messages;
@@ -11,7 +12,7 @@ import greynekos.greybook.logic.parser.ParserUtil;
 import greynekos.greybook.logic.parser.commandoption.OptionalSinglePreambleOption;
 import greynekos.greybook.logic.parser.commandoption.ZeroOrMorePrefixOption;
 import greynekos.greybook.model.Model;
-import greynekos.greybook.model.person.NameOrStudentIdPredicate;
+import greynekos.greybook.model.person.NameOrStudentIdPredicateOrTag;
 
 /**
  * Finds and lists all persons in GreyBook whose name contains any of the
@@ -33,21 +34,25 @@ public class FindCommand extends Command {
 
     private final ZeroOrMorePrefixOption<String> studentIdFragmentsOption =
             ZeroOrMorePrefixOption.of(PREFIX_STUDENTID, "ID_FRAGMENT", s -> s == null ? "" : s.trim());
+    private final ZeroOrMorePrefixOption<String> tagFragmentsOption =
+            ZeroOrMorePrefixOption.of(PREFIX_TAG, "TAG_FRAGMENT", s -> s == null ? "" : s.trim());
 
     @Override
     public void addToParser(GreyBookParser parser) {
-        parser.newCommand(COMMAND_WORD, MESSAGE_USAGE, this).addOptions(studentIdFragmentsOption, preambleOption);
+        parser.newCommand(COMMAND_WORD, MESSAGE_USAGE, this).addOptions(studentIdFragmentsOption, preambleOption,
+                tagFragmentsOption);
     }
 
     @Override
     public CommandResult execute(Model model, ArgumentParseResult arg) throws CommandException {
         requireNonNull(model);
-        ParserUtil.KeywordsAndIdFrags parsed =
-                ParserUtil.parseKeywordsAndIdFrags(arg, preambleOption, studentIdFragmentsOption);
-        if (parsed.keywords().isEmpty() && parsed.idFrags().isEmpty()) {
+        ParserUtil.KeywordsIdAndTagFrags parsed =
+                ParserUtil.parseKeywordsAndIdFrags(arg, preambleOption, studentIdFragmentsOption, tagFragmentsOption);
+        if (parsed.keywords().isEmpty() && parsed.idFrags().isEmpty() && parsed.tagFrags().isEmpty()) {
             throw new CommandException(MESSAGE_EMPTY_COMMAND);
         }
-        model.updateFilteredPersonList(new NameOrStudentIdPredicate(parsed.keywords(), parsed.idFrags()));
+        model.updateFilteredPersonList(
+                new NameOrStudentIdPredicateOrTag(parsed.keywords(), parsed.idFrags(), parsed.tagFrags()));
         return new CommandResult(
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
     }

@@ -44,7 +44,7 @@ public class ParserUtil {
     /**
      * Record class used by Find command.
      */
-    public record KeywordsAndIdFrags(List<String> keywords, List<String> idFrags) {
+    public record KeywordsIdAndTagFrags(List<String> keywords, List<String> idFrags, List<String> tagFrags) {
     }
 
     /**
@@ -226,14 +226,16 @@ public class ParserUtil {
      * Parses keywords (from preamble) and student ID fragments (from i/ values)
      * from {@code arg}. Returns an immutable container (record) holding both lists.
      */
-    public static KeywordsAndIdFrags parseKeywordsAndIdFrags(ArgumentParseResult arg,
+    public static KeywordsIdAndTagFrags parseKeywordsAndIdFrags(ArgumentParseResult arg,
             OptionalSinglePreambleOption<String> preambleOption,
-            ZeroOrMorePrefixOption<String> studentIdFragmentsOption) {
+            ZeroOrMorePrefixOption<String> studentIdFragmentsOption,
+            ZeroOrMorePrefixOption<String> tagsFragmentsOption) {
 
-        requireAllNonNull(arg, preambleOption, studentIdFragmentsOption);
+        requireAllNonNull(arg, preambleOption, studentIdFragmentsOption, tagsFragmentsOption);
 
         List<String> keywords = new ArrayList<>();
         List<String> idFrags = new ArrayList<>();
+        List<String> tagFrags = new ArrayList<>();
 
         arg.getOptionalValue(preambleOption).map(
                 s -> Arrays.stream(s.trim().split("\\s+")).filter(tok -> !tok.isBlank()).collect(Collectors.toList()))
@@ -258,6 +260,19 @@ public class ParserUtil {
             }
         }
 
-        return new KeywordsAndIdFrags(List.copyOf(keywords), List.copyOf(idFrags));
+        for (String raw : arg.getAllValues(tagsFragmentsOption)) {
+            if (raw == null || raw.trim().isEmpty()) {
+                continue;
+            }
+            String[] parts = raw.trim().split("\\s+");
+            tagFrags.add(parts[0]);
+            for (int i = 1; i < parts.length; i++) {
+                String tok = parts[i];
+                if (!tok.isBlank()) {
+                    keywords.add(tok);
+                }
+            }
+        }
+        return new KeywordsIdAndTagFrags(List.copyOf(keywords), List.copyOf(idFrags), List.copyOf(tagFrags));
     }
 }
