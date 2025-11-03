@@ -201,10 +201,14 @@ GreyBook helps you store, edit, and track students' details with precision.
 - `e/EMAIL`: Valid email address following RFC 5321/5322 email format standards
 - `i/STUDENTID`: Student's NUS ID (e.g., A0000000Y)
 - `t/TAG`: Optional categories (e.g., `t/committee` or `t/freshman`)
+  
+  <box type="warning" seamless>
+  Note: Only alphanumeric characters and `-` (dash) is allowed.
+  </box>
 
 <box type="tip" seamless>
 
-**Tip:** A name can only contain letters, spaces, and certain special characters. Refer to the [Parameter Details](#parameter-details) for more details!
+**Tip:** A name can only contain letters, spaces, and certain special characters (`,`, `(`, `)`, `/`, `.`, `@`, `-`, `'`). Refer to the [Parameter Details](#parameter-details) for more details!
 
 </box>
 
@@ -216,6 +220,19 @@ GreyBook helps you store, edit, and track students' details with precision.
 <box type="tip" seamless>
 
 **Tip:** Email validation follows <a href="https://datatracker.ietf.org/doc/html/rfc5322" target="_blank">RFC 5322</a> standards for internet message format.
+</box>
+
+<box type="warning" seamless>
+
+**Important: Duplicate Prevention**
+
+Each student is uniquely identified by their **Student ID**. Two contacts with the same Student ID are considered duplicates and are not allowed.
+
+**Example:**
+- If `A0123456X` already exists in GreyBook, attempting to add another student with `i/A0123456X`, with all other fields different, will fail.
+- Error message: `This person already exists in GreyBook`
+
+**Note:** Students may share the same name, phone number, or email, but Student IDs must be unique.
 </box>
 
 **Examples:**
@@ -269,7 +286,7 @@ edit 2 n/Betsy Crower t/
 
 #### Finding Students: `find`
 
-**Command:** `find KEYWORD [MORE_KEYWORDS]…​ [i/ID_FRAGMENT]…​`
+**Command:** `find [KEYWORD [MORE_KEYWORDS]…​] [i/ID_FRAGMENT]…​`
 
 **Parameters:**
 
@@ -564,12 +581,12 @@ For advanced users who wish to use special characters like quotation marks (`"`)
 ### Command Summary
 
 | Command  | Description                  | Syntax                                                           |
-| -------- | ---------------------------- | ---------------------------------------------------------------- |
+| -------- | ---------------------------- |------------------------------------------------------------------|
 | `add`    | Create a new student         | `add n/NAME p/PHONE e/EMAIL i/STUDENTID [t/TAG]…`                |
 | `edit`   | Update details               | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [i/STUDENTID] [t/TAG]…` |
 | `delete` | Remove a student             | `delete (INDEX \| STUDENTID)`                                    |
 | `list`   | Show all students            | `list`                                                           |
-| `find`   | Search by name or student ID | `find KEYWORD [MORE_KEYWORDS]…​ [i/ID_FRAGMENT]…​`                 |
+| `find`   | Search by name or student ID | `find [KEYWORD [MORE_KEYWORDS]…]​ [i/ID_FRAGMENT]…​`             |
 | `mark`   | Mark attendance              | `mark (INDEX \| STUDENTID \| all) (p/ \|\| a/ \|\| l/ \|\| e/)`  |
 | `unmark` | Unmark attendance            | `unmark (INDEX \| STUDENTID \| all)`                             |
 | `clear`  | Delete **all** students      | `clear`                                                          |
@@ -583,10 +600,10 @@ For advanced users who wish to use special characters like quotation marks (`"`)
 | Parameter   | Description                                              |
 | ----------- | -------------------------------------------------------- |
 | `NAME`      | Letters, spaces, and certain special characters allowed. |
-| `PHONE`     | 8-digit Singapore phone number.                          |
+| `PHONE`     | 8-digit Singapore phone number or International phone numbers (following E.164 Standards)                          |
 | `EMAIL`     | Must follow RFC 5321/5322 email format standards.        |
 | `STUDENTID` | NUS Student ID (e.g., A0123456X).                        |
-| `TAG`       | Optional label for categorizing members.                 |
+| `TAG`       | Optional label for categorizing members (only alphanumeric and `-` (dash) allowed)                 |
 | `INDEX`     | Positive integer (1, 2, 3, …).                           |
 
 <box type="tip" seamless>
