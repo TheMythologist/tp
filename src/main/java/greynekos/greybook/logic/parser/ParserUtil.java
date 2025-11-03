@@ -17,6 +17,7 @@ import greynekos.greybook.logic.parser.commandoption.OptionalSinglePreambleOptio
 import greynekos.greybook.logic.parser.commandoption.ZeroOrMorePrefixOption;
 import greynekos.greybook.logic.parser.exceptions.ParseException;
 import greynekos.greybook.model.person.All;
+import greynekos.greybook.model.person.AttendanceStatus;
 import greynekos.greybook.model.person.Email;
 import greynekos.greybook.model.person.Name;
 import greynekos.greybook.model.person.PersonIdentifier;
@@ -42,6 +43,14 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_PERSON_IDENTIFIER_OR_ALL =
             "Person identifier or \"all\" keyword is invalid. It should be either a positive integer index,"
                     + " a valid Student ID (format: A0000000Y), or the keyword \"all\".";
+
+    public static final String MESSAGE_UNKNOWN_FOLLOWING_IDENTIFIER =
+            "Unexpected text detected after the person identifier: \"%s\". "
+                    + "Make sure only one identifier is provided.\nIt should be either a positive integer index"
+                    + " or a valid Student ID (format: A0000000Y).";
+
+    public static final String MESSAGE_UNKNOWN_FOLLOWING_FLAG =
+            "Unexpected text detected after flag: \"%s\". " + "Ensure the command is written in the correct format.";
 
     /**
      * Record class used by Find command.
@@ -105,6 +114,15 @@ public class ParserUtil {
     public static PersonIdentifierOrAll parsePersonIdentifierOrAll(String input) throws ParseException {
         requireNonNull(input);
         String trimmed = input.trim();
+        String[] inputPreambles = trimmed.split(" ", 2);
+        /*
+         * Checks if there are any additional string after the person identifier or
+         * keyword
+         */
+        if (inputPreambles.length > 1) {
+            throw new ParseException(String.format(MESSAGE_UNKNOWN_FOLLOWING_IDENTIFIER, inputPreambles[1].trim()));
+        }
+
         if (trimmed.equals(All.ALL_KEYWORD)) {
             return new All();
         }
@@ -226,6 +244,35 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Creates an {@link ArgumentParser} that parses an optional flag following a
+     * person identifier (e.g. in commands like {@code mark} or {@code unmark}).
+     *
+     * If the {@code flagValue} is empty or consists only of whitespace, the given
+     * {@link AttendanceStatus.Status} is returned as the parsed result. Otherwise,
+     * if any non-empty string is provided, a {@link ParseException} is thrown.
+     *
+     * This is used to ensure that no unexpected flags or trailing values follow a
+     * person identifier.
+     *
+     * @param status
+     *            The {@link AttendanceStatus.Status} to return when no flag is
+     *            provided.
+     * @return An {@link ArgumentParser} that parses a flag string into an
+     *         {@link AttendanceStatus.Status}.
+     * @throws ParseException
+     *             If a non-empty flag is encountered.
+     */
+    public static ArgumentParser<AttendanceStatus.Status> createFlagParser(AttendanceStatus.Status status) {
+        requireNonNull(status);
+        return (String flagValue) -> {
+            if (flagValue.trim().length() > 0) {
+                throw new ParseException(String.format(MESSAGE_UNKNOWN_FOLLOWING_FLAG, flagValue));
+            }
+            return status;
+        };
     }
 
     /**

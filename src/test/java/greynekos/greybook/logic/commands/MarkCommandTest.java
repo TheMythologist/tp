@@ -9,8 +9,9 @@ import static greynekos.greybook.logic.commands.util.CommandUtil.MESSAGE_PERSON_
 import static greynekos.greybook.logic.parser.CliSyntax.PREFIX_ABSENT;
 import static greynekos.greybook.logic.parser.CliSyntax.PREFIX_PRESENT;
 import static greynekos.greybook.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static greynekos.greybook.logic.parser.ParserUtil.MESSAGE_INVALID_PERSON_IDENTIFIER_OR_ALL;
+import static greynekos.greybook.logic.parser.ParserUtil.MESSAGE_UNKNOWN_FOLLOWING_IDENTIFIER;
 import static greynekos.greybook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static greynekos.greybook.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static greynekos.greybook.testutil.TypicalPersons.getTypicalGreyBook;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -39,13 +40,13 @@ public class MarkCommandTest {
 
     @Test
     public void execute_markByIndex_success() {
-        Person targetPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person targetPerson = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
         MarkCommand markCommand = new MarkCommand();
 
         GreyBookParser parser = new GreyBookParser();
         markCommand.addToParser(parser);
 
-        String userInput = "mark " + INDEX_FIRST_PERSON.getOneBased() + " p/";
+        String userInput = "mark " + INDEX_SECOND_PERSON.getOneBased() + " p/";
         ArgumentParseResult arg = assertDoesNotThrow(() -> parser.parse(userInput));
 
         Person markedPerson =
@@ -184,7 +185,7 @@ public class MarkCommandTest {
 
         String userInput = "mark 1 x/";
 
-        assertParseFailure(parser, userInput, MESSAGE_INVALID_PERSON_IDENTIFIER_OR_ALL);
+        assertParseFailure(parser, userInput, String.format(MESSAGE_UNKNOWN_FOLLOWING_IDENTIFIER, "x/"));
     }
 
     @Test
@@ -208,7 +209,8 @@ public class MarkCommandTest {
         String userInput =
                 String.format("mark %d %s p/", INDEX_FIRST_PERSON.getOneBased(), targetPerson.getStudentID().value);
 
-        assertParseFailure(parser, userInput, MESSAGE_INVALID_PERSON_IDENTIFIER_OR_ALL);
+        assertParseFailure(parser, userInput,
+                String.format(MESSAGE_UNKNOWN_FOLLOWING_IDENTIFIER, targetPerson.getStudentID()));
     }
 
     @Test

@@ -33,7 +33,8 @@ public class MarkCommand extends Command {
 
     /** Message shown when marking is successful */
     public static final String MESSAGE_MARK_PERSON_SUCCESS = "Marked %1$s's Attendance: %2$s";
-    public static final String MESSAGE_MARK_ALL_SUCCESS = "All attendance status have been marked as \"%1$s\".";
+    public static final String MESSAGE_MARK_ALL_SUCCESS =
+            "All attendance status have been" + "successfully marked as \"%1$s\".";
     public static final String MESSAGE_MARK_FLAGS_AND_EXAMPLES = "Flags: " + PREFIX_PRESENT + " for Present, "
             + PREFIX_ABSENT + " for Absent, " + PREFIX_LATE + " for Late, " + PREFIX_EXCUSED + " for Excused\n"
             + "Examples:\n" + "  " + COMMAND_WORD + " 1 " + PREFIX_PRESENT + "\n" + "  " + COMMAND_WORD + " A0123456J "
@@ -45,6 +46,8 @@ public class MarkCommand extends Command {
     public static final String MESSAGE_MISSING_ATTENDANCE_FLAG =
             "Missing attendance flag. Please provide a valid flag\n" + MESSAGE_MARK_FLAGS_AND_EXAMPLES;
 
+    public static final String MESSAGE_SAME_STATUS_ATTEMPTED = "%s is already marked as \"%s\"";
+
     private static final String PREFIX_GROUP_STRING = "ATTENDANCE";
 
     /**
@@ -55,19 +58,19 @@ public class MarkCommand extends Command {
 
     private final RequiredMutuallyExclusivePrefixOption<AttendanceStatus.Status> presentOption =
             RequiredMutuallyExclusivePrefixOption.of(PREFIX_GROUP_STRING, PREFIX_PRESENT, "Present",
-                    s -> AttendanceStatus.Status.PRESENT);
+                    ParserUtil.createFlagParser(AttendanceStatus.Status.PRESENT));
 
     private final RequiredMutuallyExclusivePrefixOption<AttendanceStatus.Status> absentOption =
             RequiredMutuallyExclusivePrefixOption.of(PREFIX_GROUP_STRING, PREFIX_ABSENT, "Absent",
-                    s -> AttendanceStatus.Status.ABSENT);
+                    ParserUtil.createFlagParser(AttendanceStatus.Status.ABSENT));
 
     private final RequiredMutuallyExclusivePrefixOption<AttendanceStatus.Status> lateOption =
             RequiredMutuallyExclusivePrefixOption.of(PREFIX_GROUP_STRING, PREFIX_LATE, "Late",
-                    s -> AttendanceStatus.Status.LATE);
+                    ParserUtil.createFlagParser(AttendanceStatus.Status.LATE));
 
     private final RequiredMutuallyExclusivePrefixOption<AttendanceStatus.Status> excusedOption =
             RequiredMutuallyExclusivePrefixOption.of(PREFIX_GROUP_STRING, PREFIX_EXCUSED, "Excused",
-                    s -> AttendanceStatus.Status.EXCUSED);
+                    ParserUtil.createFlagParser(AttendanceStatus.Status.EXCUSED));
 
     @Override
     public void addToParser(GreyBookParser parser) {
@@ -90,6 +93,11 @@ public class MarkCommand extends Command {
         }
 
         Person personToMark = CommandUtil.resolvePerson(model, (PersonIdentifier) identifier);
+
+        if (personToMark.getAttendance().value.equals(attendanceStatus)) {
+            throw new CommandException(
+                    String.format(MESSAGE_SAME_STATUS_ATTEMPTED, personToMark.getName(), attendanceStatus));
+        }
 
         model.markPerson(personToMark, attendanceStatus);
 

@@ -13,6 +13,7 @@ import greynekos.greybook.logic.parser.ParserUtil;
 import greynekos.greybook.logic.parser.commandoption.SinglePreambleOption;
 import greynekos.greybook.model.Model;
 import greynekos.greybook.model.person.All;
+import greynekos.greybook.model.person.AttendanceStatus;
 import greynekos.greybook.model.person.Person;
 import greynekos.greybook.model.person.PersonIdentifier;
 import greynekos.greybook.model.person.PersonIdentifierOrAll;
@@ -33,6 +34,8 @@ public class UnmarkCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Clears a person's attendance status.\n"
             + "Parameters: INDEX (must be a positive integer) or STUDENT_ID (format: A0000000Y)\n" + "Examples:\n"
             + "  " + COMMAND_WORD + " 1\n" + "  " + COMMAND_WORD + " A0123456J\n" + "  " + COMMAND_WORD + " all";
+
+    public static final String MESSAGE_SAME_STATUS_ATTEMPTED = "%s already has no attendance status";
 
     /**
      * Unmark Command Preamble and Prefix Options
@@ -56,6 +59,10 @@ public class UnmarkCommand extends Command {
         }
 
         Person personToUnmark = CommandUtil.resolvePerson(model, (PersonIdentifier) identifier);
+
+        if (personToUnmark.getAttendance().value.equals(AttendanceStatus.Status.NONE)) {
+            throw new CommandException(String.format(MESSAGE_SAME_STATUS_ATTEMPTED, personToUnmark.getName()));
+        }
 
         model.unmarkPerson(personToUnmark);
 
