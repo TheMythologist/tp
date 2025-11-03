@@ -11,6 +11,7 @@ import static greynekos.greybook.logic.parser.CliSyntax.PREFIX_PRESENT;
 import static greynekos.greybook.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static greynekos.greybook.logic.parser.ParserUtil.MESSAGE_INVALID_PERSON_IDENTIFIER_OR_ALL;
 import static greynekos.greybook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static greynekos.greybook.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static greynekos.greybook.testutil.TypicalPersons.getTypicalGreyBook;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -39,13 +40,13 @@ public class MarkCommandTest {
 
     @Test
     public void execute_markByIndex_success() {
-        Person targetPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person targetPerson = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
         MarkCommand markCommand = new MarkCommand();
 
         GreyBookParser parser = new GreyBookParser();
         markCommand.addToParser(parser);
 
-        String userInput = "mark " + INDEX_FIRST_PERSON.getOneBased() + " p/";
+        String userInput = "mark " + INDEX_SECOND_PERSON.getOneBased() + " p/";
         ArgumentParseResult arg = assertDoesNotThrow(() -> parser.parse(userInput));
 
         Person markedPerson =

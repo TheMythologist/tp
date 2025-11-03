@@ -8,7 +8,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
-import greynekos.greybook.logic.Messages;
 import greynekos.greybook.logic.commands.exceptions.CommandException;
 import greynekos.greybook.logic.commands.util.CommandUtil;
 import greynekos.greybook.logic.parser.ArgumentParseResult;
@@ -33,7 +32,8 @@ public class MarkCommand extends Command {
 
     /** Message shown when marking is successful */
     public static final String MESSAGE_MARK_PERSON_SUCCESS = "Marked %1$s's Attendance: %2$s";
-    public static final String MESSAGE_MARK_ALL_SUCCESS = "All attendance status have been marked as \"%1$s\".";
+    public static final String MESSAGE_MARK_ALL_SUCCESS =
+            "All attendance statuses have been successfully marked as \"%1$s\".";
     public static final String MESSAGE_MARK_FLAGS_AND_EXAMPLES = "Flags: " + PREFIX_PRESENT + " for Present, "
             + PREFIX_ABSENT + " for Absent, " + PREFIX_LATE + " for Late, " + PREFIX_EXCUSED + " for Excused\n"
             + "Examples:\n" + "  " + COMMAND_WORD + " 1 " + PREFIX_PRESENT + "\n" + "  " + COMMAND_WORD + " A0123456J "
@@ -43,7 +43,9 @@ public class MarkCommand extends Command {
             + MESSAGE_MARK_FLAGS_AND_EXAMPLES;
 
     public static final String MESSAGE_MISSING_ATTENDANCE_FLAG =
-            "Missing attendance flag. Please provide a valid flag\n" + MESSAGE_MARK_FLAGS_AND_EXAMPLES;
+            "Missing attendance flag. Please provide a valid flag.\n" + MESSAGE_MARK_FLAGS_AND_EXAMPLES;
+
+    public static final String MESSAGE_SAME_STATUS_ATTEMPTED = "%s is already marked as \"%s\".";
 
     private static final String PREFIX_GROUP_STRING = "ATTENDANCE";
 
@@ -91,10 +93,14 @@ public class MarkCommand extends Command {
 
         Person personToMark = CommandUtil.resolvePerson(model, (PersonIdentifier) identifier);
 
+        if (personToMark.getAttendance().value.equals(attendanceStatus)) {
+            return new CommandResult(
+                    String.format(MESSAGE_SAME_STATUS_ATTEMPTED, personToMark.getName(), attendanceStatus));
+        }
+
         model.markPerson(personToMark, attendanceStatus);
 
-        return new CommandResult(String.format(MESSAGE_MARK_PERSON_SUCCESS, personToMark.getName(), attendanceStatus,
-                Messages.format(personToMark)));
+        return new CommandResult(String.format(MESSAGE_MARK_PERSON_SUCCESS, personToMark.getName(), attendanceStatus));
     }
 
     private CommandResult executeMarkAll(Model model, AttendanceStatus.Status attendanceStatus) {
