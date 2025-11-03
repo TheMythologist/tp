@@ -189,6 +189,56 @@ Upon execution, the command:
 4. Constructs a `CommandResult` reporting how many students were matched.
 
 <puml src="diagrams/FindSequenceDiagram.puml" alt="Find Command Diagram" />
+  
+### \[Implemented\] Command history feature
+
+The **command history** feature allows users to navigate through previously executed commands using the **Up** and **Down** arrow keys, similar to standard terminal behavior. It provides an intuitive way for users to recall, reuse, or edit recent commands without retyping them. This helps to boost the efficiency of users who are well-versed in CLI or terminal applications.
+
+#### Overview
+
+The `CommandHistory` class maintains a bounded list of previously entered commands. Each command is stored in insertion order and can be accessed sequentially through navigation methods. The class also manages a cursor position that represents the user’s current position in the history when scrolling through past commands.
+
+Key behaviours:
+
+- Sequential Navigation
+  - Users can move *backward* (previous commands) or *forward* (next commands) through the history
+    - `getPrevCommand()` returns the previous command relative to the cursor position
+    - `getNextCommand()` returns the next command or an empty string if there are no newer commands
+- Cursor Tracking
+
+  The cursor starts at the end of the list (after the most recent command). Navigating upward decrements the cursor, while navigating downward increments it. When reaching the oldest or newest command, the cursor remains clamped within valid bounds.
+- Duplicate Prevention
+
+  Consecutive identical commands are not re-added to history. This prevents clutter from repeated identical inputs.
+- Bounded History
+
+  To avoid excessive memory use in long-running sessions, the history is capped at a configurable limit (`SIZE_LIMIT = 50`). When the limit is reached, the oldest entry is discarded before adding a new one.
+- Reset and Clearing
+  - `resetCursor()` sets the cursor back to the end of the list.
+  - `resetHistory()` clears all recorded commands and resets the cursor.
+
+
+#### Design considerations:
+
+**Aspect: How command history is saved:**
+
+- **Alternative 1 (current choice):** Saves the entire command history.
+  - Pros: Easy to implement.
+  - Cons: May have performance issues in terms of memory/disk usage.
+
+- **Alternative 2:** Commands are appended to the history file individually itself.
+  - Pros: Will use less disk usage.
+  - Cons: Harder to implement loading and saving.
+
+**Aspect: Thread Safety**
+
+- **Alternative 1 (current choice):** No thread safety.
+  - Pros: Easy to implement, especially for single-threaded applications like Javafx.
+  - Cons: Lead to race conditions in multi-threaded applications.
+
+- **Alternative 2:** Thread-safe loading and storing of command history.
+  - Pros: Able to support multi-threaded applications.
+  - Cons: Harder to implement.
 
 ### \[Proposed\] Undo/redo feature
 
@@ -507,3 +557,25 @@ testers are expected to do more _exploratory_ testing.
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
+
+## **Apendix: Planned Enhancements**
+
+**Team size**: 5
+
+### 1. Add more details for each user
+
+**Current issue:** We current only store the name, student ID, email, phone and tags of each student.
+
+**Planned enhancement:** We plan to store more crucial student information, such as the faculty, year, or next-of-kin number.
+
+### 2. Confirmation dialog for `clear` command
+
+**Current issue:** The `clear` command immediately removes all students in the list, which is a destructive command.
+
+**Planned enhancement:** We plan to request the user's confirmation before running this destructive command. A flag should also be implemented to allow users to bypass this confirmation dialog.
+
+### 3. More robust checking for phone numbers
+
+**Current issue:** We use a regex to perform checking if an international phone number is valid. This does not take into account region/country-specific phone number rules.
+
+**Planned enhancement:** We plan to comply with verify phone numbers with each country's specific phone number rules. A validation library such as Google's [`libphonenumber`](https://github.com/google/libphonenumber) could be used.

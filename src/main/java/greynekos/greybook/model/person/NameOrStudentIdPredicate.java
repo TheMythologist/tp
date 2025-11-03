@@ -13,8 +13,8 @@ import greynekos.greybook.commons.util.StringUtil;
  */
 public class NameOrStudentIdPredicate implements Predicate<Person> {
 
-    private final List<String> keywords;
-    private final List<String> idFragmentsUp;
+    protected final List<String> keywords;
+    protected final List<String> idFragmentsUp;
 
     /**
      * Constructs a NameOrStudentIdPredicate.
