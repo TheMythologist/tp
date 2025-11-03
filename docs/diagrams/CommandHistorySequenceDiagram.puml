@@ -1,0 +1,45 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+actor User as user USER_COLOR
+
+participant "CommandBox (UI)" as CommandBox UI_COLOR
+' TO UPDATE
+participant "MainWindow" as MainWindow LOGIC_COLOR
+participant "Logic (LogicManager)" as LogicManager LOGIC_COLOR
+participant "Model" as Model MODEL_COLOR
+' TO UPDATE
+participant "History" as History LOGIC_COLOR
+' TO UPDATE
+participant "CommandHistory" as CommandHistory LOGIC_COLOR
+participant "Storage (JsonHistoryStorage)" as Storage STORAGE_COLOR
+
+User -> CommandBox : type command + Enter
+activate CommandBox
+CommandBox -> MainWindow : CommandExecutor.execute(commandText)
+deactivate CommandBox
+
+activate MainWindow
+MainWindow -> LogicManager : execute(commandText)
+deactivate MainWindow
+
+activate LogicManager
+LogicManager -> LogicManager : parse command (GreyBookParser)
+LogicManager -> Model : apply command (argParseResult.execute(model))
+LogicManager -> Model : getHistory()
+LogicManager -> History : getCommandHistory()
+activate History
+History -> CommandHistory : addCommand(commandText)
+deactivate History
+LogicManager -> Storage : saveGreyBook(model.getGreyBook())
+LogicManager -> Storage : saveHistory(model.getHistory())
+deactivate LogicManager
+
+activate Storage
+Storage -> Storage : JsonUtil.saveJsonFile(history.getCommandHistory().getHistory(), filePath)
+deactivate Storage
+
+MainWindow <-- LogicManager : CommandResult
+MainWindow -> CommandBox : update UI (clear field, show feedback)
+User <-- MainWindow : UI updated
+@enduml
