@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
-import greynekos.greybook.logic.Messages;
 import greynekos.greybook.logic.commands.exceptions.CommandException;
 import greynekos.greybook.logic.commands.util.CommandUtil;
 import greynekos.greybook.logic.parser.ArgumentParseResult;
@@ -13,6 +12,7 @@ import greynekos.greybook.logic.parser.ParserUtil;
 import greynekos.greybook.logic.parser.commandoption.SinglePreambleOption;
 import greynekos.greybook.model.Model;
 import greynekos.greybook.model.person.All;
+import greynekos.greybook.model.person.AttendanceStatus;
 import greynekos.greybook.model.person.Person;
 import greynekos.greybook.model.person.PersonIdentifier;
 import greynekos.greybook.model.person.PersonIdentifierOrAll;
@@ -24,8 +24,8 @@ public class UnmarkCommand extends Command {
 
     public static final String COMMAND_WORD = "unmark";
 
-    public static final String MESSAGE_UNMARK_PERSON_SUCCESS = "Cleared %1$s's attendance status";
-    public static final String MESSAGE_UNMARK_ALL_SUCCESS = "All attendance status have been cleared.";
+    public static final String MESSAGE_UNMARK_PERSON_SUCCESS = "Cleared %1$s's attendance status.";
+    public static final String MESSAGE_UNMARK_ALL_SUCCESS = "All attendance statuses have been successfully cleared.";
 
     /**
      * Unmark Command Usage and Error Messages
@@ -34,10 +34,11 @@ public class UnmarkCommand extends Command {
             + "Parameters: INDEX (must be a positive integer) or STUDENT_ID (format: A0000000Y)\n" + "Examples:\n"
             + "  " + COMMAND_WORD + " 1\n" + "  " + COMMAND_WORD + " A0123456J\n" + "  " + COMMAND_WORD + " all";
 
+    public static final String MESSAGE_SAME_STATUS_ATTEMPTED = "%s already has no attendance status.";
+
     /**
      * Unmark Command Preamble and Prefix Options
      */
-
     private final SinglePreambleOption<PersonIdentifierOrAll> identifierOrAllOption =
             SinglePreambleOption.of("ALL or INDEX or STUDENTID", ParserUtil::parsePersonIdentifierOrAll);
 
@@ -57,10 +58,13 @@ public class UnmarkCommand extends Command {
 
         Person personToUnmark = CommandUtil.resolvePerson(model, (PersonIdentifier) identifier);
 
+        if (personToUnmark.getAttendance().value.equals(AttendanceStatus.Status.NONE)) {
+            return new CommandResult(String.format(MESSAGE_SAME_STATUS_ATTEMPTED, personToUnmark.getName()));
+        }
+
         model.unmarkPerson(personToUnmark);
 
-        return new CommandResult(String.format(MESSAGE_UNMARK_PERSON_SUCCESS, personToUnmark.getName(),
-                Messages.format(personToUnmark)));
+        return new CommandResult(String.format(MESSAGE_UNMARK_PERSON_SUCCESS, personToUnmark.getName()));
     }
 
     private CommandResult executeUnmarkAll(Model model) {
