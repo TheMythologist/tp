@@ -26,7 +26,7 @@ public class UnmarkCommand extends Command {
     public static final String COMMAND_WORD = "unmark";
 
     public static final String MESSAGE_UNMARK_PERSON_SUCCESS = "Cleared %1$s's attendance status";
-    public static final String MESSAGE_UNMARK_ALL_SUCCESS = "All attendance status have been cleared.";
+    public static final String MESSAGE_UNMARK_ALL_SUCCESS = "All attendance status have been successfully cleared.";
 
     /**
      * Unmark Command Usage and Error Messages
