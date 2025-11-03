@@ -1,45 +1,85 @@
 @startuml
 !include style.puml
 skinparam ArrowFontStyle plain
-actor User as user USER_COLOR
 
-participant "CommandBox (UI)" as CommandBox UI_COLOR
-' TO UPDATE
-participant "MainWindow" as MainWindow LOGIC_COLOR
-participant "Logic (LogicManager)" as LogicManager LOGIC_COLOR
-participant "Model" as Model MODEL_COLOR
-' TO UPDATE
-participant "History" as History LOGIC_COLOR
-' TO UPDATE
-participant "CommandHistory" as CommandHistory LOGIC_COLOR
-participant "Storage (JsonHistoryStorage)" as Storage STORAGE_COLOR
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":GreyBookParser" as GreyBookParser LOGIC_COLOR
+participant ":CommandParser" as CommandParser LOGIC_COLOR
+participant "c:Command" as SomeCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
 
-User -> CommandBox : type command + Enter
-activate CommandBox
-CommandBox -> MainWindow : CommandExecutor.execute(commandText)
-deactivate CommandBox
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+participant "h:History" as History MODEL_COLOR
+participant "ch:CommandHistory" as CommandHistory MODEL_COLOR
+end box
 
-activate MainWindow
-MainWindow -> LogicManager : execute(commandText)
-deactivate MainWindow
-
+[-> LogicManager : execute(commandText)
 activate LogicManager
-LogicManager -> LogicManager : parse command (GreyBookParser)
-LogicManager -> Model : apply command (argParseResult.execute(model))
-LogicManager -> Model : getHistory()
-LogicManager -> History : getCommandHistory()
+
+LogicManager -> GreyBookParser : parseCommand(commandText)
+activate GreyBookParser
+
+create CommandParser
+GreyBookParser -> CommandParser
+activate CommandParser
+
+CommandParser --> GreyBookParser
+deactivate CommandParser
+
+GreyBookParser -> CommandParser : parse(args)
+activate CommandParser
+
+create SomeCommand
+CommandParser -> SomeCommand
+activate SomeCommand
+
+SomeCommand --> CommandParser
+deactivate SomeCommand
+
+CommandParser --> GreyBookParser : c
+deactivate CommandParser
+
+CommandParser -[hidden]-> GreyBookParser
+destroy CommandParser
+
+GreyBookParser --> LogicManager : c
+deactivate GreyBookParser
+
+LogicManager -> SomeCommand : execute(m)
+activate SomeCommand
+
+SomeCommand -> Model : apply changes...
+activate Model
+Model --> SomeCommand
+deactivate Model
+
+' --- add to command history after successful execute ---
+SomeCommand -> Model : getHistory()
+activate Model
+Model --> SomeCommand : h
+deactivate Model
+
+SomeCommand -> History : getCommandHistory()
 activate History
 History -> CommandHistory : addCommand(commandText)
+activate CommandHistory
+CommandHistory --> History
+deactivate CommandHistory
+History --> SomeCommand
 deactivate History
-LogicManager -> Storage : saveGreyBook(model.getGreyBook())
-LogicManager -> Storage : saveHistory(model.getHistory())
+
+create CommandResult
+SomeCommand -> CommandResult
+activate CommandResult
+CommandResult --> SomeCommand
+deactivate CommandResult
+
+SomeCommand --> LogicManager : r
+deactivate SomeCommand
+
+[<-- LogicManager
 deactivate LogicManager
-
-activate Storage
-Storage -> Storage : JsonUtil.saveJsonFile(history.getCommandHistory().getHistory(), filePath)
-deactivate Storage
-
-MainWindow <-- LogicManager : CommandResult
-MainWindow -> CommandBox : update UI (clear field, show feedback)
-User <-- MainWindow : UI updated
 @enduml
