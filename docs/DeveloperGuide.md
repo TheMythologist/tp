@@ -184,6 +184,7 @@ After creating a `NameOrStudentIDPredicate`, it temporarily filters the displaye
 #### Implementation
 
 Upon execution, the command:
+
 1. Ensures that at least one `name` keyword or `studentID` fragment is provided.
 2. Creates a `NameOrStudentIDPredicate` containing two lists of `name` keywords and `studentID` fragments. `NameOrStudentIDPredicate` performs its `test` by performing a case-insensitive substring search for both fields.
 3. Delegates filtering to an appropriate method in `Model`.
@@ -363,43 +364,43 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                    | I want to …​                                                    | So that…​                                             |
-| -------- | -------------------------- | --------------------------------------------------------------- |------------------------------------------------------------|
-| `* * *`  | committee member           | add a student manually with name contact number email etc        | the roster stays up to date.                        |
-| `* * *`  | committee member           | deactivate (or delete) a student                             | we keep history without cluttering the active list. |
-| `* * *`  | committee member           | view student details                                         |                                                            |
-| `* * *`  | secretary/attendance taker | mark a student as present absent late or excused             | attendance status is specific.                     |
-| `* *`    | committee member           | assign roles (admin secretary project lead student)          | permissions are appropriate.                       |
-| `* *`    | committee member           | restrict access to contact details to authorized roles      | student privacy is protected.                       |
-| `* *`    | committee member           | edit a student’s details                                     | corrections don’t require creating duplicates.     |
-| `* *`    | committee member           | search students by name email tag or year                    | locate people fast.                                |
-| `* *`    | secretary/attendance taker | create an attendance session with date/time and event name  | attendance is organized by event.                  |
-| `* *`    | secretary/attendance taker | bulk-mark attendance for selected students                   | save time for large events.                        |
-| `* *`    | committee member           | export attendance for a date range to CSV                   | submit readable records to others.                 |
-| `* *`    | committee member           | create a project/competition entry with a title and description | it can be referenced and managed.                  |
-| `* *`    | committee member           | assign students to a project                                 | teams are clearly defined.                         |
-| `* *`    | committee member           | archive completed projects                                  | active views remain uncluttered.                   |
-| `* *`    | committee member           | download the full roster to CSV                             | share it with others.                              |
-| `* *`    | committee member           | generate a report of attendance by month                    | review engagement over time.                       |
-| `* *`    | committee member           | configure required fields (e.g. emergency contact)          | we collect essential information.                  |
-| `* *`    | committee member           | export an event-day contact sheet (names emergency contacts notes) | on-site management is safer.                       |
-| `* *`    | committee member           | define project-specific custom fields (e.g. competition category team code) | required metadata is captured.                     |
-| `* *`    | committee member           | track equipment checkout and return by student               | gear is accounted for.                             |
-| `* *`    | committee member           | import students from a CSV (or other common formats)         | onboard a whole cohort quickly.                    |
-| `*`      | committee member           | merge duplicate student records                              | reports are accurate.                              |
-| `*`      | committee member           | tag students with attributes (e.g. role skills year of study) | find suitable students quickly.                     |
-| `*`      | committee member           | see attendance rates per event and per group                | identify engagement trends.                        |
-| `*`      | committee member           | move a student from one project to another                   | team changes are reflected accurately.             |
-| `*`      | committee member           | see a dashboard showing student count active projects and average attendance | monitor club health at a glance.                   |
-| `*`      | committee member           | view an audit log of edits to student profiles               | changes are traceable.                             |
-| `*`      | committee member           | create event templates (title location default attendees)   | recurring events are faster to set up.             |
-| `*`      | committee member           | auto-assign duties based on availability and past load      | work is distributed fairly.                        |
-| `*`      | committee member           | target messages by a saved filter (e.g. year=2 AND skill=web_app) | only relevant students are contacted.               |
-| `*`      | committee member           | flag a student as on probation with an expiry date           | restrictions are visible and time-bound.           |
-| `*`      | committee member           | log an incident linked to an event (e.g. injury conduct)    | follow-up is tracked.                              |
-| `*`      | committee member           | assign a temporary “attendance taker” role for a single event | volunteers can help without broad access.          |
-| `*`      | committee member           | freeze an attendance session after review and require a reason to reopen | records are tamper-resistant.                      |
-| `*`      | committee member           | set composition caps when forming teams (e.g. max 2 Year-1s) | rules are enforced automatically.                  |
+| Priority | As a …​                    | I want to …​                                                                 | So that…​                                           |
+| -------- | -------------------------- | ---------------------------------------------------------------------------- | --------------------------------------------------- |
+| `* * *`  | committee member           | add a student manually with name contact number email etc                    | the roster stays up to date.                        |
+| `* * *`  | committee member           | deactivate (or delete) a student                                             | we keep history without cluttering the active list. |
+| `* * *`  | committee member           | view student details                                                         |                                                     |
+| `* * *`  | secretary/attendance taker | mark a student as present absent late or excused                             | attendance status is specific.                      |
+| `* *`    | committee member           | assign roles (admin secretary project lead student)                          | permissions are appropriate.                        |
+| `* *`    | committee member           | restrict access to contact details to authorized roles                       | student privacy is protected.                       |
+| `* *`    | committee member           | edit a student’s details                                                     | corrections don’t require creating duplicates.      |
+| `* *`    | committee member           | search students by name email tag or year                                    | locate people fast.                                 |
+| `* *`    | secretary/attendance taker | create an attendance session with date/time and event name                   | attendance is organized by event.                   |
+| `* *`    | secretary/attendance taker | bulk-mark attendance for selected students                                   | save time for large events.                         |
+| `* *`    | committee member           | export attendance for a date range to CSV                                    | submit readable records to others.                  |
+| `* *`    | committee member           | create a project/competition entry with a title and description              | it can be referenced and managed.                   |
+| `* *`    | committee member           | assign students to a project                                                 | teams are clearly defined.                          |
+| `* *`    | committee member           | archive completed projects                                                   | active views remain uncluttered.                    |
+| `* *`    | committee member           | download the full roster to CSV                                              | share it with others.                               |
+| `* *`    | committee member           | generate a report of attendance by month                                     | review engagement over time.                        |
+| `* *`    | committee member           | configure required fields (e.g. emergency contact)                           | we collect essential information.                   |
+| `* *`    | committee member           | export an event-day contact sheet (names emergency contacts notes)           | on-site management is safer.                        |
+| `* *`    | committee member           | define project-specific custom fields (e.g. competition category team code)  | required metadata is captured.                      |
+| `* *`    | committee member           | track equipment checkout and return by student                               | gear is accounted for.                              |
+| `* *`    | committee member           | import students from a CSV (or other common formats)                         | onboard a whole cohort quickly.                     |
+| `*`      | committee member           | merge duplicate student records                                              | reports are accurate.                               |
+| `*`      | committee member           | tag students with attributes (e.g. role skills year of study)                | find suitable students quickly.                     |
+| `*`      | committee member           | see attendance rates per event and per group                                 | identify engagement trends.                         |
+| `*`      | committee member           | move a student from one project to another                                   | team changes are reflected accurately.              |
+| `*`      | committee member           | see a dashboard showing student count active projects and average attendance | monitor club health at a glance.                    |
+| `*`      | committee member           | view an audit log of edits to student profiles                               | changes are traceable.                              |
+| `*`      | committee member           | create event templates (title location default attendees)                    | recurring events are faster to set up.              |
+| `*`      | committee member           | auto-assign duties based on availability and past load                       | work is distributed fairly.                         |
+| `*`      | committee member           | target messages by a saved filter (e.g. year=2 AND skill=web_app)            | only relevant students are contacted.               |
+| `*`      | committee member           | flag a student as on probation with an expiry date                           | restrictions are visible and time-bound.            |
+| `*`      | committee member           | log an incident linked to an event (e.g. injury conduct)                     | follow-up is tracked.                               |
+| `*`      | committee member           | assign a temporary “attendance taker” role for a single event                | volunteers can help without broad access.           |
+| `*`      | committee member           | freeze an attendance session after review and require a reason to reopen     | records are tamper-resistant.                       |
+| `*`      | committee member           | set composition caps when forming teams (e.g. max 2 Year-1s)                 | rules are enforced automatically.                   |
 
 ### Use cases
 
@@ -411,8 +412,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  User requests to add a specific student to the list, providing their name, email, phone number, studentID, and optional tags.
 2.  GreyBook validates the request
-3. GreyBook adds the student
-3.  GreyBook shows a success message
+3.  GreyBook adds the student
+4.  GreyBook shows a success message
 
     Use case ends.
 
@@ -487,15 +488,14 @@ Use case ends.
 
     Use case resumes at step 3.
 
-
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
 2.  Should be able to hold up to 1000 students without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) of about 55-80 Words per Minute (WPM) should be able to accomplish student record management tasks, like marking attendance, faster using commands than using the mouse on traditional formats like spreadsheets.
 4.  The application should efficiently handle and store student and attendance data in a human readable format such as JSON without degrading performance as data grows.
-5. Should validate all arguments (names, emails, studentIDs, etc.) and provide specific error messages if arguments are not valid.
-6. Should prevent duplicate entries through enforcing unique Student IDs, allowing for rare cases like having the same name, email or phone number.
+5.  Should validate all arguments (names, emails, studentIDs, etc.) and provide specific error messages if arguments are not valid.
+6.  Should prevent duplicate entries through enforcing unique Student IDs, allowing for rare cases like having the same name, email or phone number.
 
 _{More to be added}_
 
@@ -538,16 +538,46 @@ testers are expected to do more _exploratory_ testing.
    1. Reopen the app by double clicking the jar file.<br>
       Expected: The app starts up with previous data saved.
 
-### Deleting a person
+### Adding a student
+
+1. Adding a student not in the full list
+   1. Test case: `add n/John Doe p/98765432 e/johnd@example.com i/A0000000Y t/member t/owesMoney`<br>
+      Expected: Student added with all the specified fields.
+
+   1. Test case: `add n/John Doe p/98765432 e/johnd@example.com i/A0000000Y`<br>
+      Expected: Student added with no tags.
+
+   1. Test case: `add n/John Doe e/johnd@example.com i/A0000000Y`<br>
+      Expected: No student added, error message explaining `p/PHONE` is missing appears in the status message.
+
+   1. Test case: `add n/John Doe`<br>
+      Expected: No student added, error message explaining `p/PHONE, e/EMAIL, i/STUDENTID` are missing appears in the status message.
+
+1. Adding a student already in the full list
+   1. Prerequisites: A student with the Student ID "A0000000Y" has already been added.
+
+   1. Test case: `add n/John Doe p/98765432 e/johnd@example.com i/A0000000Y`<br>
+      Expected: Student added with all the specified fields.
+
+### Clearing the list
+
+1. Clearing the full list of students
+   1. Test case: `clear`<br>
+      Expected: All students are cleared, even those that are not shown in the filtered list.
+
+   1. Test case: `clear blabla blablabla blablabla`<br>
+      Expected: All students are cleared, even those that are not shown in the filtered list.
+
+### Deleting a student
 
 1. Deleting a student while all students are being shown
    1. Prerequisites: List all students using the `list` command. Multiple students in the list.
 
    1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+      Expected: First student is deleted from the list. Details of the deleted student shown in the status message.
 
    1. Test case: `delete A0123456J` (assuming a student with this student ID exists)<br>
-      Expected: Contact with student ID A0123456J is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+      Expected: Student with student ID A0123456J is deleted from the list. Details of the deleted student shown in the status message.
 
    1. Test case: `delete 0`<br>
       Expected: No student is deleted. Error details shown in the status message. Status bar remains the same.
@@ -558,14 +588,116 @@ testers are expected to do more _exploratory_ testing.
    1. Other incorrect delete commands to try: `delete`, `delete x`, `delete INVALID_STUDENTID`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+1. Deleting a student not shown in the list.
+   1. Prerequisites: A student with the student ID "A0000000Y" is not shown in the list.
 
-### Saving data
+   1. Test case: `delete A0000000Y`
+      Expected: The student is deleted. Details of the deleted student shown in the status message.
 
-1. Dealing with missing/corrupted data files
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+### Editing a student
 
-1. _{ more test cases …​ }_
+1. Editing a student in the full list
+   1. Prerequisites: There are some students in the displayed list. There are less than 99 students in the displayed list.
+
+   1. Test case: `edit 1 n/Alice Wonderland`<br>
+      Expected: The name of the first student in the displayed list is updated to "Alice Wonderland". Other fields remain unchanged. The status message confirms the successful edit.
+
+   1. Test case: `edit 2 p/91234567 e/alice@example.org t/newMember t/active`<br>
+      Expected: The phone, email, and tags of the second student in the displayed list are updated. The previous tags are overwritten by the new ones. The status message confirms the successful edit.
+
+   1. Test case: `edit 1`<br>
+      Expected: No student is edited. Error message appears in the status message explaining that at least one field must be provided for editing.
+
+   1. Test case: `edit 99 n/Name`<br>
+      Expected: No student is edited. Error message "The person index provided is invalid" appears in the status message.
+
+1. Editing a student ID to an already existing student ID
+   1. Prerequisites: The first student in the displayed list has ID: "A0000000Y" and the second student in the displayed list has ID "A0123456J".
+
+   1. Test case: `edit 2 i/A0000000Y`<br>
+      Expected: No student is edited. Error message "This person already exists in GreyBook." appears in the status message.
+
+### Finding students
+
+1. Finding students by name(s)
+   1. Prerequisites: The list contains a diverse set of students with varied names, student IDs, and tags, or use the initial sample data.
+   1. Test case: `find Alex`<br>
+      Expected: Students whose name contains the keyword "Alex" (case-insensitive) are shown in the displayed list. The status message indicates the number of students found.
+
+   1. Test case: `find Alice Bob`<br>
+      Expected: Students whose names contain either "Alice" OR "Bob" are shown. The status message indicates the number of students found.
+
+   1. Test case: `find NonExistentName`<br>
+      Expected: An empty list is displayed. The status message indicates that 0 students were listed.
+
+1. Finding students by student ID fragment(s)
+   1. Prerequisites: Assume students exist with IDs A0123456J and A0000000Y.
+
+   1. Test case: `find i/000`<br>
+      Expected: All students whose Student ID contains the fragment "000" are shown.
+
+   1. Test case: `find i/A0123456J`<br>
+      Expected: Only the specific student with the exact ID A0123456J is shown.
+
+1. Finding students by tag fragment(s)
+   1. Prerequisites: Assume tags `member` and `owesMoney` are present in the list.
+
+   1. Test case: `find t/mem`<br>
+      Expected: All students who have a tag containing the fragment "mem" (e.g., `member`) are shown.
+
+   1. Test case: `find t/mem t/owes`<br>
+      Expected: Students who have a tag matching "mem" OR "owes" are shown.
+
+1. Finding students using multiple fields
+   1. Test case: `find Alice i/000 t/member`<br>
+      Expected: Students who match the name keyword "Alice" OR the ID fragment "000" OR the tag fragment "member" are shown in the displayed list.
+
+### Marking attendance
+
+1. Marking attendance using index
+   1. Prerequisites: The list contains at least 4 students.
+   1. Test case: `mark 1 p/`<br>
+      Expected: The attendance status of the first student in the displayed list is successfully updated to 'Present'. The status message confirms the successful mark.
+
+   1. Test case: `mark 2 a/`<br>
+      Expected: The attendance status of the second student is updated to 'Absent'. The status message confirms the successful mark.
+
+   1. Test case: `mark 3 l/`<br>
+      Expected: The attendance status of the third student is updated to 'Late'. The status message confirms the successful mark.
+
+   1. Test case: `mark 4 e/`<br>
+      Expected: The attendance status of the fourth student is updated to 'Excused'. The status message confirms the successful mark.
+
+1. Marking attendance using Student ID
+   1. Prerequisites: A student with ID "A0123456J" exists in the full list.
+   1. Test case: `mark A0123456J p/`<br>
+      Expected: The attendance status of the student with ID A0123456J is updated to 'Present', regardless of whether they are currently shown in the displayed list.
+      If they are not in the displayed list, the displayed list updates to the full list of students.
+
+1. Marking attendance for all students
+   1. Prerequisites: The list contains some students, of which only a subset are displayed.
+   1. Test case: `mark all a/`<br>
+      Expected: The attendance status of all students in the displayed list is updated to 'Absent'. The status message indicates that all persons were marked.
+
+1. Invalid mark commands
+   1. Test case: `mark 1`<br>
+      Expected: No student is marked. Error message appears in the status message explaining that an attendance flag (p/, a/, l/, or e/) is missing.
+
+   1. Test case: `mark p/`<br>
+      Expected: Error message indicating invalid command format appears in the status message.
+
+   1. Test case: `mark 99 p/` (assuming there are less than 99 students in the displayed list)<br>
+      Expected: No student is marked. Error message "Error, user does not exist." appears in the status message.
+
+   1. Test case: `mark A9999999W a/` (assuming this ID does not exist)<br>
+      Expected: No student is marked. Error message "Error, user does not exist." appears in the status message.
+      The displayed list now shows the full list of students.
+
+   1. Test case: `mark 1 p/ a/`<br>
+      Expected: Error message appears in the status message explaining that multiple flags were provided.
+
+   1. Test case: `mark 1 A0123456J p/`<br>
+      Expected: Error message appears in the status message explaining that the person identifier provided is invalid.
 
 ## **Apendix: Planned Enhancements**
 
