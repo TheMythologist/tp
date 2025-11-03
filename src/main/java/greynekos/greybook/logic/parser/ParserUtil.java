@@ -1,17 +1,26 @@
 package greynekos.greybook.logic.parser;
 
+import static greynekos.greybook.commons.util.CollectionUtil.requireAllNonNull;
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import greynekos.greybook.commons.core.index.Index;
 import greynekos.greybook.commons.util.StringUtil;
+import greynekos.greybook.logic.parser.commandoption.OptionalSinglePreambleOption;
+import greynekos.greybook.logic.parser.commandoption.ZeroOrMorePrefixOption;
 import greynekos.greybook.logic.parser.exceptions.ParseException;
+import greynekos.greybook.model.person.All;
 import greynekos.greybook.model.person.Email;
 import greynekos.greybook.model.person.Name;
 import greynekos.greybook.model.person.PersonIdentifier;
+import greynekos.greybook.model.person.PersonIdentifierOrAll;
 import greynekos.greybook.model.person.Phone;
 import greynekos.greybook.model.person.StudentID;
 import greynekos.greybook.model.tag.Tag;
@@ -30,6 +39,15 @@ public class ParserUtil {
                     + "(format: A0000000Y).";
 
     private static final String VALID_NUMBER_REGEX = "0|[1-9]\\d*";
+    public static final String MESSAGE_INVALID_PERSON_IDENTIFIER_OR_ALL =
+            "Person identifier or \"all\" keyword is invalid. It should be either a positive integer index,"
+                    + " a valid Student ID (format: A0000000Y), or the keyword \"all\".";
+
+    /**
+     * Record class used by Find command.
+     */
+    public record KeywordsAndIdFrags(List<String> keywords, List<String> idFrags) {
+    }
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading
@@ -72,6 +90,29 @@ public class ParserUtil {
         }
 
         throw new ParseException(MESSAGE_INVALID_PERSON_IDENTIFIER);
+    }
+
+    /**
+     * Parses {@code input} as an unmark identifier - tries to parse as {@code All}
+     * first, then {@code Index}, then as {@code StudentID}. Returns a
+     * {@link PersonIdentifierOrAll} if it's valid as either format. Leading and
+     * trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException
+     *             if the input is neither {@code All.ALL_KEYWORD}, a valid index
+     *             nor a valid student ID.
+     */
+    public static PersonIdentifierOrAll parsePersonIdentifierOrAll(String input) throws ParseException {
+        requireNonNull(input);
+        String trimmed = input.trim();
+        if (trimmed.equals(All.ALL_KEYWORD)) {
+            return new All();
+        }
+        try {
+            return parsePersonIdentifier(input);
+        } catch (ParseException pe) {
+            throw new ParseException(MESSAGE_INVALID_PERSON_IDENTIFIER_OR_ALL);
+        }
     }
 
     /**
@@ -185,5 +226,44 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses keywords (from preamble) and student ID fragments (from i/ values)
+     * from {@code arg}. Returns an immutable container (record) holding both lists.
+     */
+    public static KeywordsAndIdFrags parseKeywordsAndIdFrags(ArgumentParseResult arg,
+            OptionalSinglePreambleOption<String> preambleOption,
+            ZeroOrMorePrefixOption<String> studentIdFragmentsOption) {
+
+        requireAllNonNull(arg, preambleOption, studentIdFragmentsOption);
+
+        List<String> keywords = new ArrayList<>();
+        List<String> idFrags = new ArrayList<>();
+
+        arg.getOptionalValue(preambleOption).map(
+                s -> Arrays.stream(s.trim().split("\\s+")).filter(tok -> !tok.isBlank()).collect(Collectors.toList()))
+                .ifPresent(keywords::addAll);
+
+        for (String raw : arg.getAllValues(studentIdFragmentsOption)) {
+            if (raw == null) {
+                continue;
+            }
+            String trimmed = raw.trim();
+            if (trimmed.isEmpty()) {
+                continue;
+            }
+
+            String[] parts = trimmed.split("\\s+");
+            idFrags.add(parts[0]);
+            for (int i = 1; i < parts.length; i++) {
+                String tok = parts[i];
+                if (!tok.isBlank()) {
+                    keywords.add(tok);
+                }
+            }
+        }
+
+        return new KeywordsAndIdFrags(List.copyOf(keywords), List.copyOf(idFrags));
     }
 }

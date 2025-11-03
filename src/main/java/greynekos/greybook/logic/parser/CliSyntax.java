@@ -16,5 +16,5 @@ public class CliSyntax {
     public static final Prefix PREFIX_ABSENT = new Prefix("a/");
     public static final Prefix PREFIX_LATE = new Prefix("l/");
     public static final Prefix PREFIX_EXCUSED = new Prefix("e/");
-    public static final Prefix PREFIX_EMPTY = new Prefix("");
+    public static final Preamble PREAMBLE = new Preamble();
 }

@@ -11,12 +11,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
 import greynekos.greybook.commons.core.GuiSettings;
 import greynekos.greybook.commons.core.history.CommandHistory;
-import greynekos.greybook.model.person.NameContainsKeywordsPredicate;
+import greynekos.greybook.model.person.NameOrStudentIdPredicate;
 import greynekos.greybook.testutil.GreyBookBuilder;
 
 public class ModelManagerTest {
@@ -39,7 +40,7 @@ public class ModelManagerTest {
     public void setUserPrefs_validUserPrefs_copiesUserPrefs() {
         UserPrefs userPrefs = new UserPrefs();
         userPrefs.setGreyBookFilePath(Paths.get("greybook/book/file/path"));
-        userPrefs.setGuiSettings(new GuiSettings(1, 2, 3, 4));
+        userPrefs.setGuiSettings(new GuiSettings(1, 2, 3, 4, false));
         modelManager.setUserPrefs(userPrefs);
         assertEquals(userPrefs, modelManager.getUserPrefs());
 
@@ -56,7 +57,7 @@ public class ModelManagerTest {
 
     @Test
     public void setGuiSettings_validGuiSettings_setsGuiSettings() {
-        GuiSettings guiSettings = new GuiSettings(1, 2, 3, 4);
+        GuiSettings guiSettings = new GuiSettings(1, 2, 3, 4, false);
         modelManager.setGuiSettings(guiSettings);
         assertEquals(guiSettings, modelManager.getGuiSettings());
     }
@@ -144,7 +145,7 @@ public class ModelManagerTest {
 
         // different filteredList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
-        modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+        modelManager.updateFilteredPersonList(new NameOrStudentIdPredicate(Arrays.asList(keywords), List.of()));
         assertFalse(modelManager.equals(new ModelManager(greyBook, userPrefs, history)));
 
         // resets modelManager to initial state for upcoming tests

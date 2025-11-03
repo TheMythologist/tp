@@ -13,7 +13,6 @@ import greynekos.greybook.logic.parser.commandoption.MutuallyExclusiveOption;
 import greynekos.greybook.logic.parser.commandoption.NoDuplicateOption;
 import greynekos.greybook.logic.parser.commandoption.OneOrMorePreambleOption;
 import greynekos.greybook.logic.parser.commandoption.Option;
-import greynekos.greybook.logic.parser.commandoption.OptionalSinglePreambleOption;
 import greynekos.greybook.logic.parser.commandoption.PrefixOption;
 import greynekos.greybook.logic.parser.commandoption.RequiredOption;
 import greynekos.greybook.logic.parser.commandoption.SinglePreambleOption;
@@ -81,7 +80,7 @@ public class CommandParser {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(getNoDuplicateOptions());
-        argMultimap.verifyNoMutuallyExclusivePrefixesFor(getMutuallyExclusiveOptions());
+        argMultimap.verifyNoMutuallyExclusiveOptionsFor(getMutuallyExclusiveOptions());
 
         Map<Option<?>, List<?>> optionArgumentToResult = new HashMap<>();
         for (Option<?> option : options) {
@@ -92,15 +91,6 @@ public class CommandParser {
                 }
             } else if (option instanceof SinglePreambleOption) {
                 result.add(option.parseOptionArgument(argMultimap.getPreamble()));
-            } else if (option instanceof OptionalSinglePreambleOption) {
-                String preamble = argMultimap.getPreamble();
-                if (!preamble.isEmpty()) {
-                    try {
-                        result.add(option.parseOptionArgument(preamble));
-                    } catch (ParseException e) {
-                        // Ignore empty preamble options
-                    }
-                }
             } else {
                 for (String arg : argMultimap.getAllValues(option.getPrefix())) {
                     result.add(option.parseOptionArgument(arg));
@@ -124,8 +114,9 @@ public class CommandParser {
         return filterOptionsByInstance(NoDuplicateOption.class);
     }
 
-    private Prefix[] getMutuallyExclusiveOptions() {
-        return filterOptionsByInstance(MutuallyExclusiveOption.class);
+    private MutuallyExclusiveOption<?>[] getMutuallyExclusiveOptions() {
+        return options.stream().filter(option -> MutuallyExclusiveOption.class.isInstance(option)).toList()
+                .toArray(new MutuallyExclusiveOption[0]);
     }
 
     private Prefix[] filterOptionsByInstance(Class<?> cls) {
@@ -138,6 +129,13 @@ public class CommandParser {
      * in the given {@code ArgumentMultimap}.
      */
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+        return Stream.of(prefixes).allMatch(prefix -> {
+            if (prefix.getPrefix().equals("")) {
+                if (argumentMultimap.getPreamble().trim().equals("")) {
+                    return false;
+                }
+            }
+            return argumentMultimap.getValue(prefix).isPresent();
+        });
     }
 }

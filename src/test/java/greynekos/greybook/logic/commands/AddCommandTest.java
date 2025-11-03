@@ -21,6 +21,7 @@ import greynekos.greybook.model.Model;
 import greynekos.greybook.model.ReadOnlyGreyBook;
 import greynekos.greybook.model.ReadOnlyHistory;
 import greynekos.greybook.model.ReadOnlyUserPrefs;
+import greynekos.greybook.model.person.AttendanceStatus;
 import greynekos.greybook.model.person.Person;
 import greynekos.greybook.model.person.StudentID;
 import greynekos.greybook.testutil.PersonBuilder;
@@ -138,6 +139,16 @@ public class AddCommandTest {
 
         @Override
         public Optional<Person> getPersonByStudentId(StudentID studentId) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void markPerson(Person target, AttendanceStatus.Status attendanceStatus) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void unmarkPerson(Person target) {
             throw new AssertionError("This method should not be called.");
         }
     }

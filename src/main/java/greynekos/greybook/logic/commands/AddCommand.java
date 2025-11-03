@@ -31,11 +31,11 @@ public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to GreyBook. " + "Parameters: "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to GreyBook. " + "\nParameters: "
             + PREFIX_NAME + "NAME " + PREFIX_PHONE + "PHONE " + PREFIX_EMAIL + "EMAIL " + PREFIX_STUDENTID
-            + "STUDENTID " + "[" + PREFIX_TAG + "TAG]...\n" + "Example: " + COMMAND_WORD + " " + PREFIX_NAME
+            + "STUDENTID " + "[" + PREFIX_TAG + "TAG]...\n" + "Example:\n" + "  " + COMMAND_WORD + " " + PREFIX_NAME
             + "John Doe " + PREFIX_PHONE + "98765432 " + PREFIX_EMAIL + "johnd@example.com " + PREFIX_STUDENTID
-            + "A0000000Y " + PREFIX_TAG + "friends " + PREFIX_TAG + "owesMoney";
+            + "A0000000Y " + PREFIX_TAG + "member " + PREFIX_TAG + "owesMoney";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in GreyBook.";

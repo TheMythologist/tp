@@ -27,7 +27,8 @@ public class Person {
     private final AttendanceStatus attendanceStatus;
 
     /**
-     * Every field must be present and not null.
+     * Every field must be present and not null. Constructs with a person with an
+     * unmarked attendance.
      */
     public Person(Name name, Phone phone, Email email, StudentID studentID, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, tags, studentID);
@@ -40,11 +41,11 @@ public class Person {
     }
 
     /**
-     * Constructs a Person.
+     * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, StudentID studentID, Set<Tag> tags,
             AttendanceStatus attendanceStatus) {
-        requireAllNonNull(name, phone, email, tags, studentID);
+        requireAllNonNull(name, phone, email, tags, studentID, attendanceStatus);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -110,7 +111,8 @@ public class Person {
 
         Person otherPerson = (Person) other;
         return name.equals(otherPerson.name) && phone.equals(otherPerson.phone) && email.equals(otherPerson.email)
-                && tags.equals(otherPerson.tags) && studentID.equals(otherPerson.studentID);
+                && tags.equals(otherPerson.tags) && studentID.equals(otherPerson.studentID)
+                && attendanceStatus.equals(otherPerson.attendanceStatus);
     }
 
     @Override

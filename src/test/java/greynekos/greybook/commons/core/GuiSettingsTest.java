@@ -9,8 +9,8 @@ public class GuiSettingsTest {
     public void toStringMethod() {
         GuiSettings guiSettings = new GuiSettings();
         String expected = GuiSettings.class.getCanonicalName() + "{windowWidth=" + guiSettings.getWindowWidth()
-                + ", windowHeight=" + guiSettings.getWindowHeight() + ", windowCoordinates="
-                + guiSettings.getWindowCoordinates() + "}";
+                + ", windowHeight=" + guiSettings.getWindowHeight() + ", windowX=" + guiSettings.getWindowX()
+                + ", windowY=" + guiSettings.getWindowY() + ", isMaximized=" + guiSettings.getIsMaximized() + "}";
         assertEquals(expected, guiSettings.toString());
     }
 }

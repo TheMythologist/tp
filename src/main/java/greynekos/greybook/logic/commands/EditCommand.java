@@ -28,6 +28,7 @@ import greynekos.greybook.logic.parser.commandoption.OptionalPrefixOption;
 import greynekos.greybook.logic.parser.commandoption.SinglePreambleOption;
 import greynekos.greybook.logic.parser.commandoption.ZeroOrMorePrefixOption;
 import greynekos.greybook.model.Model;
+import greynekos.greybook.model.person.AttendanceStatus;
 import greynekos.greybook.model.person.Email;
 import greynekos.greybook.model.person.Name;
 import greynekos.greybook.model.person.Person;
@@ -47,7 +48,7 @@ public class EditCommand extends Command {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) " + "[" + PREFIX_NAME + "NAME] " + "[" + PREFIX_PHONE
             + "PHONE] " + "[" + PREFIX_EMAIL + "EMAIL] " + "[" + PREFIX_STUDENTID + "STUDENTID] " + "[" + PREFIX_TAG
-            + "TAG]...\n" + "Example: " + COMMAND_WORD + " 1 " + PREFIX_PHONE + "91234567 " + PREFIX_EMAIL
+            + "TAG]...\n" + "Example:\n" + "  " + COMMAND_WORD + " 1 " + PREFIX_PHONE + "91234567 " + PREFIX_EMAIL
             + "johndoe@example.com";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
@@ -148,8 +149,9 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         StudentID updatedStudentId = editPersonDescriptor.getStudentID().orElse(personToEdit.getStudentID());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        AttendanceStatus updatedAttendance = personToEdit.getAttendance();
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedStudentId, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedStudentId, updatedTags, updatedAttendance);
     }
 
     /**

@@ -4,68 +4,538 @@
   pageNav: 3
 ---
 
-# GreyBook User Guide
+# User Guide
 
-GreyBook is a **desktop app for managing contacts, optimised for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, GreyBook can get your contact management tasks done faster than traditional GUI apps.
+**GreyBook** is a desktop application that helps **NUS clubs and societies efficiently manage contacts and track attendance**. It combines the speed and precision of a Command Line Interface (CLI) with the convenience of a Graphical User Interface (GUI).
 
-> New to a CLI? It just means that you type short commands (like 'add' or 'list') instead of clicking through menus on a GUI.
+Optimized for users who prefer typing commands, GreyBook enables fast, streamlined management — letting you accomplish more in less time than with traditional GUI-based applications.
 
+<box type="tip" seamless>
+
+**New to a CLI?** It simply means typing short commands (like `add` or `list`) instead of clicking through menus and buttons. No need to use a mouse!
+</box>
+
+# Table of Contents
 <!-- * Table of Contents -->
 <page-nav-print />
 
----
+## About This Guide
 
-## Quick start
+### Target Users
 
-1. **Install Java 17 or newer.**
-   - Check your version: open a terminal (Windows: Command Prompt; macOS/Linux: Terminal) and run `java -version`.
-   - If you don’t have Java 17+, install the latest Long Term Support (LTS) Java. macOS users can follow this guide: <https://se-education.org/guides/tutorials/javaInstallationMac.html>.
+This guide is designed for **leaders and committee members of NUS clubs or societies** who:
 
-2. **Download GreyBook.**
-   - Get the latest `.jar` from the [Releases page](https://github.com/AY2526S1-CS2103T-F13-4/tp/releases).
-   - Save it to a folder you’ll remember (this becomes GreyBook’s “home” folder).
+- Manage members' contact details, emails, and student IDs
+- Track attendance for meetings and events
+- Prefer efficient, keyboard-driven workflows
 
-3. **Start the app.**
-   - In a terminal, run the command `cd` with the GreyBook's "Home" folder, and run GreyBook with Java:
-     ```
-     cd C:\Users\John\GreyBookFolder
-     java -jar GreyBook.jar
-     ```
+<div style="page-break-after: always;"></div>
 
-4. **What you’ll see.**
-   - A window opens with sample contacts so you can try commands.
+### What You'll Need
 
-5. **Try a few commands:**
-    - `help` — open the help window
-    - `add n/John Doe p/98765432 e/johnd@example.com i/A0000000Y` — add a person
-    - `mark 1 p/` — marks the attendance of the 1st person in the list as `Present`
-    - `mark A0000000Y a/` — marks John Doe as `Absent`
-    - `unmark 1` — remove the attendance status of the 1st person in the list
-    - `unmark A0000000Y` — removes the attendance status of John Doe
-    - `unmark all` — removes the attendance status of all people
-    - `list` — show all people
-    - `delete 3` — delete the 3rd person in the list
-    - `clear` — delete all people
-    - `exit` — quit the app
+**Prior Knowledge:**
 
-> If you see a security prompt on macOS the first time you open the app, right-click the `.jar` and choose **Open**, then confirm.
+- Basic computer literacy (e.g., managing files, running applications)
+- Familiarity with command-line interfaces is helpful but not required
+
+**Technical Requirements:**
+
+- Java 17 or higher installed on your computer
+- At least 50MB of available storage space
+- Compatible with any modern operating system (Windows, macOS, Linux)
+
+### How to Use This Guide
+
+- **New users**: Start with [Quick Start](#quick-start) for setup and basic usage
+- **Existing users**: Jump to [Advanced Workflows](#recommended-workflows-for-experienced-users) to learn how to use GreyBook efficiently
 
 ---
 
-## Features
+## Quick Start
 
-<box type="info" seamless>
+### Installation
 
-**Notes about the command format:**<br>
+1. **Check Java Version**
+
+   Open a terminal and ensure you have Java `17` or above installed on your computer.
+
+   How do I open/use a terminal?</br>
+   - Mac Users: Press `Cmd + Space`, type Terminal in search bar to open.
+   - Windows Users: In the Windows Start menu search bar, type "Command Prompt" to open.
+   - Linux Users: Press `Ctrl + Alt + T` to instantly open a terminal window
+
+Type the following command exactly as you see it and press enter.
+
+   ```
+   java -version
+   ```
+
+If you have Java 17 installed, you should see something similar to the following:
+
+```
+java version "17.0.12" 2024-07-16 LTS
+Java(TM) SE Runtime Environment (build 17.0.12+8-LTS-286)
+Java HotSpot(TM) 64-Bit Server VM (build 17.0.12+8-LTS-286, mixed mode, sharing)
+```
+
+If you see a version number of 17 or above, you're all set.
+
+**Don't have the correct version of Java installed?** <br>
+Mac users: Follow <a href="https://se-education.org/guides/tutorials/javaInstallationMac.html" target="_blank">this guide</a>.<br>
+Windows users: Follow <a href="https://se-education.org/guides/tutorials/javaInstallationWindows.html" target="_blank">this guide</a>.<br>
+Linux users: Follow <a href="https://se-education.org/guides/tutorials/javaInstallationLinux.html" target="_blank">this guide</a>.<br>
+
+<div style="page-break-after: always;"></div>
+
+1. **Download GreyBook**
+
+   Download the latest `.jar` file from the <a href="https://github.com/AY2526S1-CS2103T-F13-4/tp/releases/latest" target="_blank">latest release page</a>.<br>
+   ![Where to download](images/githubDownload.png)
+
+   By default, this will download `greybook.jar` to your **Downloads** folder. This will be your **home folder**, or in other words, where your GreyBook data is stored.<br>
+   If you wish, you can copy or move `greybook.jar` anywhere you like to change its **home folder**.
+
+2. **Launch the Application**
+
+   If you did not move `greybook.jar`, it will be in your **Downloads** folder. Navigate (`cd`) to it by running the following commands in your terminal:<br>
+
+   ```
+   cd Downloads
+   java -jar greybook.jar
+   ```
+
+   **Note**: These are two separate commands! Press enter after each line to run them individually.<br>
+   If you had moved `greybook.jar` elsewhere, replace `Downloads` with `greybook.jar`'s new filepath.
+
+   > **macOS users:** If you see a security prompt the first time, right-click the `.jar` → **Open** → confirm.
+
+3. **First Look**
+
+   GreyBook should launch within a few seconds.
+   A few sample students are preloaded so you can try out basic commands immediately.
+
+   ![Initial Window](images/initialWindow.png)
+
+---
+
+<div style="page-break-after: always;"></div>
+
+### Your First Commands
+
+Let's try a few essential commands. Remember to press enter after typing each command to run it!
+
+1. **Add a Student**<br>
+
+   ```
+   add n/John Doe p/98765432 e/johnd@example.com i/A0000000Y
+   ```
+
+2. **Mark John's Attendance as Present**
+
+   ```
+   mark A0000000Y p/
+   ```
+
+3. **Unmark John's Attendance**
+
+   ```
+   unmark A0000000Y
+   ```
+
+4. **Find and Display John**
+
+   ```
+   find i/A0000000Y
+   ```
+
+5. **List All Students**
+
+    ```
+    list
+    ```
+
+---
+
+---
+
+## Command Format Summary
+
+Here is some important information you need to understand the rest of the guide!
+
+**Quick Notes about the command format:**
 
 - Words in `UPPER_CASE` are called **parameters**, things you replace.<br>
-  e.g. in `add n/NAME`, replace `NAME` with a person's name, like `add n/John Doe`.
+  e.g. in `add n/NAME`, replace `NAME` with a student's name, like `add n/John Doe`.
+
+- Words in `"double quotation marks"` are called **literals**, things you type as-is (without the quotation marks).<br>
+  e.g. in the command format of `mark "all"`, make sure you type out exactly `mark all`.
 
 - Items in square brackets are optional.<br>
-  e.g. `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+  e.g. `n/NAME [t/TAG]` can be used as `n/John Doe t/member` or as `n/John Doe`.
+
+- Items in round brackets are mutually exclusive. Pick only one!<br>
+  e.g. `(INDEX | STUDENTID)` can be used as `1` or as `A0000000Y`.
 
 - Items with `…`​ after them can be used multiple times, including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (0 times), `t/friend` (1 time), `t/friend t/family` (2 times) etc.
+  e.g. `[t/TAG]…​` can be used as ` ` (0 times), `t/member` (1 time), `t/member t/exco` (2 times) etc.
+
+- If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines,type them out manually instead!
+
+<div style="page-break-after: always;"></div>
+
+## Core Features
+
+### Managing Students
+
+GreyBook helps you store, edit, and track students' details with precision.
+
+#### Adding Students: `add`
+
+**Command:**
+`add n/NAME p/PHONE e/EMAIL i/STUDENTID [t/TAG]…​`
+
+**Parameters:**
+
+- `n/NAME`: Student's full name (letters, spaces, and certain special characters allowed)
+- `p/PHONE`: 8-digit Singapore phone number or International phone numbers (following E.164 Standards)
+- `e/EMAIL`: Valid email address
+- `i/STUDENTID`: Student's NUS ID (e.g., A0000000Y)
+- `t/TAG`: Optional categories (e.g., `t/committee` or `t/freshman`)
+
+<box type="tip" seamless>
+
+**Tip:** A name can only contain letters, spaces, and certain special characters. Refer to the [Parameter Details](#parameter-details) for more details!
+
+</box>
+
+<box type="tip" seamless>
+
+**Tip:** We use a special checksum to validate `STUDENTID` field so only **valid** NUS Student IDs will be accepted!
+</box>
+
+**Examples:**
+
+```
+add n/John Doe p/98765432 e/johnd@example.com i/A0000000Y
+add n/Betsy Crowe p/87654321 e/betsycrowe@example.com i/A1111111M t/operations-team
+```
+
+**Expected Output:**
+
+![result for adding Betsy Crowe](images/addBetsyResult.png)
+
+<box type="tip" seamless>
+
+**Tip:** A student can have any number of tags (including 0)
+</box>
+
+---
+
+#### Editing Students: `edit`
+
+**Command:**
+`edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [i/STUDENTID] [t/TAG]…​`
+
+**Parameters:**
+
+- `INDEX`: The index number in the displayed student list (must be positive)
+- Any combination of optional fields can be updated
+
+**Behavior:**
+
+- Updates replace existing values
+- When editing tags, the old tags are replaced entirely
+- Use `t/` (empty) to remove all tags
+
+**Examples:**
+
+```
+edit 1 p/91234567 e/johndoe@example.com
+edit 2 n/Betsy Crower t/
+```
+
+**Expected Output:**
+
+![result for adding Betsy Crowe](images/editResult.png)
+
+---
+
+<div style="page-break-after: always;"></div>
+
+#### Finding Students: `find`
+
+**Command:** `find KEYWORD [MORE_KEYWORDS]…​ [i/ID_FRAGMENT]…​`
+
+**Parameters:**
+
+- `KEYWORD`: The name of the student
+- `i/ID_FRAGMENT`: A substring of a student ID (e.g. `0Y` from `A0000000Y`)
+- You can provide any number of keywords and ID fragments
+- The search is case-insensitive. e.g. `hans` will match `Hans`
+
+Students matching at least one keyword or one student ID fragment will be returned.
+e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+
+Examples:
+
+- `find John` returns `john` and `John Doe`
+- `find i/12345` returns anyone with student IDs containing `12345` (e.g. `A0123456J`)
+- `find alex i/8L david` returns `Alex Yeoh`, `David Li`, anyone with student IDs containing `8L`<br>
+  ![result for 'find alex i/8L david'](images/findAlexDavidResult.png)
+
+---
+
+#### Listing All Students: `list`
+
+**Command:** `list`
+
+<box type="tip" seamless>
+
+**Tip:** Use this command after a `find` command to see all students again!
+</box>
+
+---
+
+#### Deleting Students: `delete`
+
+**Command:**
+`delete (INDEX | STUDENTID)`
+
+**Parameters:**
+
+- `INDEX`: The index number in the displayed student list (must be positive)
+- `STUDENTID`: Student's NUS ID (e.g., A0000000Y)
+
+**Notes:**
+
+- Provide either an index or a student ID — not both
+
+Examples:
+
+- Running `list`, then running `delete 2` deletes the 2nd student in the GreyBook.
+- Running `find Betsy`, then running `delete 1` deletes the 1st student in the results of the `find` command.
+- `delete A0123456J` deletes the student with student ID A0123456J from the GreyBook.
+
+---
+
+#### Clearing all Students: `clear`
+
+**Command:** `clear`
+
+Deletes **all** entries from GreyBook.
+
+<box type="warning" seamless>
+
+**Caution!**
+This action cannot be undone!
+</box>
+
+---
+
+### Managing Attendance
+
+GreyBook helps you keep track of students' attendance efficiently.
+
+#### Marking Attendance: `mark`
+
+**Command:**
+`mark (INDEX | STUDENTID | "all") (p/ | a/ | l/ | e/)`
+
+**Flags:**
+
+| Flag | Status  |
+| ---- | ------- |
+| `p/` | Present |
+| `a/` | Absent  |
+| `l/` | Late    |
+| `e/` | Excused |
+
+**Notes:**
+
+- Provide **either** an index, a student ID **or** "all" — not both nor "all"
+- Only one attendance flag can be used at a time
+- Marking a student with the same attendance status will have no effect
+
+<div style="page-break-after: always;"></div>
+
+**Examples:**
+
+#### 1. Mark Student by Index or Student ID
+
+```
+mark 1 p/
+mark A1234567X p/
+```
+
+<box type="tip" seamless>
+
+**Tip:** When marking students by their Student ID, they do not have to be displayed in your filtered list of students.
+</box>
+
+##### Expected Output
+
+![result for 'mark 1 p/' or 'mark A1234567X p/'](images/markIndexOrStudentIdResult.png)
+
+#### 2. Mark All Students
+
+```
+mark all a/
+```
+
+##### Expected Output
+
+![result for 'mark all a/'](images/markAllResult.png)
+
+---
+
+<div style="page-break-after: always;"></div>
+
+#### Unmarking Attendance: `unmark`
+
+**Command:**
+`unmark (INDEX | STUDENTID | "all")`
+
+**Notes:**
+
+- Provide **either** an index, a student ID **or** "all" — not both nor "all"
+- Unmarking a student with no attendance status will have no effect
+
+**Examples:**
+
+#### 1. Unmark Student by Index or Student ID
+
+```
+unmark 1
+unmark A1234567X
+```
+
+<box type="tip" seamless>
+
+**Tip:** When unmarking students by their Student ID, they do not have to be displayed in your filtered list of students.
+</box>
+
+##### Expected Output
+
+![result for 'unmark 1' or 'unmark A1234567X'](images/unmarkIndexOrStudentIdResult.png)
+
+#### 2. Unmark All Students
+
+```
+unmark all
+```
+
+##### Expected Output
+
+![result for 'unmark all'](images/unmarkAllResult.png)
+
+---
+
+<div style="page-break-after: always;"></div>
+
+### Application Controls
+
+GreyBook also offers some core commands that are essential in every application.
+
+#### Getting Help: `help`
+
+**Command:** `help`
+
+Shows a pop-up containing the GreyBook User Guide URL (this webpage). Copy the link into your browser to access the guide.
+
+![help message](images/helpMessage.png)
+
+---
+
+#### Exiting the Application: `exit`
+
+**Command:** `exit`
+
+Closes GreyBook.
+
+---
+
+### Miscellaneous Features
+
+#### Terminal-like Behaviour
+
+Want to rerun a command you typed before? Similar to a typical CLI application, use the **up or down arrows** to navigate your command history. You can also use Ctrl+C to clear the current command!
+
+<box type="tip" seamless>
+
+**Tip:** If you have selected some text in the command, `Ctrl+C` will not clear your command. This way, you can still use `Ctrl+C` to copy the text!
+</box>
+
+<box type="warning" seamless>
+
+**Caution! For advanced users**
+The command history is saved in the hard disk automatically after every successful command as a JSON file at: `[JAR file location]/history.json`.
+It is not recommended to modify this file to alter your command history. If your changes to the history file makes it invalid, GreyBook will discard all history and start fresh on the next run. Before you edit, make a backup copy of the file.
+</box>
+
+---
+
+#### Automatic Saving of Data
+
+GreyBook data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+
+The data is saved as a JSON file at: <br>
+`[JAR file location]/data/greybook.json` <br>
+
+By default, your data file is located at: <br>
+`Downloads/data/greybook.json`<br>
+Open the Downloads folder in your preferred File Explorer to check it out!
+
+<box type="warning" seamless>
+
+**Caution!**
+Editing this file is recommended for advanced users only. If your changes to the data file makes it invalid, GreyBook will discard all data and start fresh on the next run. Before you edit, make a backup copy of the file.
+Some changes can cause the GreyBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+</box>
+
+<div style="page-break-after: always;"></div>
+
+## Recommended Workflows (for experienced users)
+
+Here are some unique ways to combine commands to increase your efficiency with GreyBook. <br>
+
+**Scenario 1**: I know the expected headcount and one person is excused. My on-site count matches that.<br>
+Recommended Flow: `mark` all students as present, `find` the excused student and `mark` accordingly. <br>
+
+```
+mark all p/
+find Jason
+mark 1 e/
+list
+```
+
+---
+
+**Scenario 2**: I have late arrivals that I need to mark.<br>
+Recommended Flow: `find` the late arrivals and `mark all l/`. No need to look for latecomers manually! <br>
+
+```
+find jack jill
+mark all l/
+list
+```
+
+---
+
+**Scenario 3**: Students are trickling in and I need to mark them as present one by one.<br>
+Recommended Flow: Type a `find` command followed by student names as they arrive. When you have the time, execute the `find` command and `mark all p/` to mark those that arrived so far.<br>
+
+```
+find john sally jason maria
+mark all p/
+find tommy larry
+...
+```
+
+---
+
+## Full Command Format Details
+
+For advanced users who wish to use special characters like quotation marks (`"`) in your arguments, do take note of these advanced command formats.
 
 - Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -76,250 +546,176 @@ GreyBook is a **desktop app for managing contacts, optimised for use via a Comma
 - If a prefix for the command occurs in the argument, you may use quotation marks `"` to escape it.
   e.g. `SomeCommandName p/"p-Slash t/ contains t-Slash" t/tag`
 
-* If you want to use quotation marks `"` in your argument, you have to escape it with a backslash `\`
+- If you want to use quotation marks `"` in your argument, you have to escape it with a backslash `\`
   e.g. `SomeCommandName t/Quote: \"`
 
-* Likewise if you wanted to use backslashes `\` in your argument, you have to escape it with a backslash.
+- Likewise, if you wanted to use backslashes `\` in your argument, you have to escape it with a backslash.
   e.g. `SomeCommandName t/Backslash: \\`
 
-- If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application. Type them out manually instead!
-  </box>
+---
 
-### Viewing help : `help`
+<div style="page-break-after: always;"></div>
 
-Shows a message explaining how to access the help page.
+### Command Summary
 
-![help message](images/helpMessage.png)
+| Command  | Description                  | Syntax                                                           |
+| -------- | ---------------------------- | ---------------------------------------------------------------- |
+| `add`    | Create a new student         | `add n/NAME p/PHONE e/EMAIL i/STUDENTID [t/TAG]…`                |
+| `edit`   | Update details               | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [i/STUDENTID] [t/TAG]…` |
+| `delete` | Remove a student             | `delete (INDEX \| STUDENTID)`                                    |
+| `list`   | Show all students            | `list`                                                           |
+| `find`   | Search by name or student ID | `find KEYWORD [MORE_KEYWORDS]…​ [i/ID_FRAGMENT]…​`                 |
+| `mark`   | Mark attendance              | `mark (INDEX \| STUDENTID \| all) (p/ \|\| a/ \|\| l/ \|\| e/)`  |
+| `unmark` | Unmark attendance            | `unmark (INDEX \| STUDENTID \| all)`                             |
+| `clear`  | Delete **all** students      | `clear`                                                          |
+| `help`   | Open the help window         | `help`                                                           |
+| `exit`   | Quit the app                 | `exit`                                                           |
 
-Format: `help`
+---
 
-### Adding a person: `add`
+### Parameter Details
 
-Adds a person to the GreyBook.
-
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL i/STUDENTID [t/TAG]…​`
+| Parameter   | Description                                              |
+| ----------- | -------------------------------------------------------- |
+| `NAME`      | Letters, spaces, and certain special characters allowed. |
+| `PHONE`     | 8-digit Singapore phone number.                          |
+| `EMAIL`     | Must follow valid email format (case-insensitive).       |
+| `STUDENTID` | NUS Student ID (e.g., A0123456J).                        |
+| `TAG`       | Optional label for categorizing members.                 |
+| `INDEX`     | Positive integer (1, 2, 3, …).                           |
 
 <box type="tip" seamless>
 
-**Tip:** A person can have any number of tags (including 0)
+**Tip:** Refer to the [FAQ](#name-related-issues) for names with unsupported characters.
 </box>
 
-Examples:
+---
 
-- `add n/John Doe p/98765432 e/johnd@example.com i/A0000000Y`
-- `add n/Betsy Crowe t/friend e/betsycrowe@example.com i/A1111111M p/1234567 t/criminal`
-
-### Listing all persons : `list`
-
-Shows a list of all persons in the GreyBook.
-
-Format: `list`
-
-### Editing a person : `edit`
-
-Edits an existing person in the GreyBook.
-
-Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [i/STUDENTID] [t/TAG]…​`
-
-- Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-- At least one of the optional fields must be provided.
-- Existing values will be updated to the new values.
-- When editing tags, the existing tags of the person will be removed i.e. adding of tags is not cumulative.
-- You can remove all the person’s tags by typing `t/` without
-  specifying any tags after it.
-
-Examples:
-
-- `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-- `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-
-### Marking a person : `mark`
-
-Marks the attendance of an existing person in the GreyBook.
-
-Format: `mark (INDEX || STUDENTID) (p/ || a/ || l/ || e/)`
-
-* `||` indicates "or", meaning that within the parentheses, the user can provide either one option or the other, but **not both simultaneously**.
-* `mark INDEX` marks the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* `mark STUDENTID` marks the person with the specified `STUDENTID`. The person with the student ID must be in the displayed person list.
-* One attendance flag must be provided.
-  * `p/`: Present
-  * `a/`: Absent
-  * `l/`: Late
-  * `e/`: Excused
-* Only one attendance flag can be used at a time. Using multiple flags (e.g. `p/ a/`) will result in an error.
-* Attendance flags are **not cumulative**; a new flag replaces the previous status.
-
-
-Examples:
-*  `mark A0000000Y p/` Marks the person with the student ID `A0000000Y` as `Present`.
-*  `mark 2 e/` Marks the 2nd person as `Excused`.
-
-### Unmarking a person : `unmark`
-
-Removes the attendance status of an existing person in the GreyBook.
-
-Format: `unmark INDEX` or `unmark STUDENTID` or `unmark all`
-
-* `unmark INDEX` removes the attendance of the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* `unmark STUDENTID` removes the attendance of the person with the specified `STUDENTID`. The person with the student ID must be in the displayed person list.
-* `unmark all` removes the attendance of **all persons** in the contact list.
-
-Examples:
-*  `unmark A0000000Y` Unmarks the person with the student ID `A0000000Y`.
-*  `unmark 2` Unmarks the 2nd person.
-*  `unmark all` Unmarks everyone in the current contact list.
-
-
-### Locating persons by name: `find`
-
-Finds persons whose names contain any of the given keywords.
-
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-- The search is case-insensitive. e.g. `hans` will match `Hans`
-- The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-- Only the name is searched.
-- Only full words will be matched e.g. `Han` will not match `Hans`
-- Persons matching at least one keyword will be returned.
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-
-Examples:
-
-- `find John` returns `john` and `John Doe`
-- `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
-
-### Deleting a person : `delete`
-
-Deletes the specified person from the GreyBook.
-
-Format: `delete INDEX` or `delete STUDENTID`
-
-- Deletes the person at the specified `INDEX` or with the specified `STUDENTID`.
-- The index refers to the index number shown in the displayed person list.
-- The index **must be a positive integer** 1, 2, 3, …​
-- The student ID must follow the format `A0000000Y` where:
-  - First character must be 'A'
-  - Followed by exactly 7 digits
-  - Ending with any English letter (A-Z)
-
-Examples:
-
-- `list` followed by `delete 2` deletes the 2nd person in the GreyBook.
-- `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
-- `delete A0123456J` deletes the person with student ID A0123456J from the GreyBook.
-
-### Clearing all entries : `clear`
-
-Deletes **all** entries from GreyBook.
-
-Format: `clear`
-
-> This action cannot be undone!
-
-### Exiting the program : `exit`
-
-Closes GreyBook.
-
-Format: `exit`
-
-### Saving the data
-
-GreyBook data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
-
-### Editing the data file
-
-GreyBook data is saved automatically as a JSON file at: <br>
-`[JAR file location]/data/GreyBook.json`
-
-<box type="warning" seamless>
-**Caution!**
-Editing this file is recommended for advanced users only. If your changes to the data file makes it invalid, GreyBook will discard all data and start fresh on the next run. Before you edit, make a backup copy of the file.
-Some changes can cause the GreyBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
-</box>
-
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
-
---------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## FAQs
 
-**Q: What operating systems does GreyBook support?**
-**A:** Any system that can run Java 17+ (Windows, macOS, Linux). If Java runs, GreyBook runs.
+### Installation & Requirements
 
-**Q: Do I need to install anything besides GreyBook?**
-**A:** Yes, **Java 17 or newer**. Check with `java -version`. If it’s older, install a current Long Term Support Java version.
+**Q: What operating systems does GreyBook support?**<br>
+**A:** Any system that can run Java 17+ (Windows, macOS, Linux). If Java 17 runs, GreyBook runs.
 
-**Q: How do I update GreyBook to a new version?**
-**A:** Download the new `.jar` and run it. Your existing data in `data/GreyBook.json` will be picked up automatically if you keep it in the same folder.
+**Q: Do I need to install anything besides GreyBook?**<br>
+**A:** Yes, **Java 17 or newer**. Check with `java -version`. If it's older, install a current Long Term Support Java version.
 
-**Q: Will I lose my data when I update?**
-**A:** No. The data file is separate from the app. Keep `data/GreyBook.json` with the `.jar` and you’re good.
+### Updating & Migration
 
-**Q: Where exactly is my data?**
-**A:** In `[JAR file location]/data/GreyBook.json`.
+**Q: How do I update GreyBook to a new version?**<br>
+**A:** Download the new `.jar` and run it. Your existing data in `data/greybook.json` will be picked up automatically if you keep it in the same folder.
 
-**Q: Can I move GreyBook to another computer (or a USB drive)?**
-**A:** Yes. Copy the `.jar` **and** the `data` folder together. On the new computer, double-click the `.jar`.
+**Q: Will I lose my data when I update?**<br>
+**A:** No. The data file is separate from the app. Keep `data/greybook.json` with the `.jar` and you're good.
 
-**Q: Is there an undo command?**
-**A:** Not currently. Actions like `delete` and `clear` are immediate and irreversible. Consider regular backups of `data/GreyBook.json`.
+**Q: Can I move GreyBook to another computer (or a USB drive)?**<br>
+**A:** Yes. Copy the `.jar` **and** the `data` folder together, as well the config and preferences files, `config.json` and `preferences.json` respectively. If you would to copy the command history as well, copy over the file `history.json`. On the new computer, simply run `java -jar greybook.jar`.
 
-**Q: How do I back up my contacts?**
-**A:** Close GreyBook and copy `data/GreyBook.json` to a safe place (cloud/storage drive).
+### Data Location, Saving & Backup
 
-**Q: I edited the JSON and something broke. What now?**
-**A:** Close GreyBook, restore your backup `GreyBook.json`, then reopen GreyBook. Avoid manual edits unless you’re confident.
+**Q: Where exactly is my data?**<br>
+**A:** In `[JAR file location]/data/greybook.json`. By default, it will be in `Downloads/data/greybook.json`
 
-**Q: Are name searches case-sensitive?**
+**Q: Does GreyBook save automatically?**<br>
+**A:** Yes. Changes are saved to `greybook.json` right after each command.
+
+**Q: How do I back up my data?**<br>
+**A:** Close GreyBook and copy `data/greybook.json` to a safe place (cloud/storage drive).
+
+**Q: I edited the JSON and something broke. What now?**<br>
+**A:** Close GreyBook, restore your backup `greybook.json`, then reopen GreyBook. Avoid manual edits unless you're confident.
+
+**Q: How do I reset GreyBook to factory data?**<br>
+**A:** Close the app, delete `data/greybook.json`, and reopen GreyBook (you'll start fresh with sample data).
+
+### Search Behaviour
+
+**Q: Are name searches case-sensitive?**<br>
 **A:** No. `hans` matches `Hans`.
 
-**Q: Why doesn’t `find Han` match `Hans`?**
-**A:** `find` matches **full words**. Use the full word or multiple keywords.
+**Q: How do tags work?**<br>
+**A:** Add any number: `t/member t/colleague`. Editing tags **replaces** the old set. Use `t/` (empty) to clear all tags.
 
-**Q: How do tags work?**
-**A:** Add any number: `t/friend t/colleague`. Editing tags **replaces** the old set. Use `t/` (empty) to clear all tags.
+### Limits & Performance
 
-**Q: Can I store addresses or other fields?**
+**Q: Is there an undo command?**<br>
+**A:** Not currently. Actions like `delete` and `clear` are immediate and irreversible. Consider regular backups of `data/greybook.json`.
+
+**Q: Can I store addresses or other fields?**<br>
 **A:** Only the fields shown in the command formats are supported (e.g., `n/`, `p/`, `e/`, `i/`, and tags).
 
-**Q: Does GreyBook save automatically?**
-**A:** Yes. Changes are saved to `GreyBook.json` right after each command.
+**Q: How many students can I store?**<br>
+**A:** There's no hard limit in the app; performance depends on your computer.
 
-**Q: How many contacts can I store?**
-**A:** There’s no hard limit in the app; performance depends on your computer.
+### Name Related Issues
 
-**Q: How do I reset GreyBook to factory data?**
-**A:** Close the app, delete `data/GreyBook.json`, and reopen GreyBook (you’ll start fresh with sample data).
+**Q: What characters are allowed in the name field?**<br>
+**A:** Only alphabets and the following special characters are allowed: `(Empty space)`, `,`, `(`, `)`, `/`, `.`, `@`, `-`, `'`.
 
----
+**Q: My name contains a character that is not allowed in the name. How should I enter my name?**<br>
+**A:** Please use standard English (Latin) letters only.
+For example, if your name is "محمد", you can enter it as "Mohamed". If your name is "李华", you can enter it as "Li Hua".
+Similarly, if your name contains special characters such as accents or diacritics (e.g. "José", "Strauß"), please remove them — e.g. "Jose", "Straus".
 
-## Known issues
-
-1. **App opens off-screen after moving between multiple monitors.**
-   **Fix:**
-   - Close GreyBook.
-   - Delete the `preferences.json` file created by GreyBook.
-   - Start GreyBook again.
-     _(`preferences.json` is in the same folder as your `.jar`, or in your app data folder depending on OS.)_
+**Q: Why are some special characters allowed but not others?**<br>
+**A:** This is due to the limitation of the program, as we are unable to support every single possible unicode character. We defer this decision to <a href="https://partnersupport.singpass.gov.sg/hc/en-sg/articles/32733563138585-What-are-the-special-characters-allowed-in-Myinfo-Name-data-item" target="_blank">Singapore's Myinfo</a> for supported special characters.
 
 ---
 
-## Command summary
+## Appendix
 
-Action | What it does | Format (examples)
----|---|---
-**Add** | Create a new contact | `add n/NAME p/PHONE_NUMBER e/EMAIL i/STUDENTID [t/TAG]...`<br>e.g., `add n/James Ho p/22224444 e/jamesho@example.com i/A0000000Y t/friend t/colleague`
-**List** | Show all contacts | `list`
-**Find** | Search by name (full words) | `find KEYWORD [MORE_KEYWORDS]`<br>e.g., `find James Jake`
-**Edit** | Update details | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [i/STUDENTID] [t/TAG]...`<br>e.g., `edit 2 n/James Lee e/jameslee@example.com`
-**Mark** | Mark attendance | `mark (INDEX \|\| STUDENTID) (p/ \|\| a/ \|\| l/ \|\| e/)`<br> e.g.,`mark 2 p/`, `mark A0123456J a/`
-**Unmark** | Unmark attendance | `unmark INDEX` or `unmark STUDENTID` or `unmark all`<br> e.g.,`unmark 2`, `unmark A0123456J`, `unmark all`
-**Delete** | Remove a contact | `delete INDEX` or `delete STUDENTID`<br>e.g., `delete 3`, `delete A0123456J`
-**Clear** | Delete **all** contacts | `clear`
-**Help** | Open the help window | `help`
-**Exit** | Quit the app | `exit`
+### Glossary
 
+**Tag**: A label used to categorize students (e.g., "committee", "freshman"). <br>
+**Attendance**: Record of presence, absence, lateness, or excused status at an event. <br>
+**Mutually Exclusive**: Two items that cannot be selected at the same time.<br>
+**CLI (Command-Line Interface)**: Typing commands to use an app instead of clicking menus/buttons with a mouse.<br>
+**GUI (Graphical-User Interface)**: Windows, buttons, and menus you click in an app.<br>
+**Home Folder**: The folder where `greybook.jar` is found, and where GreyBook saves its data and history files.<br>
+
+### Technical Specifications
+
+**System Requirements:**
+
+- **Java Version:** 17 or higher
+- **Memory:** 512MB minimum
+- **Storage:** 50MB available space
+- **Display:** 1024x768 minimum resolution
+
+**Supported Platforms:**
+
+- Windows 10/11
+- macOS 10.14 or later
+- Linux (Ubuntu 18.04+, CentOS 7+, etc.)
+
+**Data Storage:**
+
+- Stored locally in JSON format
+- No internet connection required
+- Data is portable and human-readable
+
+---
+
+### Contact Information
+
+**Development Team:** Project maintained by **CS2103T-F13-4** team<br>
+**GitHub**: <a href="https://github.com/AY2526S1-CS2103T-F13-4/tp" target="_blank">AY2526S1-CS2103T-F13-4/tp</a>
+
+**Support:**
+
+- Technical issues: Submit a GitHub Issue
+- Feature requests: Open a Discussion
+- General questions: Refer to FAQ or contact via GitHub Discussions
+
+**Version Information:**
+
+- **Current Version:** 1.4
+- **Last Updated:** October 2025
+- **License:** MIT License
+
+---
+
+_Thank you for using GreyBook! We hope it helps your club run smoothly and efficiently._

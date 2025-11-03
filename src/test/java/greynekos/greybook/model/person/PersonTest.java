@@ -4,7 +4,7 @@ import static greynekos.greybook.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static greynekos.greybook.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static greynekos.greybook.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static greynekos.greybook.logic.commands.CommandTestUtil.VALID_STUDENTID_BOB;
-import static greynekos.greybook.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static greynekos.greybook.logic.commands.CommandTestUtil.VALID_TAG_CONTRIBUTOR;
 import static greynekos.greybook.testutil.Assert.assertThrows;
 import static greynekos.greybook.testutil.TypicalPersons.ALICE;
 import static greynekos.greybook.testutil.TypicalPersons.BOB;
@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import greynekos.greybook.model.person.AttendanceStatus.Status;
 import greynekos.greybook.testutil.PersonBuilder;
 
 public class PersonTest {
@@ -34,7 +35,7 @@ public class PersonTest {
 
         // same name and studentId, all other attributes different -> returns true
         Person editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-                .withTags(VALID_TAG_HUSBAND).build();
+                .withTags(VALID_TAG_CONTRIBUTOR).withAttendanceStatus(Status.LATE).build();
         assertTrue(ALICE.isSamePerson(editedAlice));
 
         // different studentId, all other attributes same -> returns false
@@ -77,7 +78,11 @@ public class PersonTest {
         assertFalse(ALICE.equals(editedAlice));
 
         // different tags -> returns false
-        editedAlice = new PersonBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
+        editedAlice = new PersonBuilder(ALICE).withTags(VALID_TAG_CONTRIBUTOR).build();
+        assertFalse(ALICE.equals(editedAlice));
+
+        // different attendanceStatus -> returns false
+        editedAlice = new PersonBuilder(ALICE).withAttendanceStatus(Status.LATE).build();
         assertFalse(ALICE.equals(editedAlice));
     }
 

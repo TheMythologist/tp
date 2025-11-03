@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import greynekos.greybook.commons.core.GuiSettings;
+import greynekos.greybook.model.person.AttendanceStatus;
 import greynekos.greybook.model.person.Person;
 import greynekos.greybook.model.person.StudentID;
 import javafx.collections.ObservableList;
@@ -88,6 +89,18 @@ public interface Model {
      * GreyBook.
      */
     void setPerson(Person target, Person editedPerson);
+
+    /**
+     * Adds an {@code attendanceStatus} for the given person {@code target}.
+     * {@code target} must exist in the GreyBook. The person identity of GreyBook.
+     */
+    void markPerson(Person target, AttendanceStatus.Status attendanceStatus);
+
+    /**
+     * Removes the attendance status of the given person {@code target}.
+     * {@code target} must exist in the GreyBook. The person identity of GreyBook.
+     */
+    void unmarkPerson(Person target);
 
     /**
      * Returns the person with the given student ID, if they exist in the greybook

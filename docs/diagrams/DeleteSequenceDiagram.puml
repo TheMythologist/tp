@@ -5,7 +5,8 @@ skinparam ArrowFontStyle plain
 box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
 participant ":GreyBookParser" as GreyBookParser LOGIC_COLOR
-participant ":DeleteCommandParser" as DeleteCommandParser LOGIC_COLOR
+participant "cp:CommandParser" as CommandParser LOGIC_COLOR
+participant "arg:ArgumentParseResult" as ArgumentParseResult LOGIC_COLOR
 participant "d:DeleteCommand" as DeleteCommand LOGIC_COLOR
 participant "r:CommandResult" as CommandResult LOGIC_COLOR
 end box
@@ -17,36 +18,34 @@ end box
 [-> LogicManager : execute("delete 1")
 activate LogicManager
 
-LogicManager -> GreyBookParser : parseCommand("delete 1")
+LogicManager -> GreyBookParser : parse("delete 1")
 activate GreyBookParser
+note right: Gets 'delete' CommandParser
 
-create DeleteCommandParser
-GreyBookParser -> DeleteCommandParser
-activate DeleteCommandParser
+GreyBookParser -> CommandParser : parse(" 1")
+activate CommandParser
 
-DeleteCommandParser --> GreyBookParser
-deactivate DeleteCommandParser
+' CommandParser identifies arguments, verifies constraints, and creates the result wrapper
+create ArgumentParseResult
+CommandParser -> ArgumentParseResult
+activate ArgumentParseResult
+note right: arg stores DeleteCommand (d) \nand parsed arguments
 
-GreyBookParser -> DeleteCommandParser : parse("1")
-activate DeleteCommandParser
+ArgumentParseResult --> CommandParser : arg
+deactivate ArgumentParseResult
 
-create DeleteCommand
-DeleteCommandParser -> DeleteCommand
-activate DeleteCommand
+CommandParser --> GreyBookParser : arg
+deactivate CommandParser
 
-DeleteCommand --> DeleteCommandParser :
-deactivate DeleteCommand
-
-DeleteCommandParser --> GreyBookParser : d
-deactivate DeleteCommandParser
-'Hidden arrow to position the destroy marker below the end of the activation bar.
-DeleteCommandParser -[hidden]-> GreyBookParser
-destroy DeleteCommandParser
-
-GreyBookParser --> LogicManager : d
+GreyBookParser --> LogicManager : arg
 deactivate GreyBookParser
 
-LogicManager -> DeleteCommand : execute(m)
+' Execution is delegated to the ArgumentParseResult wrapper
+LogicManager -> ArgumentParseResult : execute(m)
+activate ArgumentParseResult
+
+' ArgumentParseResult internally calls the command execution
+ArgumentParseResult -> DeleteCommand : execute(m, arg)
 activate DeleteCommand
 
 DeleteCommand -> Model : deletePerson(1)
@@ -59,11 +58,14 @@ create CommandResult
 DeleteCommand -> CommandResult
 activate CommandResult
 
-CommandResult --> DeleteCommand
+CommandResult --> DeleteCommand : r
 deactivate CommandResult
 
-DeleteCommand --> LogicManager : r
+DeleteCommand --> ArgumentParseResult : r
 deactivate DeleteCommand
+
+ArgumentParseResult --> LogicManager : r
+deactivate ArgumentParseResult
 
 [<--LogicManager
 deactivate LogicManager

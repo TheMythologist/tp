@@ -1,7 +1,7 @@
 package greynekos.greybook.model.person;
 
 import static greynekos.greybook.logic.commands.CommandTestUtil.VALID_STUDENTID_BOB;
-import static greynekos.greybook.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static greynekos.greybook.logic.commands.CommandTestUtil.VALID_TAG_CONTRIBUTOR;
 import static greynekos.greybook.testutil.Assert.assertThrows;
 import static greynekos.greybook.testutil.TypicalPersons.ALICE;
 import static greynekos.greybook.testutil.TypicalPersons.BOB;
@@ -42,7 +42,7 @@ public class UniquePersonListTest {
     @Test
     public void contains_personWithSameIdentityFieldsInList_returnsTrue() {
         uniquePersonList.add(ALICE);
-        Person editedAlice = new PersonBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
+        Person editedAlice = new PersonBuilder(ALICE).withTags(VALID_TAG_CONTRIBUTOR).build();
         assertTrue(uniquePersonList.contains(editedAlice));
     }
 
@@ -85,7 +85,7 @@ public class UniquePersonListTest {
     public void setPerson_editedPersonHasSameIdentity_success() {
         uniquePersonList.add(ALICE);
         Person editedAlice =
-                new PersonBuilder(ALICE).withStudentID(VALID_STUDENTID_BOB).withTags(VALID_TAG_HUSBAND).build();
+                new PersonBuilder(ALICE).withStudentID(VALID_STUDENTID_BOB).withTags(VALID_TAG_CONTRIBUTOR).build();
         uniquePersonList.setPerson(ALICE, editedAlice);
         UniquePersonList expectedUniquePersonList = new UniquePersonList();
         expectedUniquePersonList.add(editedAlice);

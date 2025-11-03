@@ -1,6 +1,6 @@
 package greynekos.greybook.logic.parser.commandoption;
 
-import static greynekos.greybook.logic.parser.CliSyntax.PREFIX_EMPTY;
+import static greynekos.greybook.logic.parser.CliSyntax.PREAMBLE;
 
 import greynekos.greybook.logic.parser.ArgumentParser;
 
@@ -10,6 +10,6 @@ import greynekos.greybook.logic.parser.ArgumentParser;
  */
 public abstract class PreambleOption<T> extends CommandOption<T> {
     protected PreambleOption(String name, ArgumentParser<T> parser) {
-        super(PREFIX_EMPTY, name, parser);
+        super(PREAMBLE, name, parser);
     }
 }

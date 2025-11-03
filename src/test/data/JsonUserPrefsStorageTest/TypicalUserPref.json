@@ -2,10 +2,9 @@
   "guiSettings" : {
     "windowWidth" : 1000.0,
     "windowHeight" : 500.0,
-    "windowCoordinates" : {
-      "x" : 300,
-      "y" : 100
-    }
+    "windowX": 300.0,
+    "windowY": 100.0,
+    "isMaximized": false
   },
   "greyBookFilePath": "greybook.json"
 }

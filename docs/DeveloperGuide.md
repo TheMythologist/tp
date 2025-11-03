@@ -6,6 +6,7 @@
 
 # GreyBook Developer Guide
 
+# Table of Contents
 <!-- * Table of Contents -->
 <page-nav-print />
 
@@ -22,6 +23,8 @@
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 ## **Design**
 
@@ -66,13 +69,15 @@ For example, the `Logic` component defines its API in the `Logic.java` interface
 
 The sections below give more details of each component.
 
+<div style="page-break-after: always;"></div>
+
 ### UI component
 
 The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S1-CS2103T-F13-4/tp/master/src/main/java/greynekos/greybook/ui/Ui.java)
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonTablePanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S1-CS2103T-F13-4/tp/master/src/main/java/greynekos/greybook/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S1-CS2103T-F13-4/tp/master/src/main/resources/view/MainWindow.fxml)
 
@@ -97,13 +102,12 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 <box type="info" seamless>
 
-**Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
-</box>
-
 How the `Logic` component works:
 
-1. When `Logic` is called upon to execute a command, it is passed to an `GreyBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
-1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
+1. Every command registers the types of arguments they take and the restrictions on those arguments to the `GreyBookParser`. The parser stores them using a `CommandParser` object.
+1. When `Logic` is called upon to execute a command, it is passed to an `GreyBookParser` object which in turn gets the corresponding `CommandParser` object.
+1. The `CommandParser` object then parses the arguments, and creates a `ArgumentParseResult` object, which gets passed back to `Logic`.
+1. `Logic` then calls the `ArgumentParseResult` to execute the command using the parsed arguments. `ArgumentParseResult` calls `execute` method on the corresponding command.
 1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).<br>
    Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
 1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
@@ -114,8 +118,16 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 
 How the parsing works:
 
-- When called upon to parse a user command, the `GreyBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `GreyBookParser` returns back as a `Command` object.
-- All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
+1. When the application starts, commands (like `AddCommand`, `DeleteCommand`, etc.) register themselves with the `GreyBookParser`.
+1. Each command defines the types of arguments it takes by creating instances of `CommandOption` objects, different command options can specify rules such as whether an argument is optional or can occur multiple times. The parsing rules for each argument is also stored in the `CommandOption` object using methods in `ParserUtil` that extends the functional interface `ArgumentParser`. Lastly, each `CommandOption` has an associated `Prefix`.
+1. Each command calls `parser.newCommand(...)`, passing in the `CommandOptions` defined by the command, which creates a single instance of `CommandParser` that is stored by the `GreyBookParser`.
+1. When the `LogicManager` calls `GreyBookParser::parse(commandText)`, the `GreyBookParser` first identifies the command word (e.g., "add") and retrieves the associated configured `CommandParser`.
+1. The retrieved `CommandParser` uses the `ArgumentTokenizer` (along with the defined `Prefix`es) to break down the arguments into an `ArgumentMultimap`.
+1. The `CommandParser` then validates the arguments against the registered `CommandOption` rules (e.g., checking for missing required options or duplicate prefixes).
+1. For each argument value, the respective `CommandOption` calls its stored `ArgumentParser` to convert the raw string into the required Java object type (e.g., converting a phone number string into a `Phone` object).
+1. Finally, the `CommandParser` wraps the specific command instance (`XYZCommand`) and all the parsed values into an `ArgumentParseResult` object, which is returned up the call chain for deferred execution.
+
+<div style="page-break-after: always;"></div>
 
 ### Model component
 
@@ -137,6 +149,8 @@ The `Model` component,
 <puml src="diagrams/BetterModelClassDiagram.puml" width="450" />
 
 </box>
+
+<div style="page-break-after: always;"></div>
 
 ### Storage component
 
@@ -209,8 +223,6 @@ The following sequence diagram shows how an undo operation goes through the `Log
 
 <box type="info" seamless>
 
-**Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
 </box>
 
 Similarly, how an undo operation goes through the `Model` component is shown below:
@@ -267,6 +279,8 @@ _{Explain here how the data archiving feature will be implemented}_
 - [DevOps guide](DevOps.md)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 ## **Appendix: Requirements**
 

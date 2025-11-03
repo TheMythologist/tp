@@ -11,12 +11,14 @@ import greynekos.greybook.logic.parser.exceptions.ParseException;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
@@ -152,14 +154,51 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
+     * Checks if the settings defined in {@code GuiSettings} is out of the all
+     * screens.
+     *
+     * @param guiSettings
+     *            GUI position and width settings.
+     * @return True if the screen is out of all screens, false otherwise.
+     */
+    private boolean isWindowIsOutOfBounds(GuiSettings guiSettings) {
+        for (Screen screen : Screen.getScreens()) {
+            Rectangle2D bounds = screen.getVisualBounds();
+            if (bounds.getMinX() <= guiSettings.getWindowX() && guiSettings.getWindowX() < bounds.getMaxX()
+                    && bounds.getMinY() <= guiSettings.getWindowY() && guiSettings.getWindowY() < bounds.getMaxY()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Resets the {@code primaryStage} to the primary screen.
+     *
+     * @param isMaximized
+     *            Whether to maximize the screen.
+     */
+    private void moveToPrimaryScreen(boolean isMaximized) {
+        // Reset all fields, except if it's maximized
+        primaryStage.setHeight(GuiSettings.DEFAULT_HEIGHT);
+        primaryStage.setWidth(GuiSettings.DEFAULT_WIDTH);
+        primaryStage.setX(GuiSettings.DEFAULT_X);
+        primaryStage.setY(GuiSettings.DEFAULT_Y);
+        primaryStage.setMaximized(isMaximized);
+    }
+
+    /**
      * Sets the default size based on {@code guiSettings}.
      */
     private void setWindowDefaultSize(GuiSettings guiSettings) {
-        primaryStage.setHeight(guiSettings.getWindowHeight());
-        primaryStage.setWidth(guiSettings.getWindowWidth());
-        if (guiSettings.getWindowCoordinates() != null) {
-            primaryStage.setX(guiSettings.getWindowCoordinates().getX());
-            primaryStage.setY(guiSettings.getWindowCoordinates().getY());
+        if (isWindowIsOutOfBounds(guiSettings)) {
+            moveToPrimaryScreen(guiSettings.getIsMaximized());
+        } else {
+            primaryStage.setHeight(guiSettings.getWindowHeight());
+            primaryStage.setWidth(guiSettings.getWindowWidth());
+            primaryStage.setX(guiSettings.getWindowX());
+            primaryStage.setY(guiSettings.getWindowY());
+            primaryStage.setMaximized(guiSettings.getIsMaximized());
         }
     }
 
@@ -185,7 +224,7 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private void handleExit() {
         GuiSettings guiSettings = new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                (int) primaryStage.getX(), (int) primaryStage.getY());
+                primaryStage.getX(), primaryStage.getY(), primaryStage.maximizedProperty().get());
         logic.setGuiSettings(guiSettings);
         helpWindow.hide();
         primaryStage.hide();

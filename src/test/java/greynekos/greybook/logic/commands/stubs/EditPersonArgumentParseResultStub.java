@@ -1,7 +1,7 @@
 package greynekos.greybook.logic.commands.stubs;
 
+import static greynekos.greybook.logic.parser.CliSyntax.PREAMBLE;
 import static greynekos.greybook.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static greynekos.greybook.logic.parser.CliSyntax.PREFIX_EMPTY;
 import static greynekos.greybook.logic.parser.CliSyntax.PREFIX_NAME;
 import static greynekos.greybook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static greynekos.greybook.logic.parser.CliSyntax.PREFIX_STUDENTID;
@@ -58,7 +58,7 @@ public class EditPersonArgumentParseResultStub extends ArgumentParseResultStub {
             o = descriptor.getPhone();
         } else if (flag.getPrefix().equals(PREFIX_STUDENTID)) {
             o = descriptor.getStudentID();
-        } else if (flag.getPrefix().equals(PREFIX_EMPTY)) {
+        } else if (flag.getPrefix().equals(PREAMBLE)) {
             o = index;
         }
 

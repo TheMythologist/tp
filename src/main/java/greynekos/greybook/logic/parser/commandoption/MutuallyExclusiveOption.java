@@ -5,4 +5,5 @@ package greynekos.greybook.logic.parser.commandoption;
  * command
  */
 public interface MutuallyExclusiveOption<T> extends NoDuplicateOption<T> {
+    String getPrefixGroup();
 }
