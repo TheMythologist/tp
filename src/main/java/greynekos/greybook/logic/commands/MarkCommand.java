@@ -36,7 +36,7 @@ public class MarkCommand extends Command {
     public static final String MESSAGE_MARK_ALL_SUCCESS = "All attendance status have been marked as \"%1$s\".";
     public static final String MESSAGE_MARK_FLAGS_AND_EXAMPLES = "Flags: " + PREFIX_PRESENT + " for Present, "
             + PREFIX_ABSENT + " for Absent, " + PREFIX_LATE + " for Late, " + PREFIX_EXCUSED + " for Excused\n"
-            + "Examples:\n" + "  " + COMMAND_WORD + " 1 " + PREFIX_PRESENT + "\n" + "  " + COMMAND_WORD + " A0123456X "
+            + "Examples:\n" + "  " + COMMAND_WORD + " 1 " + PREFIX_PRESENT + "\n" + "  " + COMMAND_WORD + " A0123456J "
             + PREFIX_ABSENT + "\n" + "  " + COMMAND_WORD + " all " + PREFIX_EXCUSED;
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Marks a club member's attendance.\n"
             + "Parameters: INDEX (must be a positive integer) OR STUDENT_ID (format: A0000000Y)\n"

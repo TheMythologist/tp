@@ -580,7 +580,7 @@ For advanced users who wish to use special characters like quotation marks (`"`)
 | `NAME`      | Letters, spaces, and certain special characters allowed. |
 | `PHONE`     | 8-digit Singapore phone number.                          |
 | `EMAIL`     | Must follow valid email format (case-insensitive).       |
-| `STUDENTID` | NUS Student ID (e.g., A0123456X).                        |
+| `STUDENTID` | NUS Student ID (e.g., A0123456J).                        |
 | `TAG`       | Optional label for categorizing members.                 |
 | `INDEX`     | Positive integer (1, 2, 3, …).                           |
 
