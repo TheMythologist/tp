@@ -58,19 +58,19 @@ public class MarkCommand extends Command {
 
     private final RequiredMutuallyExclusivePrefixOption<AttendanceStatus.Status> presentOption =
             RequiredMutuallyExclusivePrefixOption.of(PREFIX_GROUP_STRING, PREFIX_PRESENT, "Present",
-                    ParserUtil.createFlagParser(AttendanceStatus.Status.PRESENT));
+                    s -> AttendanceStatus.Status.PRESENT);
 
     private final RequiredMutuallyExclusivePrefixOption<AttendanceStatus.Status> absentOption =
             RequiredMutuallyExclusivePrefixOption.of(PREFIX_GROUP_STRING, PREFIX_ABSENT, "Absent",
-                    ParserUtil.createFlagParser(AttendanceStatus.Status.ABSENT));
+                    s -> AttendanceStatus.Status.ABSENT);
 
     private final RequiredMutuallyExclusivePrefixOption<AttendanceStatus.Status> lateOption =
             RequiredMutuallyExclusivePrefixOption.of(PREFIX_GROUP_STRING, PREFIX_LATE, "Late",
-                    ParserUtil.createFlagParser(AttendanceStatus.Status.LATE));
+                    s -> AttendanceStatus.Status.LATE);
 
     private final RequiredMutuallyExclusivePrefixOption<AttendanceStatus.Status> excusedOption =
             RequiredMutuallyExclusivePrefixOption.of(PREFIX_GROUP_STRING, PREFIX_EXCUSED, "Excused",
-                    ParserUtil.createFlagParser(AttendanceStatus.Status.EXCUSED));
+                    s -> AttendanceStatus.Status.EXCUSED);
 
     @Override
     public void addToParser(GreyBookParser parser) {

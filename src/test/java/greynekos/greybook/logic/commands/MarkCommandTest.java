@@ -9,7 +9,7 @@ import static greynekos.greybook.logic.commands.util.CommandUtil.MESSAGE_PERSON_
 import static greynekos.greybook.logic.parser.CliSyntax.PREFIX_ABSENT;
 import static greynekos.greybook.logic.parser.CliSyntax.PREFIX_PRESENT;
 import static greynekos.greybook.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static greynekos.greybook.logic.parser.ParserUtil.MESSAGE_UNKNOWN_FOLLOWING_IDENTIFIER;
+import static greynekos.greybook.logic.parser.ParserUtil.MESSAGE_INVALID_PERSON_IDENTIFIER_OR_ALL;
 import static greynekos.greybook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static greynekos.greybook.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static greynekos.greybook.testutil.TypicalPersons.getTypicalGreyBook;
@@ -185,7 +185,7 @@ public class MarkCommandTest {
 
         String userInput = "mark 1 x/";
 
-        assertParseFailure(parser, userInput, String.format(MESSAGE_UNKNOWN_FOLLOWING_IDENTIFIER, "x/"));
+        assertParseFailure(parser, userInput, MESSAGE_INVALID_PERSON_IDENTIFIER_OR_ALL);
     }
 
     @Test
@@ -209,8 +209,7 @@ public class MarkCommandTest {
         String userInput =
                 String.format("mark %d %s p/", INDEX_FIRST_PERSON.getOneBased(), targetPerson.getStudentID().value);
 
-        assertParseFailure(parser, userInput,
-                String.format(MESSAGE_UNKNOWN_FOLLOWING_IDENTIFIER, targetPerson.getStudentID()));
+        assertParseFailure(parser, userInput, MESSAGE_INVALID_PERSON_IDENTIFIER_OR_ALL);
     }
 
     @Test
