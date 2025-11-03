@@ -23,10 +23,13 @@ import greynekos.greybook.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INDEX_TOO_LARGE = "Index is too large";
 
     public static final String MESSAGE_INVALID_PERSON_IDENTIFIER =
             "Person identifier is invalid. It should be either a positive integer index or a valid Student ID "
                     + "(format: A0000000Y).";
+
+    private static final String VALID_NUMBER_REGEX = "0|[1-9]\\d*";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading
@@ -58,6 +61,10 @@ public class ParserUtil {
 
         if (StringUtil.isNonZeroUnsignedInteger(trimmed)) {
             return parseIndex(trimmed);
+        }
+
+        if (trimmed.matches(VALID_NUMBER_REGEX)) {
+            throw new ParseException(MESSAGE_INDEX_TOO_LARGE);
         }
 
         if (StudentID.isValidStudentID(trimmed.toUpperCase())) {
