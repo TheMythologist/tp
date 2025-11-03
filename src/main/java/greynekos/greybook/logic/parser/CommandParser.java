@@ -23,11 +23,11 @@ import greynekos.greybook.logic.parser.exceptions.ParseException;
  * under their respective options.
  */
 public class CommandParser {
+    public static final String MESSAGE_MISSING_REQUIRED_OPTIONS_FORMAT = "Missing required fields:\n%s";
+
     private List<Option<?>> options = new ArrayList<>();
     private String messageUsage;
     private Command command;
-
-    public static final String MESSAGE_MISSING_REQUIRED_OPTIONS_FORMAT = "Missing required fields:\n%s";
 
     CommandParser(String messageUsage, Command command) {
         this.messageUsage = messageUsage;
