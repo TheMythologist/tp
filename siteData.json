@@ -52,8 +52,8 @@
         "storage-component": "Storage component",
         "common-classes": "Common classes",
         "implementation": "Implementation",
+        "implemented-command-history-feature": "[Implemented] Command history feature",
         "proposed-undo-redo-feature": "[Proposed] Undo/redo feature",
-        "proposed-data-archiving": "[Proposed] Data archiving",
         "documentation-logging-testing-configuration-dev-ops": "Documentation, logging, testing, configuration, dev-ops",
         "appendix-requirements": "Appendix: Requirements",
         "product-scope": "Product scope",
@@ -64,7 +64,11 @@
         "appendix-instructions-for-manual-testing": "Appendix: Instructions for manual testing",
         "launch-and-shutdown": "Launch and shutdown",
         "deleting-a-person": "Deleting a person",
-        "saving-data": "Saving data"
+        "saving-data": "Saving data",
+        "apendix-planned-enhancements": "Apendix: Planned Enhancements",
+        "1-add-more-details-for-each-user": "1. Add more details for each user",
+        "2-confirmation-dialog-for-clear-command": "2. Confirmation dialog for clear command",
+        "3-more-robust-checking-for-phone-numbers": "3. More robust checking for phone numbers"
       },
       "headingKeywords": {}
     },
