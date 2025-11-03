@@ -269,6 +269,12 @@ add n/Betsy Crowe p/87654321 e/betsycrowe@example.com i/A1111111M t/operations-t
 - When editing tags, the old tags are replaced entirely
 - Use `t/` (empty) to remove all tags
 
+<box type="tip" seamless>
+
+**Tip:** After using the `edit` command, all filters applied from `find` will be removed!
+
+</box>
+
 **Examples:**
 
 ```
@@ -286,13 +292,14 @@ edit 2 n/Betsy Crower t/
 
 #### Finding Students: `find`
 
-**Command:** `find [KEYWORD [MORE_KEYWORDS]…​] [i/ID_FRAGMENT]…​`
+**Command:** `find [KEYWORD [MORE_KEYWORDS]…​] [i/ID_FRAGMENT] [t/TAG_FRAGMENT]…​`
 
 **Parameters:**
 
 - `KEYWORD`: The name of the student
 - `i/ID_FRAGMENT`: A substring of a student ID (e.g. `0Y` from `A0000000Y`)
-- You can provide any number of keywords and ID fragments
+- `t/TAG_FRAGMENT`: A substring of a tag (e.g. `ember` from `member`)
+- You can provide any number of keywords, ID fragments and tag fragments
 - The search is case-insensitive. e.g. `hans` will match `Hans`
 
 Students matching at least one keyword or one student ID fragment will be returned.
@@ -302,7 +309,8 @@ Examples:
 
 - `find John` returns `john` and `John Doe`
 - `find i/12345` returns anyone with student IDs containing `12345` (e.g. `A0123456J`)
-- `find alex i/8L david` returns `Alex Yeoh`, `David Li`, anyone with student IDs containing `8L`<br>
+- `find t/op` returns anyone with tag containing `op` (e.g. `operations`)
+- `find alex i/8L david t/cont` returns `Alex Yeoh`, `David Li`, anyone with student IDs containing `8L`, anyone with the tag containing `cont`<br>
   ![result for 'find alex i/8L david'](images/findAlexDavidResult.png)
 
 ---
