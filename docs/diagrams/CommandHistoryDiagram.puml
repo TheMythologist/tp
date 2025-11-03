@@ -1,7 +1,10 @@
 @startuml
 !include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor LOGIC_COLOR_T4
+skinparam classBackgroundColor LOGIC_COLOR
 
-package "commons.core.history" {
+package "history" {
   class CommandHistory {
     - List<String> history
     - int cursor
@@ -59,9 +62,9 @@ package "storage" {
 }
 
 ' Relationships (composition/usage)
-History "1" o-- "1" CommandHistory : contains
+History "1" *-- "1" CommandHistory : contains
 LogicManager ..> History : uses (model.getHistory())
-LogicManager ..> CommandHistory : adds commands (getCommandHistory().addCommand(...))
+LogicManager ..> CommandHistory : adds commands
 MainWindow ..> CommandBox : creates
 CommandBox ..> CommandHistory : reads prev/next and sets text
 JsonHistoryStorage ..> CommandHistory : serializes (getHistory())
