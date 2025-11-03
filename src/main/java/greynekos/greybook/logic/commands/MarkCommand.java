@@ -33,7 +33,7 @@ public class MarkCommand extends Command {
     /** Message shown when marking is successful */
     public static final String MESSAGE_MARK_PERSON_SUCCESS = "Marked %1$s's Attendance: %2$s";
     public static final String MESSAGE_MARK_ALL_SUCCESS =
-            "All attendance status have been successfully marked as \"%1$s\".";
+            "All attendance statuses have been successfully marked as \"%1$s\".";
     public static final String MESSAGE_MARK_FLAGS_AND_EXAMPLES = "Flags: " + PREFIX_PRESENT + " for Present, "
             + PREFIX_ABSENT + " for Absent, " + PREFIX_LATE + " for Late, " + PREFIX_EXCUSED + " for Excused\n"
             + "Examples:\n" + "  " + COMMAND_WORD + " 1 " + PREFIX_PRESENT + "\n" + "  " + COMMAND_WORD + " A0123456J "
