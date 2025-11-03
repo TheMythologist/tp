@@ -579,3 +579,9 @@ testers are expected to do more _exploratory_ testing.
 **Current issue:** We use a regex to perform checking if an international phone number is valid. This does not take into account region/country-specific phone number rules.
 
 **Planned enhancement:** We plan to comply with verify phone numbers with each country's specific phone number rules. A validation library such as Google's [`libphonenumber`](https://github.com/google/libphonenumber) could be used.
+
+### 4. More robust duplicate checking
+
+**Current issue:** Duplicates are only identified via their student ID. Unlikely scenarios like students having the same name, email and phone number but different student IDs are currently allowed in GreyBook.
+
+**Planned enhancement:** We plan to tighten the duplicate checking logic beyond just enforcing unique student IDs. To accommodate for situations where students may share phone numbers or emails, the updated duplicate checking logic could potentially check if the combination of name, email and phone number matches, which still allows for individual duplicates (like two differently named students sharing a phone number).
