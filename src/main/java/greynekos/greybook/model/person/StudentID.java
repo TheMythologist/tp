@@ -10,7 +10,7 @@ import static java.util.Objects.requireNonNull;
 public class StudentID implements PersonIdentifier {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Student IDs must be a valid NUS Student ID with a matching checksum";
+            "Student IDs must be a valid NUS Student ID with a matching checksum.";
     public static final String VALIDATION_REGEX = "^(?:A\\d{7}|U\\d{6,7})[YXWURNMLJHEAB]$";
     public static final String VALID_CHECKSUMS = "YXWURNMLJHEAB";
     public final String value;
