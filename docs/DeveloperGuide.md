@@ -7,6 +7,7 @@
 # GreyBook Developer Guide
 
 # Table of Contents
+
 <!-- * Table of Contents -->
 <page-nav-print />
 
@@ -120,9 +121,9 @@ How the parsing works:
 
 1. When the application starts, commands (like `AddCommand`, `DeleteCommand`, etc.) register themselves with the `GreyBookParser`.
 1. Each command defines the types of arguments it takes by creating instances of `CommandOption` objects, different command options can specify rules such as whether an argument is optional or can occur multiple times. The parsing rules for each argument is also stored in the `CommandOption` object using methods in `ParserUtil` that extends the functional interface `ArgumentParser`. Lastly, each `CommandOption` has an associated `Prefix`.
-1. Each command calls `parser.newCommand(...)`, passing in the `CommandOptions` defined by the command, which creates a single instance of `CommandParser` that is stored by the `GreyBookParser`.
-1. When the `LogicManager` calls `GreyBookParser::parse(commandText)`, the `GreyBookParser` first identifies the command word (e.g., "add") and retrieves the associated configured `CommandParser`.
-1. The retrieved `CommandParser` uses the `ArgumentTokenizer` (along with the defined `Prefix`es) to break down the arguments into an `ArgumentMultimap`.
+1. Each command is stored in the `GreyBookParser`.
+1. When the `LogicManager` needs to parse the user input, it calls `GreyBookParser` to retrieve the associated configured `CommandParser`.
+1. The retrieved `CommandParser` break down the arguments into their respective options.
 1. The `CommandParser` then validates the arguments against the registered `CommandOption` rules (e.g., checking for missing required options or duplicate prefixes).
 1. For each argument value, the respective `CommandOption` calls its stored `ArgumentParser` to convert the raw string into the required Java object type (e.g., converting a phone number string into a `Phone` object).
 1. Finally, the `CommandParser` wraps the specific command instance (`XYZCommand`) and all the parsed values into an `ArgumentParseResult` object, which is returned up the call chain for deferred execution.
