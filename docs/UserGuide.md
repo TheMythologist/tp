@@ -6,7 +6,7 @@
 
 # User Guide
 
-**GreyBook** is a desktop application that helps **NUS clubs and societies efficiently manage contacts and track attendance**. It combines the speed and precision of a Command Line Interface (CLI) with the convenience of a Graphical User Interface (GUI).
+**GreyBook** is a desktop application that helps **NUS clubs and societies efficiently manage students' contacts and track attendance**. It combines the speed and precision of a Command Line Interface (CLI) with the convenience of a Graphical User Interface (GUI).
 
 Optimized for users who prefer typing commands, GreyBook enables fast, streamlined management — letting you accomplish more in less time than with traditional GUI-based applications.
 
@@ -19,13 +19,15 @@ Optimized for users who prefer typing commands, GreyBook enables fast, streamlin
 <!-- * Table of Contents -->
 <page-nav-print />
 
+---
+
 ## About This Guide
 
 ### Target Users
 
 This guide is designed for **leaders and committee members of NUS clubs or societies** who:
 
-- Manage members' contact details, emails, and student IDs
+- Manage students' contact details, emails, and student IDs
 - Track attendance for meetings and events
 - Prefer efficient, keyboard-driven workflows
 
@@ -603,7 +605,7 @@ For advanced users who wish to use special characters like quotation marks (`"`)
 | `PHONE`     | 8-digit Singapore phone number or International phone numbers (following E.164 Standards)                          |
 | `EMAIL`     | Must follow RFC 5321/5322 email format standards.        |
 | `STUDENTID` | NUS Student ID (e.g., A0123456X).                        |
-| `TAG`       | Optional label for categorizing members (only alphanumeric and `-` (dash) allowed)                 |
+| `TAG`       | Optional label for categorizing students (only alphanumeric and `-` (dash) allowed)                 |
 | `INDEX`     | Positive integer (1, 2, 3, …).                           |
 
 <box type="tip" seamless>
@@ -659,7 +661,7 @@ For advanced users who wish to use special characters like quotation marks (`"`)
 **A:** No. `hans` matches `Hans`.
 
 **Q: How do tags work?**<br>
-**A:** Add any number: `t/member t/colleague`. Editing tags **replaces** the old set. Use `t/` (empty) to clear all tags.
+**A:** Add any number: `t/member t/freshman`. Editing tags **replaces** the old set. Use `t/` (empty) to clear all tags.
 
 ### Limits & Performance
 
@@ -734,8 +736,8 @@ Similarly, if your name contains special characters such as accents or diacritic
 
 **Version Information:**
 
-- **Current Version:** 1.4
-- **Last Updated:** October 2025
+- **Current Version:** 1.6
+- **Last Updated:** November 2025
 - **License:** MIT License
 
 ---
