@@ -186,22 +186,24 @@ The `CommandHistory` class maintains a bounded list of previously entered comman
 Key behaviours:
 
 - Sequential Navigation
-  - Users can move *backward* (previous commands) or *forward* (next commands) through the history
+  - Users can move _backward_ (previous commands) or _forward_ (next commands) through the history
     - `getPrevCommand()` returns the previous command relative to the cursor position
     - `getNextCommand()` returns the next command or an empty string if there are no newer commands
 - Cursor Tracking
 
   The cursor starts at the end of the list (after the most recent command). Navigating upward decrements the cursor, while navigating downward increments it. When reaching the oldest or newest command, the cursor remains clamped within valid bounds.
+
 - Duplicate Prevention
 
   Consecutive identical commands are not re-added to history. This prevents clutter from repeated identical inputs.
+
 - Bounded History
 
   To avoid excessive memory use in long-running sessions, the history is capped at a configurable limit (`SIZE_LIMIT = 50`). When the limit is reached, the oldest entry is discarded before adding a new one.
+
 - Reset and Clearing
   - `resetCursor()` sets the cursor back to the end of the list.
   - `resetHistory()` clears all recorded commands and resets the cursor.
-
 
 #### Design considerations:
 
@@ -522,9 +524,10 @@ testers are expected to do more _exploratory_ testing.
 ### Launch and shutdown
 
 1. Initial launch
-   1. Download the jar file and copy into an empty folder
+   1. Download the jar file and copy into an empty folder.
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   1. Double-click the jar file.<br>
+      Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
 1. Saving window preferences
    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
@@ -532,7 +535,12 @@ testers are expected to do more _exploratory_ testing.
    1. Re-launch the app by double-clicking the jar file.<br>
       Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+1. Shutdown
+   1. Shutdown the app by using the `exit` command.<br>
+      Expected: The app shuts down.
+
+   1. Reopen the app by double clicking the jar file.<br>
+      Expected: The app starts up with previous data saved.
 
 ### Deleting a person
 
