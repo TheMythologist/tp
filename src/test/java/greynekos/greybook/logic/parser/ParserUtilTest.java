@@ -22,7 +22,7 @@ import greynekos.greybook.model.tag.Tag;
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel!";
-    private static final String INVALID_PHONE = "+65";
+    private static final String INVALID_PHONE = "+0123";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_STUDENTID = "B1234567A";
     private static final String INVALID_TAG = "#member";
