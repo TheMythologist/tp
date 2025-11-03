@@ -3,10 +3,10 @@ package greynekos.greybook.logic.parser;
 import static greynekos.greybook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import greynekos.greybook.logic.commands.Command;
 import greynekos.greybook.logic.parser.commandoption.MutuallyExclusiveOption;
@@ -23,6 +23,8 @@ import greynekos.greybook.logic.parser.exceptions.ParseException;
  * under their respective options.
  */
 public class CommandParser {
+    public static final String MESSAGE_MISSING_REQUIRED_OPTIONS_FORMAT = "Missing required fields:\n%s";
+
     private List<Option<?>> options = new ArrayList<>();
     private String messageUsage;
     private Command command;
@@ -73,13 +75,21 @@ public class CommandParser {
      *             allowed
      */
     public ArgumentParseResult parse(String arguments) throws ParseException {
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(arguments, getPrefixOptions());
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(arguments, getPrefixOptionsPrefixes());
 
-        if (!arePrefixesPresent(argMultimap, getRequiredOptions())) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, messageUsage));
+        List<Option<?>> missingPrefixes = getMissingOptions(argMultimap, getRequiredPrefixes());
+        if (!missingPrefixes.isEmpty()) {
+            // Show command format if no fields
+            if (missingPrefixes.size() == getRequiredPrefixes().length) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, messageUsage));
+            }
+            // Else specify missing prefixes
+            throw new ParseException(
+                    String.format(MESSAGE_MISSING_REQUIRED_OPTIONS_FORMAT, String.join(", ", missingPrefixes.stream()
+                            .map(option -> option.getPrefix().getPrefix() + option.getName()).toList())));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(getNoDuplicateOptions());
+        argMultimap.verifyNoDuplicatePrefixesFor(getNoDuplicatePrefixes());
         argMultimap.verifyNoMutuallyExclusiveOptionsFor(getMutuallyExclusiveOptions());
 
         Map<Option<?>, List<?>> optionArgumentToResult = new HashMap<>();
@@ -102,16 +112,16 @@ public class CommandParser {
         return new ArgumentParseResult(command, optionArgumentToResult);
     }
 
-    private Prefix[] getPrefixOptions() {
-        return filterOptionsByInstance(PrefixOption.class);
+    private Prefix[] getPrefixOptionsPrefixes() {
+        return filterPrefixByInstance(PrefixOption.class);
     }
 
-    private Prefix[] getRequiredOptions() {
-        return filterOptionsByInstance(RequiredOption.class);
+    private Prefix[] getRequiredPrefixes() {
+        return filterPrefixByInstance(RequiredOption.class);
     }
 
-    private Prefix[] getNoDuplicateOptions() {
-        return filterOptionsByInstance(NoDuplicateOption.class);
+    private Prefix[] getNoDuplicatePrefixes() {
+        return filterPrefixByInstance(NoDuplicateOption.class);
     }
 
     private MutuallyExclusiveOption<?>[] getMutuallyExclusiveOptions() {
@@ -119,7 +129,7 @@ public class CommandParser {
                 .toArray(new MutuallyExclusiveOption[0]);
     }
 
-    private Prefix[] filterOptionsByInstance(Class<?> cls) {
+    private Prefix[] filterPrefixByInstance(Class<?> cls) {
         return options.stream().filter(option -> cls.isInstance(option)).map(Option::getPrefix).toList()
                 .toArray(new Prefix[0]);
     }
@@ -128,14 +138,15 @@ public class CommandParser {
      * Returns true if none of the prefixes contains empty {@code Optional} values
      * in the given {@code ArgumentMultimap}.
      */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> {
-            if (prefix.getPrefix().equals("")) {
-                if (argumentMultimap.getPreamble().trim().equals("")) {
-                    return false;
-                }
-            }
-            return argumentMultimap.getValue(prefix).isPresent();
-        });
+    private List<Option<?>> getMissingOptions(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return options.stream().filter(option -> Arrays.asList(prefixes).contains(option.getPrefix()))
+                .filter(option -> {
+                    if (option.getPrefix().getPrefix().equals("")) {
+                        if (argumentMultimap.getPreamble().trim().equals("")) {
+                            return true;
+                        }
+                    }
+                    return argumentMultimap.getValue(option.getPrefix()).isEmpty();
+                }).toList();
     }
 }
