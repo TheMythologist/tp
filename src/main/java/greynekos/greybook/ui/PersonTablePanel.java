@@ -6,6 +6,7 @@ import greynekos.greybook.commons.core.LogsCenter;
 import greynekos.greybook.model.person.AttendanceStatus;
 import greynekos.greybook.model.person.Person;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -201,5 +202,6 @@ public class PersonTablePanel extends UiPart<Region> {
 
         personTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         personTableView.setItems(personList);
+        personTableView.getItems().addListener((ListChangeListener<Person>) c -> personTableView.refresh());
     }
 }
