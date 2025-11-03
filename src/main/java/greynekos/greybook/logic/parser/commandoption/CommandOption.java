@@ -25,6 +25,10 @@ public abstract class CommandOption<T> implements Option<T> {
         return prefix;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public T parseOptionArgument(String argument) throws ParseException {
         return parser.parse(argument);
     }
