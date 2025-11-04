@@ -38,13 +38,13 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 The **_Architecture Diagram_** given above explains the high-level design of the App.
 
-Given below is a quick overview of main components and how they interact with each other.
+Given below is a quick overview of the main components and how they interact with each other.
 
 **Main components of the architecture**
 
 **`Main`** (consisting of classes [`Main`](https://github.com/AY2526S1-CS2103T-F13-4/tp/master/src/main/java/greynekos/greybook/Main.java) and [`MainApp`](https://github.com/AY2526S1-CS2103T-F13-4/tp/master/src/main/java/greynekos/greybook/MainApp.java)) is in charge of the app launch and shut down.
 
-- At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
+- At app launch, it initialises the other components in the correct sequence and connects them up with each other.
 - At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
 The bulk of the app's work is done by the following four components:
@@ -67,7 +67,7 @@ Each of the four main components (also shown in the diagram above),
 - defines its _API_ in an `interface` with the same name as the Component.
 - implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point.
 
-For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside component's being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
+For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class, which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside components from being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
 
 <puml src="diagrams/ComponentManagers.puml" width="300" />
 
@@ -81,16 +81,16 @@ The **API** of this component is specified in [`Ui.java`](https://github.com/AY2
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonTablePanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts, e.g. `CommandBox`, `ResultDisplay`, `PersonTablePanel`, `StatusBarFooter`, etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class, which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S1-CS2103T-F13-4/tp/master/src/main/java/greynekos/greybook/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S1-CS2103T-F13-4/tp/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFX UI framework. The layout of these UI parts is defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S1-CS2103T-F13-4/tp/master/src/main/java/greynekos/greybook/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S1-CS2103T-F13-4/tp/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
 - executes user commands using the `Logic` component.
 - listens for changes to `Model` data so that the UI can be updated with the modified data.
 - keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
-- depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
+- depends on some classes in the `Model` component, as it displays the `Person` object residing in the `Model`.
 
 ### Logic component
 
@@ -108,13 +108,13 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 How the `Logic` component works:
 
-1. Every command registers the types of arguments they take and the restrictions on those arguments to the `GreyBookParser`. The parser stores them using a `CommandParser` object.
-1. When `Logic` is called upon to execute a command, it is passed to an `GreyBookParser` object which in turn gets the corresponding `CommandParser` object.
-1. The `CommandParser` object then parses the arguments, and creates a `ArgumentParseResult` object, which gets passed back to `Logic`.
-1. `Logic` then calls the `ArgumentParseResult` to execute the command using the parsed arguments. `ArgumentParseResult` calls `execute` method on the corresponding command.
+1. Every command registers the types of arguments it takes and the restrictions on those arguments to the `GreyBookParser`. The parser stores them using a `CommandParser` object.
+1. When `Logic` is called upon to execute a command, it is passed to a `GreyBookParser` object, which in turn gets the corresponding `CommandParser` object.
+1. The `CommandParser` object then parses the arguments and creates a `ArgumentParseResult` object, which gets passed back to `Logic`.
+1. `Logic` then calls the `ArgumentParseResult` to execute the command using the parsed arguments. `ArgumentParseResult` calls the `execute` method on the corresponding command.
 1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).<br>
-   Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
-1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
+   Note that although this is shown as a single step in the diagram above (for simplicity), in the code, this can take several interactions (between the command object and the `Model`) to achieve.
+2. The result of the command execution is encapsulated as a `CommandResult` object, which is returned from `Logic`.
 
 Here are the other classes in `Logic` (omitted from the class diagram above) that are used for parsing a user command:
 
@@ -123,7 +123,7 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 How the parsing works:
 
 1. When the application starts, commands (like `AddCommand`, `DeleteCommand`, etc.) register themselves with the `GreyBookParser`.
-1. Each command defines the types of arguments it takes by creating instances of `CommandOption` objects, different command options can specify rules such as whether an argument is optional or can occur multiple times. The parsing rules for each argument is also stored in the `CommandOption` object using methods in `ParserUtil` that extends the functional interface `ArgumentParser`. Lastly, each `CommandOption` has an associated `Prefix`.
+1. Each command defines the types of arguments it takes by creating instances of `CommandOption` objects. Different command options can specify rules, such as whether an argument is optional or can occur multiple times. The parsing rules for each argument are also stored in the `CommandOption` object using methods in `ParserUtil` that extends the functional interface `ArgumentParser`. Lastly, each `CommandOption` has an associated `Prefix`.
 1. Each command is stored in the `GreyBookParser`.
 1. When the `LogicManager` needs to parse the user input, it calls `GreyBookParser` to retrieve the associated configured `CommandParser`.
 1. The retrieved `CommandParser` break down the arguments into their respective options.
@@ -141,9 +141,9 @@ How the parsing works:
 
 The `Model` component,
 
-- stores the GreyBook data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
+- stores the GreyBook data, i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
 - stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-- stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
+- stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` object.
 - does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
 <box type="info" seamless>
@@ -165,7 +165,7 @@ The `Model` component,
 The `Storage` component,
 
 - can save both GreyBook data and user preference data in JSON format, and read them back into corresponding objects.
-- inherits from both `GreyBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
+- inherits from both `GreyBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of one is needed).
 - depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
 ### Common classes
@@ -197,7 +197,7 @@ Upon execution, the command:
 
 ### \[Implemented\] Command history feature
 
-The **command history** feature allows users to navigate through previously executed commands using the **Up** and **Down** arrow keys, similar to standard terminal behavior. It provides an intuitive way for users to recall, reuse, or edit recent commands without retyping them. This helps to boost the efficiency of users who are well-versed in CLI or terminal applications.
+The **command history** feature allows users to navigate through previously executed commands using the **Up** and **Down** arrow keys, similar to standard terminal behaviour. It provides an intuitive way for users to recall, reuse, or edit recent commands without retyping them. This helps to boost the efficiency of users who are well-versed in CLI or terminal applications.
 
 #### Overview
 
@@ -229,7 +229,7 @@ Here's a (partial) class diagram of the `CommandHistory` component:
 
 <puml src="diagrams/CommandHistoryDiagram.puml" width="550"/>
 
-The sequence diagram below illustrates the interactions with the `CommandHistory` component, when any command is executed.
+The sequence diagram below illustrates the interactions with the `CommandHistory` component when any command is executed.
 
 <puml src="diagrams/CommandHistorySequenceDiagram.puml" alt="Interactions With the CommandHistory Component" />
 
@@ -245,14 +245,14 @@ The sequence diagram below illustrates what happens when the user presses the **
   - Pros: Easy to implement.
   - Cons: May have performance issues in terms of memory/disk usage.
 
-- **Alternative 2:** Commands are appended to the history file individually itself.
-  - Pros: Will use less disk usage.
+- **Alternative 2:** Commands are appended to the history file individually serially.
+  - Pros: Will result in less disk usage.
   - Cons: Harder to implement loading and saving.
 
 **Aspect: Thread Safety**
 
 - **Alternative 1 (current choice):** No thread safety.
-  - Pros: Easy to implement, especially for single-threaded applications like Javafx.
+  - Pros: Easy to implement, especially for single-threaded applications like JavaFX.
   - Cons: Lead to race conditions in multi-threaded applications.
 
 - **Alternative 2:** Thread-safe loading and storing of command history.
@@ -273,11 +273,11 @@ These operations are exposed in the `Model` interface as `Model#commitGreyBook()
 
 Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
 
-Step 1. The user launches the application for the first time. The `VersionedGreyBook` will be initialized with the initial GreyBook state, and the `currentStatePointer` pointing to that single GreyBook state.
+Step 1. The user launches the application for the first time. The `VersionedGreyBook` will be initialised with the initial GreyBook state, and the `currentStatePointer` will point to that single GreyBook state.
 
 <puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
 
-Step 2. The user executes `delete 5` command to delete the 5th student in the GreyBook. The `delete` command calls `Model#commitGreyBook()`, causing the modified state of the GreyBook after the `delete 5` command executes to be saved in the `GreyBookStateList`, and the `currentStatePointer` is shifted to the newly inserted GreyBook state.
+Step 2. The user executes `delete 5` to delete the 5th student in the GreyBook. The `delete` command calls `Model#commitGreyBook()`, causing the modified state of the GreyBook after the `delete 5` command executes to be saved in the `GreyBookStateList`, and the `currentStatePointer` is shifted to the newly inserted GreyBook state.
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
@@ -291,14 +291,13 @@ Step 3. The user executes `add n/David …​` to add a new person. The `add` co
 
 </box>
 
-Step 4. The user now decides that adding the student was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoGreyBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous GreyBook state, and restores the GreyBook to that state.
+Step 4. The user now decides that adding the student was a mistake and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoGreyBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous GreyBook state, and restore the GreyBook to that state.
 
 <puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
 
 <box type="info" seamless>
 
-**Note:** If the `currentStatePointer` is at index 0, pointing to the initial GreyBook state, then there are no previous GreyBook states to restore. The `undo` command uses `Model#canUndoGreyBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
+**Note:** If the `currentStatePointer` is at index 0, pointing to the initial GreyBook state, then there are no previous GreyBook states to restore. The `undo` command uses `Model#canUndoGreyBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the undo.
 
 </box>
 
@@ -326,11 +325,11 @@ Step 5. The user then decides to execute the command `list`. Commands that do no
 
 <puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
 
-Step 6. The user executes `clear`, which calls `Model#commitGreyBook()`. Since the `currentStatePointer` is not pointing at the end of the `GreyBookStateList`, all GreyBook states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
+Step 6. The user executes `clear`, which calls `Model#commitGreyBook()`. Since the `currentStatePointer` is not pointing at the end of the `GreyBookStateList`, all GreyBook states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behaviour that most modern desktop applications follow.
 
 <puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
 
-The following activity diagram summarizes what happens when a user executes a new command:
+The following activity diagram summarises what happens when a user executes a new command:
 
 <puml src="diagrams/CommitActivityDiagram.puml" width="250" />
 
@@ -342,10 +341,9 @@ The following activity diagram summarizes what happens when a user executes a ne
   - Pros: Easy to implement.
   - Cons: May have performance issues in terms of memory usage.
 
-- **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
+- **Alternative 2:** Individual commands know how to undo/redo by itself.
   - Pros: Will use less memory (e.g. for `delete`, just save the student being deleted).
-  - Cons: We must ensure that the implementation of each individual command are correct.
+  - Cons: We must ensure that the implementation of each individual command is correct.
 
 ---
 
@@ -389,7 +387,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* *`    | committee member           | restrict access to contact details to authorized roles                       | student privacy is protected.                       |
 | `* *`    | committee member           | edit a student’s details                                                     | corrections don’t require creating duplicates.      |
 | `* *`    | committee member           | search students by name email tag or year                                    | locate people fast.                                 |
-| `* *`    | secretary/attendance taker | create an attendance session with date/time and event name                   | attendance is organized by event.                   |
+| `* *`    | secretary/attendance taker | create an attendance session with date/time and event name                   | attendance is organised by event.                   |
 | `* *`    | secretary/attendance taker | bulk-mark attendance for selected students                                   | save time for large events.                         |
 | `* *`    | committee member           | export attendance for a date range to CSV                                    | submit readable records to others.                  |
 | `* *`    | committee member           | create a project/competition entry with a title and description              | it can be referenced and managed.                   |
@@ -398,12 +396,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* *`    | committee member           | download the full roster to CSV                                              | share it with others.                               |
 | `* *`    | committee member           | generate a report of attendance by month                                     | review engagement over time.                        |
 | `* *`    | committee member           | configure required fields (e.g. emergency contact)                           | we collect essential information.                   |
-| `* *`    | committee member           | export an event-day contact sheet (names emergency contacts notes)           | on-site management is safer.                        |
+| `* *`    | committee member           | export an event-day contact sheet (names, emergency contacts, notes)         | on-site management is safer.                        |
 | `* *`    | committee member           | define project-specific custom fields (e.g. competition category team code)  | required metadata is captured.                      |
 | `* *`    | committee member           | track equipment checkout and return by student                               | gear is accounted for.                              |
 | `* *`    | committee member           | import students from a CSV (or other common formats)                         | onboard a whole cohort quickly.                     |
 | `*`      | committee member           | merge duplicate student records                                              | reports are accurate.                               |
-| `*`      | committee member           | tag students with attributes (e.g. role skills year of study)                | find suitable students quickly.                     |
+| `*`      | committee member           | tag students with attributes (e.g. role, skills, year of study)              | find suitable students quickly.                     |
 | `*`      | committee member           | see attendance rates per event and per group                                 | identify engagement trends.                         |
 | `*`      | committee member           | move a student from one project to another                                   | team changes are reflected accurately.              |
 | `*`      | committee member           | see a dashboard showing student count active projects and average attendance | monitor club health at a glance.                    |
@@ -466,7 +464,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     Use case resumes at step 3.
 
 - 3b. The given studentID does not exist.
-  - 3b1. GreyBook shows an error message, possibly suggests a similar studentID
+  - 3b1. GreyBook shows an error message, possibly suggesting a similar studentID
 
     Use case resumes at step 3.
 
@@ -507,8 +505,8 @@ Use case ends.
 
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
 2.  Should be able to hold up to 1000 students without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) of about 55-80 Words per Minute (WPM) should be able to accomplish student record management tasks, like marking attendance, faster using commands than using the mouse on traditional formats like spreadsheets.
-4.  The application should efficiently handle and store student and attendance data in a human readable format such as JSON without degrading performance as data grows.
+3.  A user with an above-average typing speed for regular English text (i.e. not code, not system admin commands) of about 55-80 Words per Minute (WPM) should be able to accomplish student record management tasks, like marking attendance, faster using commands than using the mouse on traditional formats like spreadsheets.
+4.  The application should efficiently handle and store student and attendance data in a human-readable format, such as JSON, without degrading performance as data grows.
 5.  Should validate all arguments (names, emails, studentIDs, etc.) and provide specific error messages if arguments are not valid.
 6.  Should prevent duplicate entries through enforcing unique Student IDs, allowing for rare cases like having the same name, email or phone number.
 
@@ -535,7 +533,7 @@ testers are expected to do more _exploratory_ testing.
 ### Launch and shutdown
 
 1. Initial launch
-   1. Download the jar file and copy into an empty folder.
+   1. Download the jar file and copy it into an empty folder.
 
    1. Double-click the jar file.<br>
       Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
@@ -544,14 +542,14 @@ testers are expected to do more _exploratory_ testing.
    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
    1. Re-launch the app by double-clicking the jar file.<br>
-      Expected: The most recent window size and location is retained.
+      Expected: The most recent window size and location are retained.
 
 1. Shutdown
    1. Shutdown the app by using the `exit` command.<br>
       Expected: The app shuts down.
 
-   1. Reopen the app by double clicking the jar file.<br>
-      Expected: The app starts up with previous data saved.
+   1. Reopen the app by double-clicking the jar file.<br>
+      Expected: The app starts up with the previous data saved.
 
 ### Adding a student
 
@@ -586,19 +584,19 @@ testers are expected to do more _exploratory_ testing.
 ### Deleting a student
 
 1. Deleting a student while all students are being shown
-   1. Prerequisites: List all students using the `list` command. Multiple students in the list.
+   1. Prerequisites: List all students using the `list` command. Multiple students are in the list.
 
    1. Test case: `delete 1`<br>
-      Expected: First student is deleted from the list. Details of the deleted student shown in the status message.
+      Expected: First student is deleted from the list. Details of the deleted student are shown in the status message.
 
    1. Test case: `delete A0123456J` (assuming a student with this student ID exists)<br>
-      Expected: Student with student ID A0123456J is deleted from the list. Details of the deleted student shown in the status message.
+      Expected: Student with student ID A0123456J is deleted from the list. Details of the deleted student are shown in the status message.
 
    1. Test case: `delete 0`<br>
-      Expected: No student is deleted. Error details shown in the status message. Status bar remains the same.
+      Expected: No student is deleted. Error details are shown in the status message. Status bar remains the same.
 
    1. Test case: `delete A9999999W` (assuming no student with this student ID exists)<br>
-      Expected: No student is deleted. Error message "Error, user does not exist." shown in the status message.
+      Expected: No student is deleted. Error message "Error, user does not exist." is shown in the status message.
 
    1. Other incorrect delete commands to try: `delete`, `delete x`, `delete INVALID_STUDENTID`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
@@ -607,12 +605,12 @@ testers are expected to do more _exploratory_ testing.
    1. Prerequisites: A student with the student ID "A0000000Y" is not shown in the list.
 
    1. Test case: `delete A0000000Y`
-      Expected: The student is deleted. Details of the deleted student shown in the status message.
+      Expected: The student is deleted. Details of the deleted student are shown in the status message.
 
 ### Editing a student
 
 1. Editing a student in the full list
-   1. Prerequisites: There are some students in the displayed list. There are less than 99 students in the displayed list.
+   1. Prerequisites: There are some students in the displayed list. There are fewer than 99 students in the displayed list.
 
    1. Test case: `edit 1 n/Alice Wonderland`<br>
       Expected: The name of the first student in the displayed list is updated to "Alice Wonderland". Other fields remain unchanged. The status message confirms the successful edit.
@@ -678,7 +676,7 @@ testers are expected to do more _exploratory_ testing.
       Expected: The help window pops up with a link to the user guide
 
 1. Reopening the help window
-   1. Prerequisites: The help window has already been shown but has been minimized by the user
+   1. Prerequisites: The help window has already been shown, but has been minimised by the user
    1. Test case: `help`
       Expected: The help window pops up with a link to the user guide
 
@@ -720,7 +718,7 @@ testers are expected to do more _exploratory_ testing.
       If they are not in the displayed list, the displayed list updates to the full list of students.
 
 1. Marking attendance for all students
-   1. Prerequisites: The list contains some students, of which only a subset are displayed.
+   1. Prerequisites: The list contains some students, of whom only a subset are displayed.
    1. Test case: `mark all a/`<br>
       Expected: The attendance status of all students in the displayed list is updated to 'Absent'. The status message indicates that all persons were marked.
 
@@ -731,7 +729,7 @@ testers are expected to do more _exploratory_ testing.
    1. Test case: `mark p/`<br>
       Expected: Error message indicating invalid command format appears in the status message.
 
-   1. Test case: `mark 99 p/` (assuming there are less than 99 students in the displayed list)<br>
+   1. Test case: `mark 99 p/` (assuming there are fewer than 99 students in the displayed list)<br>
       Expected: No student is marked. Error message "Error, user does not exist." appears in the status message.
 
    1. Test case: `mark A9999999W a/` (assuming this ID does not exist)<br>
@@ -760,7 +758,7 @@ testers are expected to do more _exploratory_ testing.
       Expected: The attendance status of all students in the displayed list is cleared. The status message indicates that all persons were marked.
 
 1. Invalid unmark commands
-   1. Test case: `unmark 99` (assuming there are less than 99 students in the displayed list)<br>
+   1. Test case: `unmark 99` (assuming there are fewer than 99 students in the displayed list)<br>
       Expected: No student is unmarked. Error message "Error, user does not exist." appears in the status message.
 
    1. Test case: `unmark A9999999W`<br>
@@ -772,36 +770,36 @@ testers are expected to do more _exploratory_ testing.
    1. Test case: `unmark 1 all`<br>
       Expected: Error message appears in the status message explaining that either a person identifier or the all keyword should be provided.
 
-## **Apendix: Planned Enhancements**
+## **Appendix: Planned Enhancements**
 
 **Team size**: 5
 
 ### 1. Add more details for each user
 
-**Current issue:** We current only store the name, student ID, email, phone and tags of each student.
+**Current issue:** We currently only store the name, student ID, email, phone and tags of each student.
 
 **Planned enhancement:** We plan to store more crucial student information, such as the faculty, year, or next-of-kin number.
 
-### 2. Confirmation dialog for `clear` command
+### 2. Confirmation dialogue for `clear` command
 
 **Current issue:** The `clear` command immediately removes all students in the list, which is a destructive command.
 
-**Planned enhancement:** We plan to request the user's confirmation before running this destructive command. A flag should also be implemented to allow users to bypass this confirmation dialog.
+**Planned enhancement:** We plan to request the user's confirmation before running this destructive command. A flag should also be implemented to allow users to bypass this confirmation dialogue.
 
 ### 3. More robust checking for phone numbers
 
-**Current issue:** We use a regex to perform checking if an international phone number is valid. This does not take into account region/country-specific phone number rules.
+**Current issue:** We use a regex to check if an international phone number is valid. This does not take into account region/country-specific phone number rules.
 
-**Planned enhancement:** We plan to comply with verify phone numbers with each country's specific phone number rules. A validation library such as Google's [`libphonenumber`](https://github.com/google/libphonenumber) could be used.
+**Planned enhancement:** We plan to verify phone numbers with each country's specific phone number rules. A validation library such as Google's [`libphonenumber`](https://github.com/google/libphonenumber) could be used.
 
 ### 4. More robust duplicate checking
 
 **Current issue:** Duplicates are only identified via their student ID. Unlikely scenarios like students having the same name, email and phone number but different student IDs are currently allowed in GreyBook.
 
-**Planned enhancement:** We plan to tighten the duplicate checking logic beyond just enforcing unique student IDs. To accommodate for situations where students may share phone numbers or emails, the updated duplicate checking logic could potentially check if the combination of name, email and phone number matches, which still allows for individual duplicates (like two differently named students sharing a phone number).
+**Planned enhancement:** We plan to tighten the duplicate checking logic beyond just enforcing unique student IDs. To accommodate situations where students may share phone numbers or emails, the updated duplicate checking logic could potentially check if the combination of name, email and phone number matches, which still allows for individual duplicates (like two differently named students sharing a phone number).
 
 ### 5. Stricter command argument validation
 
-**Current issue:** Certain commands like `mark` and `unmark` assume that users will follow the correct command format and will not include any additional text (e.g. flags, another student identifier, or random input) after a student identifier. Currently, the parser treats everything before a legitimate flag as part of the student identifier or the `all` keyword, resulting in an invalid person identifier or keyword error message. Moreover, the parser currently allows successful execution when a valid command is given but includes invalid trailing text. These issues lead to generic error messages that make it harder for users to understand the cause of the problem, and can even cause confusion when a command appears to succeed despite invalid input.
+**Current issue:** Certain commands like `mark` and `unmark` assume that users will follow the correct command format and will not include any additional text (e.g. flags, another student identifier, or random input) after a student identifier. Currently, the parser treats everything before a legitimate flag as part of the student identifier or the `all` keyword, resulting in an invalid person identifier or keyword error message. Moreover, the parser currently allows successful execution when a valid command is given, but includes invalid trailing text. These issues lead to generic error messages that make it harder for users to understand the cause of the problem, and can even cause confusion when a command appears to succeed despite invalid input.
 
-**Planned enhancement:** We plan to refactor and modularize argument validation to improve error handling. Enhancements to the argument validation layer will enable detection and rejection of unexpected text or trailing flags, allowing the parser to throw more specific and informative errors. This will make error messages clearer for users and make it easier to support future command extensions without requiring changes to existing parser logic.
+**Planned enhancement:** We plan to refactor and modularise argument validation to improve error handling. Enhancements to the argument validation layer will enable detection and rejection of unexpected text or trailing flags, allowing the parser to throw more specific and informative errors. This will make error messages clearer for users and make it easier to support future command extensions without requiring changes to existing parser logic.
