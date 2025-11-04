@@ -864,6 +864,12 @@ This reuse saved roughly **10–15% of total development effort**, allowing us t
 
 ### 7. Support CSV file format
 
-**Current issue:** We currently store student information and their attendance in JSON files. However, users may wish to export this data to CSV for easy viewing in external applications such as Excel, or even import data from Excel files to GreyBook.
+**Current issue:** We currently store student information and their attendance in a JSON file. However, users may wish to export this data to CSV for easy viewing in external applications such as Excel, or even import data from Excel files to GreyBook.
 
 **Planned enhancement:** We plan to support saving and loading of data to and from CSV files.
+
+### 8. Support multiple events
+
+**Current issue:** We currently store attendance statuses and information to a JSON file. When users wish to use the application for a new event, they either have to manually run `unmark all`, or backup the JSON file to a separate directory and delete the JSON file.
+
+**Planned enhancement:** We plan to support switching to another JSON file via the application directly to support taking of attendance for multiple events.
