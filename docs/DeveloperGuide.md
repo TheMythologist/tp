@@ -594,3 +594,8 @@ testers are expected to do more _exploratory_ testing.
 **Current issue:** Certain commands like `mark` and `unmark` assume that users will follow the correct command format and will not include any additional text (e.g. flags, another student identifier, or random input) after a student identifier. Currently, the parser treats everything before a legitimate flag as part of the student identifier or the `all` keyword, resulting in an invalid person identifier or keyword error message. Moreover, the parser currently allows successful execution when a valid command is given but includes invalid trailing text. These issues lead to generic error messages that make it harder for users to understand the cause of the problem, and can even cause confusion when a command appears to succeed despite invalid input.
 
 **Planned enhancement:** We plan to refactor and modularize argument validation to improve error handling. Enhancements to the argument validation layer will enable detection and rejection of unexpected text or trailing flags, allowing the parser to throw more specific and informative errors. This will make error messages clearer for users and make it easier to support future command extensions without requiring changes to existing parser logic.
+
+### 6. Command argument validation involving escape characters and quotation marks
+**Current issue:** Double quotations marks are not allowed in names, but the `find` command accepts double quotation marks via the use of an escape character `\`.
+
+**Planned enhancement:** We plan to tighten command argument validation to correctly detect and handle these special symbols.
