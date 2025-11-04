@@ -1,0 +1,30 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box UI UI_COLOR_T1
+participant "cb:CommandBox" as CommandBox UI_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "ch:CommandHistory" as CommandHistory MODEL_COLOR
+end box
+
+[-> CommandBox : Press UP
+activate CommandBox
+CommandBox -> CommandHistory : getPrevCommand()
+activate CommandHistory
+CommandHistory --> CommandBox : previous-command-string\n(or NO_PREV_OR_NEXT_COMMAND)
+deactivate CommandHistory
+CommandBox -> CommandBox : setText(previous-command)
+deactivate CommandBox
+
+[-> CommandBox : Press DOWN
+activate CommandBox
+CommandBox -> CommandHistory : getNextCommand()
+activate CommandHistory
+CommandHistory --> CommandBox : next-command-string\n(or NO_PREV_OR_NEXT_COMMAND)
+deactivate CommandHistory
+CommandBox -> CommandBox : setText(next-command or buffer)
+deactivate CommandBox
+@enduml
