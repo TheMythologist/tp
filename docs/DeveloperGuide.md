@@ -385,14 +385,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | secretary/attendance taker | mark a student as present absent late or excused                | attendance status is specific.                      |
 | `* *`    | committee member           | assign roles (admin secretary project lead student)             | permissions are appropriate.                        |
 | `* *`    | committee member           | edit a student’s details                                        | corrections don’t require creating duplicates.      |
-| `* *`    | committee member           | search students by name, student ID or tag                      | locate people fast.                                 |
-| `* *`    | secretary/attendance taker | bulk-mark attendance for selected students                      | save time for large events.                         |
-| `* *`    | committee member           | export attendance for a date range to CSV                       | submit readable records to others.                  |
-| `* *`    | committee member           | download the full roster to CSV                                 | share it with others.                               |
+| `* *`    | committee member           | search students by name, student ID or tag                      | it is faster to locate students.                    |
+| `* *`    | secretary/attendance taker | bulk-mark attendance for selected students                      | I can save time for large events.                   |
+| `* *`    | committee member           | export attendance for a date range to CSV                       | I can submit readable records to others.            |
+| `* *`    | committee member           | download the full roster to CSV                                 | share with others is easy.                          |
 | `* *`    | committee member           | configure required fields (e.g. emergency contact)              | we collect essential information.                   |
-| `* *`    | committee member           | import students from a CSV (or other common formats)            | onboard a whole cohort quickly.                     |
+| `* *`    | committee member           | import students from a CSV (or other common formats)            | we can onboard a whole cohort quickly.              |
 | `*`      | committee member           | merge duplicate student records                                 | reports are accurate.                               |
-| `*`      | committee member           | tag students with attributes (e.g. role, skills, year of study) | find suitable students quickly.                     |
+| `*`      | committee member           | tag students with attributes (e.g. role, skills, year of study) | finding suitable students is quick and easy.        |
 | `*`      | committee member           | view an audit log of edits to student profiles                  | changes are traceable.                              |
 
 ### Use cases
