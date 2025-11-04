@@ -102,20 +102,26 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 <puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 1` Command" />
 
-   How the `Logic` component works:
+<box type="info" seamless>
+  
+ How the `Logic` component works:
 
-   1. Every command registers the types of arguments it takes and the restrictions on those arguments to the `GreyBookParser`. The parser stores them using a `CommandParser` object.
-   1. When `Logic` is called upon to execute a command, it is passed to a `GreyBookParser` object, which in turn gets the corresponding `CommandParser` object.
-   1. The `CommandParser` object then parses the arguments and creates a `ArgumentParseResult` object, which gets passed back to `Logic`.
-   1. `Logic` then calls the `ArgumentParseResult` to execute the command using the parsed arguments. `ArgumentParseResult` calls the `execute` method on the corresponding command.
-   1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).<br>
-      Note that although this is shown as a single step in the diagram above (for simplicity), in the code, this can take several interactions (between the command object and the `Model`) to achieve.
-   1. The result of the command execution is encapsulated as a `CommandResult` object, which is returned from `Logic`.
+ 1. Every command registers the types of arguments it takes and the restrictions on those arguments to the `GreyBookParser`. The parser stores them using a `CommandParser` object.
+ 1. When `Logic` is called upon to execute a command, it is passed to a `GreyBookParser` object, which in turn gets the corresponding `CommandParser` object.
+ 1. The `CommandParser` object then parses the arguments and creates a `ArgumentParseResult` object, which gets passed back to `Logic`.
+ 1. `Logic` then calls the `ArgumentParseResult` to execute the command using the parsed arguments. `ArgumentParseResult` calls the `execute` method on the corresponding command.
+ 1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).<br>
+    Note that although this is shown as a single step in the diagram above (for simplicity), in the code, this can take several interactions (between the command object and the `Model`) to achieve.
+ 1. The result of the command execution is encapsulated as a `CommandResult` object, which is returned from `Logic`.
+
+</box>
 
 Here are the other classes in `Logic` (omitted from the class diagram above) that are used for parsing a user command:
 
 <puml src="diagrams/ParserClasses.puml" width="600"/>
 
+<box type="info" seamless>
+  
 How the parsing works:
 
 1. When the application starts, commands (like `AddCommand`, `DeleteCommand`, etc.) register themselves with the `GreyBookParser`.
@@ -126,6 +132,8 @@ How the parsing works:
 1. The `CommandParser` then validates the arguments against the registered `CommandOption` rules (e.g., checking for missing required options or duplicate prefixes).
 1. For each argument value, the respective `CommandOption` calls its stored `ArgumentParser` to convert the raw string into the required Java object type (e.g., converting a phone number string into a `Phone` object).
 1. Finally, the `CommandParser` wraps the specific command instance (`XYZCommand`) and all the parsed values into an `ArgumentParseResult` object, which is returned up the call chain for deferred execution.
+
+</box>
 
 <div style="page-break-after: always;"></div>
 
