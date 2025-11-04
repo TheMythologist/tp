@@ -225,6 +225,18 @@ Key behaviours:
   - `resetCursor()` sets the cursor back to the end of the list.
   - `resetHistory()` clears all recorded commands and resets the cursor.
 
+Here's a (partial) class diagram of the `CommandHistory` component:
+
+<puml src="diagrams/CommandHistoryDiagram.puml" width="550"/>
+
+The sequence diagram below illustrates the interactions with the `CommandHistory` component, when any command is executed.
+
+<puml src="diagrams/CommandHistorySequenceDiagram.puml" alt="Interactions With the CommandHistory Component" />
+
+The sequence diagram below illustrates what happens when the user presses the **Up** or **Down** arrow key.
+
+<puml src="diagrams/CommandHistoryUpDownSequenceDiagram.puml" />
+
 #### Design considerations:
 
 **Aspect: How command history is saved:**
