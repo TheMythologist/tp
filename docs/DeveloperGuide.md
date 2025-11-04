@@ -419,7 +419,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `GreyBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Add a student**
+**Use case: UC01 - Add a student**
 
 **MSS**
 
@@ -440,7 +440,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   - 1c1. GreyBook shows an error message.
     Use case resumes at step 1.
 
-**Use case: Delete a student**
+**Use case: UC02 - Delete a student**
 
 **MSS**
 
@@ -468,7 +468,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case resumes at step 3.
 
-**Use Case: Mark Attendance for a student**
+**Use Case: UC03 - Mark Attendance for a student**
 
 **MSS**
 
@@ -498,6 +498,93 @@ Use case ends.
 
 - 3c. The attendance status is invalid
   - 3c1. GreyBook shows an error message
+
+    Use case resumes at step 3.
+
+**Use Case: UC04 - Find a Student**
+
+**MSS**
+
+1. User requests to find a student, providing their name and/or StudentID fragment and/or tag fragment.
+2. GreyBook finds and displays the corresponding students
+3. GreyBook shows a success message
+
+Use case ends.
+
+**Extensions**
+
+- 1a. No search criteria provided.
+  
+  - 1a1. GreyBook shows an error message.
+
+    Use case ends.
+
+- 1b. The given command is invalid
+  
+  - 1b1. GreyBook shows an error message.
+
+    Use case ends.
+
+- 1c. The given parameter is invalid
+  
+  - 1c1. GreyBook shows an error message.
+
+    Use case ends.
+
+- 2a. No students match the search criteria.
+
+  - 2a1. GreyBook displays an empty list.
+
+  - 2a2. GreyBook shows a message indicating 0 students were found.
+
+    Use case ends.
+
+**Use Case: UC05 - Editing a Student**
+
+**MSS**
+
+1. User requests to list students
+2. GreyBook shows a list of students
+3. User requests to edit a specific student in the list, providing their index and at least one field to update (name, phone, email, studentID, or tags)
+4. GreyBook validates the request
+5. GreyBook updates the student's details
+6. GreyBook shows a success message
+
+Use case ends.
+
+**Extensions**
+
+- 2a. The list is empty.
+
+  Use case ends.
+
+- 3a. The given index is invalid.
+
+  - 3a1. GreyBook shows an error message.
+
+    Use case resumes at step 3.
+
+- 3b. No fields to edit are provided.
+
+  - 3b1. GreyBook shows an error message indicating at least one field must be provided.
+
+    Use case resumes at step 3.
+
+- 4a. The command format is invalid.
+
+  - 4a1. GreyBook shows an error message.
+
+    Use case resumes at step 3.
+
+- 4b. One or more field values are invalid (e.g., invalid email format, invalid studentID checksum).
+
+  - 4b1. GreyBook shows a field-specific error message.
+
+    Use case resumes at step 3.
+
+- 4c. The edited studentID already belongs to another student.
+
+  - 4c1. GreyBook shows an error message indicating the student already exists.
 
     Use case resumes at step 3.
 
