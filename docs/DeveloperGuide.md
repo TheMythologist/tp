@@ -593,7 +593,7 @@ Commands like `mark` have complex parameter rules (e.g. only one valid flag is a
 - Generate **specific**, **context-aware** error messages
 - **Prevent successful execution** when input formats are incorrect
 
-Therefore, we had create a custom **GreyBookParser** in attempts to improve input handling and provide feedback for every invalid command.
+Therefore, we created a custom **GreyBookParser** in an attempt to improve input handling and provide feedback for every invalid command.
 
 ### Effort Required
 Our team invested considerable effort not just in feature development, but also in usability, validation, and extensibility.
