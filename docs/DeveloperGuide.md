@@ -104,15 +104,15 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 <box type="info" seamless>
 
-How the `Logic` component works:
+   How the `Logic` component works:
 
-1. Every command registers the types of arguments it takes and the restrictions on those arguments to the `GreyBookParser`. The parser stores them using a `CommandParser` object.
-1. When `Logic` is called upon to execute a command, it is passed to a `GreyBookParser` object, which in turn gets the corresponding `CommandParser` object.
-1. The `CommandParser` object then parses the arguments and creates a `ArgumentParseResult` object, which gets passed back to `Logic`.
-1. `Logic` then calls the `ArgumentParseResult` to execute the command using the parsed arguments. `ArgumentParseResult` calls the `execute` method on the corresponding command.
-1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).<br>
-   Note that although this is shown as a single step in the diagram above (for simplicity), in the code, this can take several interactions (between the command object and the `Model`) to achieve.
-2. The result of the command execution is encapsulated as a `CommandResult` object, which is returned from `Logic`.
+   1. Every command registers the types of arguments it takes and the restrictions on those arguments to the `GreyBookParser`. The parser stores them using a `CommandParser` object.
+   1. When `Logic` is called upon to execute a command, it is passed to a `GreyBookParser` object, which in turn gets the corresponding `CommandParser` object.
+   1. The `CommandParser` object then parses the arguments and creates a `ArgumentParseResult` object, which gets passed back to `Logic`.
+   1. `Logic` then calls the `ArgumentParseResult` to execute the command using the parsed arguments. `ArgumentParseResult` calls the `execute` method on the corresponding command.
+   1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).<br>
+      Note that although this is shown as a single step in the diagram above (for simplicity), in the code, this can take several interactions (between the command object and the `Model`) to achieve.
+   1. The result of the command execution is encapsulated as a `CommandResult` object, which is returned from `Logic`.
 
 </box>
 
