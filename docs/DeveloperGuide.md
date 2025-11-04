@@ -102,8 +102,6 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 <puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 1` Command" />
 
-<box type="info" seamless>
-
    How the `Logic` component works:
 
    1. Every command registers the types of arguments it takes and the restrictions on those arguments to the `GreyBookParser`. The parser stores them using a `CommandParser` object.
@@ -113,8 +111,6 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
    1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).<br>
       Note that although this is shown as a single step in the diagram above (for simplicity), in the code, this can take several interactions (between the command object and the `Model`) to achieve.
    1. The result of the command execution is encapsulated as a `CommandResult` object, which is returned from `Logic`.
-
-</box>
 
 Here are the other classes in `Logic` (omitted from the class diagram above) that are used for parsing a user command:
 
