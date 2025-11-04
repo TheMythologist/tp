@@ -84,7 +84,9 @@
         "3-more-robust-checking-for-phone-numbers": "3. More robust checking for phone numbers",
         "4-more-robust-duplicate-checking": "4. More robust duplicate checking",
         "5-stricter-command-argument-validation": "5. Stricter command argument validation",
-        "6-command-argument-validation-involving-quotation-marks": "6. Command argument validation involving quotation marks"
+        "6-command-argument-validation-involving-quotation-marks": "6. Command argument validation involving quotation marks",
+        "7-support-csv-file-format": "7. Support CSV file format",
+        "8-support-multiple-events": "8. Support multiple events"
       },
       "headingKeywords": {}
     },
