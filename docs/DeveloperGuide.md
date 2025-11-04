@@ -237,7 +237,7 @@ The sequence diagram below illustrates what happens when the user presses the **
 
 <puml src="diagrams/CommandHistoryUpDownSequenceDiagram.puml" />
 
-#### Design considerations:
+#### Design considerations
 
 **Aspect: How command history is saved:**
 
@@ -333,7 +333,7 @@ The following activity diagram summarises what happens when a user executes a ne
 
 <puml src="diagrams/CommitActivityDiagram.puml" width="250" />
 
-#### Design considerations:
+#### Design considerations
 
 **Aspect: How undo & redo executes:**
 
@@ -423,10 +423,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to add a specific student to the list, providing their name, email, phone number, studentID, and optional tags.
-2.  GreyBook validates the request
-3.  GreyBook adds the student
-4.  GreyBook shows a success message
+1. User requests to add a specific student to the list, providing their name, email, phone number, studentID, and optional tags.
+2. GreyBook validates the request
+3. GreyBook adds the student
+4. GreyBook shows a success message
 
     Use case ends.
 
@@ -444,11 +444,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to list students
-2.  GreyBook shows a list of students
-3.  User requests to delete a specific student in the list, providing their index in the list, or their studentID.
-4.  GreyBook deletes the student
-5.  GreyBook shows a success message
+1. User requests to list students
+2. GreyBook shows a list of students
+3. User requests to delete a specific student in the list, providing their index in the list, or their studentID.
+4. GreyBook deletes the student
+5. GreyBook shows a success message
 
     Use case ends.
 
@@ -503,12 +503,12 @@ Use case ends.
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 students without a noticeable sluggishness in performance for typical usage.
-3.  A user with an above-average typing speed for regular English text (i.e. not code, not system admin commands) of about 55-80 Words per Minute (WPM) should be able to accomplish student record management tasks, like marking attendance, faster using commands than using the mouse on traditional formats like spreadsheets.
-4.  The application should efficiently handle and store student and attendance data in a human-readable format, such as JSON, without degrading performance as data grows.
-5.  Should validate all arguments (names, emails, studentIDs, etc.) and provide specific error messages if arguments are not valid.
-6.  Should prevent duplicate entries through enforcing unique Student IDs, allowing for rare cases like having the same name, email or phone number.
+1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
+2. Should be able to hold up to 1000 students without a noticeable sluggishness in performance for typical usage.
+3. A user with an above-average typing speed for regular English text (i.e. not code, not system admin commands) of about 55-80 Words per Minute (WPM) should be able to accomplish student record management tasks, like marking attendance, faster using commands than using the mouse on traditional formats like spreadsheets.
+4. The application should efficiently handle and store student and attendance data in a human-readable format, such as JSON, without degrading performance as data grows.
+5. Should validate all arguments (names, emails, studentIDs, etc.) and provide specific error messages if arguments are not valid.
+6. Should prevent duplicate entries through enforcing unique Student IDs, allowing for rare cases like having the same name, email or phone number.
 
 _{More to be added}_
 
@@ -519,7 +519,7 @@ _{More to be added}_
 
 ---
 
-## **Appendix: Instructions for manual testing**
+## **Appendix: Instructions for Manual Testing**
 
 Given below are instructions to test the app manually.
 
@@ -769,6 +769,78 @@ testers are expected to do more _exploratory_ testing.
 
    1. Test case: `unmark 1 all`<br>
       Expected: Error message appears in the status message explaining that either a person identifier or the all keyword should be provided.
+
+---
+
+## **Appendix: Effort**
+
+### Difficulty Level
+
+Compared to AddressBook Level 3 (AB3), **GreyBook** is significantly more complex. Building on AB3’s core features, it introduces new **attributes**, **commands**, and **components** that expand both functionality and system architecture.
+
+### Challenges Faced
+
+#### 1. Complex Attribute Validation
+
+GreyBook expands beyond AB3’s simple validation rules by supporting:
+
+- **Names** with limited special characters while maintaining compatibility with official naming standards
+- **Phone numbers** that may be local or international (E.164 standard)
+- **Student IDs** validated using a checksum algorithm
+
+We had to ensure that invalid data is rejected while maintaining flexibility for various use cases, balancing security and usability. Hence, custom validation logic and careful test coverage was required to be implemented.
+
+#### 2. Strict Argument Validation
+
+Commands like `mark` have complex parameter rules (e.g. only one valid flag is allowed, preamble is either a student identifier or a keyword `all` ). We needed to extend the AB3 parser to:
+
+- Generate **specific**, **context-aware** error messages
+- **Prevent successful execution** when input formats are incorrect
+
+Therefore, we created a custom **GreyBookParser** in an attempt to improve input handling and provide feedback for every invalid command.
+
+### Effort Required
+
+Our team invested considerable effort not just in feature development, but also in usability, validation, and extensibility.
+
+These areas include:
+
+- Designing **robust** input validation across all commands and attributes
+- Implementing **Command History**, persisted in a JSON file
+- Enhancing the **UI** to be improve navigability and visual appeal for our target audience
+- Extending the **parser system** for stricter error detection and consistent handling of user mistakes
+- Maintaining **strong code quality**, with weekly code reviews and adherence to clean architecture principles
+
+We have reused AB3's foundation components, including:
+
+- **Person class** that is used as Student
+- **Storage** which we slightly modified for new attributes and aditional files
+- **Command Infrastructure**
+- **Window Layout**
+
+This reuse saved roughly **10–15% of total development effort**, allowing us to focus on **new functionalities and user experience improvements** rather than core architecture, such as attendance status, parser validation and command history.
+
+### Achievements of the project
+
+#### 1. Creation and Improvement of Components
+
+- Added **Command History** for quick access to past commands
+- Implemented **Attendnace Tracking** with `mark` and `unmark` commands
+- Improved **parsing architecture** with precise validation and more detailed error messages
+- Enhanced **UI** to be more suitable for our target audience
+
+#### 2. Quality Documentation
+
+- **User Guide** is comprehensive, beginner-friendly and formatted for clarity
+- **Developer Guide** includes architectural diagrams and clear explanations of system flow
+
+#### 3. Effective Team Coordination
+
+- Work was **evenly distributed** across team members
+- **Weekly milestones** were achieved consistently
+- **Peer code reviews** ensured high maintainability and code integrity
+
+---
 
 ## **Appendix: Planned Enhancements**
 
