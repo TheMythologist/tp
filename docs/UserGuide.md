@@ -239,6 +239,7 @@ GreyBook helps you store, edit, and track students' details with precision.
 Each student is uniquely identified by their **Student ID**. Two contacts with the same Student ID are considered duplicates and are not allowed.
 
 **Example:**
+
 - If `A0123456J` already exists in GreyBook, attempting to add another student with `i/A0123456J`, with all other fields different, will fail.
 - Error message: `This person already exists in GreyBook`
 
@@ -596,18 +597,18 @@ For advanced users who wish to use special characters like quotation marks (`"`)
 
 ### Command Summary
 
-| Command  | Description                  | Syntax                                                           |
-| -------- | ---------------------------- |------------------------------------------------------------------|
-| `add`    | Create a new student         | `add n/NAME p/PHONE e/EMAIL i/STUDENTID [t/TAG]…`                |
-| `edit`   | Update details               | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [i/STUDENTID] [t/TAG]…` |
-| `delete` | Remove a student             | `delete (INDEX \| STUDENTID)`                                    |
-| `list`   | Show all students            | `list`                                                           |
-| `find`   | Search by name or student ID | `find [KEYWORD [MORE_KEYWORDS]…]​ [i/ID_FRAGMENT]…​`             |
-| `mark`   | Mark attendance              | `mark (INDEX \| STUDENTID \| all) (p/ \|\| a/ \|\| l/ \|\| e/)`  |
-| `unmark` | Unmark attendance            | `unmark (INDEX \| STUDENTID \| all)`                             |
-| `clear`  | Delete **all** students      | `clear`                                                          |
-| `help`   | Open the help window         | `help`                                                           |
-| `exit`   | Quit the app                 | `exit`                                                           |
+| Command  | Description                        | Syntax                                                           |
+| -------- | ---------------------------------- | ---------------------------------------------------------------- |
+| `add`    | Create a new student               | `add n/NAME p/PHONE e/EMAIL i/STUDENTID [t/TAG]…`                |
+| `edit`   | Update details                     | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [i/STUDENTID] [t/TAG]…` |
+| `delete` | Remove a student                   | `delete (INDEX \| STUDENTID)`                                    |
+| `list`   | Show all students                  | `list`                                                           |
+| `find`   | Search by name, student ID or tags | `find ​{(KEYWORD \| i/ID_FRAGMENT \| t/TAG_FRAGMENT)}+`          |
+| `mark`   | Mark attendance                    | `mark (INDEX \| STUDENTID \| all) (p/ \|\| a/ \|\| l/ \|\| e/)`  |
+| `unmark` | Unmark attendance                  | `unmark (INDEX \| STUDENTID \| all)`                             |
+| `clear`  | Delete **all** students            | `clear`                                                          |
+| `help`   | Open the help window               | `help`                                                           |
+| `exit`   | Quit the app                       | `exit`                                                           |
 
 ---
 
