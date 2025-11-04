@@ -1,0 +1,85 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":GreyBookParser" as GreyBookParser LOGIC_COLOR
+participant ":CommandParser" as CommandParser LOGIC_COLOR
+participant "c:Command" as SomeCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+participant "h:History" as History MODEL_COLOR
+participant "ch:CommandHistory" as CommandHistory MODEL_COLOR
+end box
+
+[-> LogicManager : execute(commandText)
+activate LogicManager
+
+LogicManager -> GreyBookParser : parseCommand(commandText)
+activate GreyBookParser
+
+create CommandParser
+GreyBookParser -> CommandParser
+activate CommandParser
+
+CommandParser --> GreyBookParser
+deactivate CommandParser
+
+GreyBookParser -> CommandParser : parse(args)
+activate CommandParser
+
+create SomeCommand
+CommandParser -> SomeCommand
+activate SomeCommand
+
+SomeCommand --> CommandParser
+deactivate SomeCommand
+
+CommandParser --> GreyBookParser : c
+deactivate CommandParser
+
+CommandParser -[hidden]-> GreyBookParser
+destroy CommandParser
+
+GreyBookParser --> LogicManager : c
+deactivate GreyBookParser
+
+LogicManager -> SomeCommand : execute(m)
+activate SomeCommand
+
+SomeCommand -> Model : apply changes...
+activate Model
+Model --> SomeCommand
+deactivate Model
+
+' --- add to command history after successful execute ---
+SomeCommand -> Model : getHistory()
+activate Model
+Model --> SomeCommand : h
+deactivate Model
+
+SomeCommand -> History : getCommandHistory()
+activate History
+History -> CommandHistory : addCommand(commandText)
+activate CommandHistory
+CommandHistory --> History
+deactivate CommandHistory
+History --> SomeCommand
+deactivate History
+
+create CommandResult
+SomeCommand -> CommandResult
+activate CommandResult
+CommandResult --> SomeCommand
+deactivate CommandResult
+
+SomeCommand --> LogicManager : r
+deactivate SomeCommand
+
+[<-- LogicManager
+deactivate LogicManager
+@enduml

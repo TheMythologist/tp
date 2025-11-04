@@ -1,0 +1,72 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor LOGIC_COLOR_T4
+skinparam classBackgroundColor LOGIC_COLOR
+
+package "history" {
+  class CommandHistory {
+    - List<String> history
+    - int cursor
+    + addCommand(String)
+    + getPrevCommand() : String
+    + getNextCommand() : String
+    + resetHistory()
+    + getHistory() : List<String>
+    == constants ==
+    + NO_PREV_OR_NEXT_COMMAND : String
+    + SIZE_LIMIT : int
+  }
+}
+
+package "model" {
+  class History {
+    - CommandHistory commandHistory
+    + getCommandHistory() : CommandHistory
+    + setCommandHistory(CommandHistory)
+    + resetData(ReadOnlyHistory)
+  }
+  interface ReadOnlyHistory {
+    + getCommandHistory() : CommandHistory
+  }
+}
+
+package "ui" {
+  class CommandBox {
+    - CommandBox.CommandExecutor commandExecutor
+    - CommandHistory history
+    + handleCommandEntered()
+    + handleUpArrowEntered()
+    + handleDownArrowEntered()
+  }
+  class MainWindow {
+    + fillInnerParts()
+  }
+}
+
+package "logic" {
+  class LogicManager {
+    - Model model
+    - Storage storage
+    + execute(String) : CommandResult
+    + getHistory() : ReadOnlyHistory
+  }
+}
+
+package "storage" {
+  class JsonHistoryStorage {
+    - Path filePath
+    + readHistory() : Optional<History>
+    + saveHistory(ReadOnlyHistory)
+  }
+}
+
+' Relationships (composition/usage)
+History "1" *-- "1" CommandHistory : contains
+LogicManager ..> History : uses (model.getHistory())
+LogicManager ..> CommandHistory : adds commands
+MainWindow ..> CommandBox : creates
+CommandBox ..> CommandHistory : reads prev/next and sets text
+JsonHistoryStorage ..> CommandHistory : serializes (getHistory())
+
+@enduml
