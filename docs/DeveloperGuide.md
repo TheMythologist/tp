@@ -11,6 +11,7 @@
 <!-- * Table of Contents -->
 <page-nav-print />
 
+<div style="page-break-after: always;"></div>
 ---
 
 ## **Acknowledgements**
@@ -27,8 +28,6 @@
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 ---
-
-<div style="page-break-after: always;"></div>
 
 ## **Design**
 
@@ -569,8 +568,6 @@ Use case ends.
 4. The application should efficiently handle and store student and attendance data in a human-readable format, such as JSON, without degrading performance as data grows.
 5. Should validate all arguments (names, emails, studentIDs, etc.) and provide specific error messages if arguments are not valid.
 6. Should prevent duplicate entries through enforcing unique Student IDs, allowing for rare cases like having the same name, email or phone number.
-
-_{More to be added}_
 
 ### Glossary
 
