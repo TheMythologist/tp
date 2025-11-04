@@ -236,9 +236,9 @@ public class ParserUtil {
      * from {@code arg}. Returns an immutable container (record) holding both lists.
      */
     public static KeywordsIdAndTagFrags parseKeywordsAndIdFrags(ArgumentParseResult arg,
-                                                                OptionalSinglePreambleOption<String> preambleOption,
-                                                                ZeroOrMorePrefixOption<String> studentIdFragmentsOption,
-                                                                ZeroOrMorePrefixOption<String> tagsFragmentsOption) throws CommandException {
+            OptionalSinglePreambleOption<String> preambleOption,
+            ZeroOrMorePrefixOption<String> studentIdFragmentsOption, ZeroOrMorePrefixOption<String> tagsFragmentsOption)
+            throws CommandException {
 
         requireAllNonNull(arg, preambleOption, studentIdFragmentsOption, tagsFragmentsOption);
 
@@ -247,7 +247,7 @@ public class ParserUtil {
         List<String> tagFrags = new ArrayList<>();
 
         arg.getOptionalValue(preambleOption).map(
-                        s -> Arrays.stream(s.trim().split("\\s+")).filter(tok -> !tok.isBlank()).collect(Collectors.toList()))
+                s -> Arrays.stream(s.trim().split("\\s+")).filter(tok -> !tok.isBlank()).collect(Collectors.toList()))
                 .ifPresent(keywords::addAll);
 
         for (String raw : arg.getAllValues(studentIdFragmentsOption)) {
