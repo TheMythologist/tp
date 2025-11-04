@@ -444,62 +444,55 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to list students
-2. GreyBook shows a list of students
-3. User requests to delete a specific student in the list, providing their index in the list, or their studentID.
-4. GreyBook deletes the student
-5. GreyBook shows a success message
+1. User requests to delete a specific student, providing their index in the displayed list, or their studentID.
+2. GreyBook deletes the student
+3. GreyBook shows a success message
 
     Use case ends.
 
 **Extensions**
 
-- 2a. The list is empty.
+- 1a. The given index is invalid.
 
-  Use case ends.
+  - 1a1. GreyBook shows an error message
 
-- 3a. The given index is invalid.
-  - 3a1. GreyBook shows an error message
+    Use case resumes at step 1.
 
-    Use case resumes at step 3.
+- 1b. The given studentID does not exist.
 
-- 3b. The given studentID does not exist.
-  - 3b1. GreyBook shows an error message, possibly suggesting a similar studentID
+  - 1b1. GreyBook shows an error message, possibly suggesting a similar studentID
 
-    Use case resumes at step 3.
+    Use case resumes at step 1.
 
 **Use Case: UC03 - Mark Attendance for a student**
 
 **MSS**
 
-1. User requests to list students
-2. GreyBook shows a list of students
-3. User requests to mark a student's attendance, providing index/studentID and attendance status
-4. GreyBook records the attendance status
-5. GreyBook shows a success message
+1. User requests to mark a student's attendance, providing index/studentID and attendance status
+2. GreyBook records the attendance status
+3. GreyBook shows a success message
 
 Use case ends.
 
 **Extensions**
 
-- 2a. The list is empty.
+- 1a. The index is invalid
 
-  Use case ends.
+  - 1a1. GreyBook shows an error message
 
-- 3a. The index is invalid
-  - 3a1. GreyBook shows an error message
+    Use case resumes at step 1.
 
-    Use case resumes at step 3.
+- 1b. The studentID does not exist in the system.
 
-- 3b. The studentID does not exist in the system.
-  - 3b1. GreyBook shows an error message
+  - 1b1. GreyBook shows an error message
 
-  Use case resumes at step 3.
+    Use case resumes at step 1.
 
-- 3c. The attendance status is invalid
-  - 3c1. GreyBook shows an error message
+- 1c. The attendance status is invalid
 
-    Use case resumes at step 3.
+  - 1c1. GreyBook shows an error message
+
+    Use case resumes at step 1.
 
 **Use Case: UC04 - Find a Student**
 
@@ -517,19 +510,19 @@ Use case ends.
   
   - 1a1. GreyBook shows an error message.
 
-    Use case ends.
+    Use case resumes at step 1.
 
 - 1b. The given command is invalid
   
   - 1b1. GreyBook shows an error message.
 
-    Use case ends.
+    Use case resumes at step 1.
 
 - 1c. The given parameter is invalid
   
   - 1c1. GreyBook shows an error message.
 
-    Use case ends.
+    Use case resumes at step 1.
 
 - 2a. No students match the search criteria.
 
@@ -556,7 +549,7 @@ Use case ends.
 
 - 2a. The list is empty.
 
-  Use case ends.
+  Use case resumes at step 1.
 
 - 3a. The given index is invalid.
 
