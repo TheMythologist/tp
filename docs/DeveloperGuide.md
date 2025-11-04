@@ -377,43 +377,23 @@ The following activity diagram summarises what happens when a user executes a ne
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                    | I want to …​                                                                 | So that…​                                           |
-| -------- | -------------------------- | ---------------------------------------------------------------------------- | --------------------------------------------------- |
-| `* * *`  | committee member           | add a student manually with name contact number email etc                    | the roster stays up to date.                        |
-| `* * *`  | committee member           | deactivate (or delete) a student                                             | we keep history without cluttering the active list. |
-| `* * *`  | committee member           | view student details                                                         |                                                     |
-| `* * *`  | secretary/attendance taker | mark a student as present absent late or excused                             | attendance status is specific.                      |
-| `* *`    | committee member           | assign roles (admin secretary project lead student)                          | permissions are appropriate.                        |
-| `* *`    | committee member           | restrict access to contact details to authorized roles                       | student privacy is protected.                       |
-| `* *`    | committee member           | edit a student’s details                                                     | corrections don’t require creating duplicates.      |
-| `* *`    | committee member           | search students by name email tag or year                                    | locate people fast.                                 |
-| `* *`    | secretary/attendance taker | create an attendance session with date/time and event name                   | attendance is organised by event.                   |
-| `* *`    | secretary/attendance taker | bulk-mark attendance for selected students                                   | save time for large events.                         |
-| `* *`    | committee member           | export attendance for a date range to CSV                                    | submit readable records to others.                  |
-| `* *`    | committee member           | create a project/competition entry with a title and description              | it can be referenced and managed.                   |
-| `* *`    | committee member           | assign students to a project                                                 | teams are clearly defined.                          |
-| `* *`    | committee member           | archive completed projects                                                   | active views remain uncluttered.                    |
-| `* *`    | committee member           | download the full roster to CSV                                              | share it with others.                               |
-| `* *`    | committee member           | generate a report of attendance by month                                     | review engagement over time.                        |
-| `* *`    | committee member           | configure required fields (e.g. emergency contact)                           | we collect essential information.                   |
-| `* *`    | committee member           | export an event-day contact sheet (names, emergency contacts, notes)         | on-site management is safer.                        |
-| `* *`    | committee member           | define project-specific custom fields (e.g. competition category team code)  | required metadata is captured.                      |
-| `* *`    | committee member           | track equipment checkout and return by student                               | gear is accounted for.                              |
-| `* *`    | committee member           | import students from a CSV (or other common formats)                         | onboard a whole cohort quickly.                     |
-| `*`      | committee member           | merge duplicate student records                                              | reports are accurate.                               |
-| `*`      | committee member           | tag students with attributes (e.g. role, skills, year of study)              | find suitable students quickly.                     |
-| `*`      | committee member           | see attendance rates per event and per group                                 | identify engagement trends.                         |
-| `*`      | committee member           | move a student from one project to another                                   | team changes are reflected accurately.              |
-| `*`      | committee member           | see a dashboard showing student count active projects and average attendance | monitor club health at a glance.                    |
-| `*`      | committee member           | view an audit log of edits to student profiles                               | changes are traceable.                              |
-| `*`      | committee member           | create event templates (title location default attendees)                    | recurring events are faster to set up.              |
-| `*`      | committee member           | auto-assign duties based on availability and past load                       | work is distributed fairly.                         |
-| `*`      | committee member           | target messages by a saved filter (e.g. year=2 AND skill=web_app)            | only relevant students are contacted.               |
-| `*`      | committee member           | flag a student as on probation with an expiry date                           | restrictions are visible and time-bound.            |
-| `*`      | committee member           | log an incident linked to an event (e.g. injury conduct)                     | follow-up is tracked.                               |
-| `*`      | committee member           | assign a temporary “attendance taker” role for a single event                | volunteers can help without broad access.           |
-| `*`      | committee member           | freeze an attendance session after review and require a reason to reopen     | records are tamper-resistant.                       |
-| `*`      | committee member           | set composition caps when forming teams (e.g. max 2 Year-1s)                 | rules are enforced automatically.                   |
+| Priority | As a …​                    | I want to …​                                                    | So that…​                                           |
+| -------- | -------------------------- | --------------------------------------------------------------- | --------------------------------------------------- |
+| `* * *`  | committee member           | add a student manually with name contact number email etc       | the roster stays up to date.                        |
+| `* * *`  | committee member           | delete a student                                                | we keep history without cluttering the active list. |
+| `* * *`  | committee member           | view student details                                            |                                                     |
+| `* * *`  | secretary/attendance taker | mark a student as present absent late or excused                | attendance status is specific.                      |
+| `* *`    | committee member           | assign roles (admin secretary project lead student)             | permissions are appropriate.                        |
+| `* *`    | committee member           | edit a student’s details                                        | corrections don’t require creating duplicates.      |
+| `* *`    | committee member           | search students by name, student ID or tag                      | it is faster to locate students.                    |
+| `* *`    | secretary/attendance taker | bulk-mark attendance for selected students                      | I can save time for large events.                   |
+| `* *`    | committee member           | export attendance for a date range to CSV                       | I can submit readable records to others.            |
+| `* *`    | committee member           | download the full roster to CSV                                 | sharing it with others is easy.                     |
+| `* *`    | committee member           | configure required fields (e.g. emergency contact)              | we collect essential information.                   |
+| `* *`    | committee member           | import students from a CSV (or other common formats)            | we can onboard a whole cohort quickly.              |
+| `*`      | committee member           | merge duplicate student records                                 | reports are accurate.                               |
+| `*`      | committee member           | tag students with attributes (e.g. role, skills, year of study) | finding suitable students is quick and easy.        |
+| `*`      | committee member           | view an audit log of edits to student profiles                  | changes are traceable.                              |
 
 ### Use cases
 
@@ -881,3 +861,15 @@ This reuse saved roughly **10–15% of total development effort**, allowing us t
 **Current issue:** Double quotations marks are generally not allowed to be entered in any attribute, but the `find` command accepts double quotation marks. Attempting to search for a field containing disallowed characters should show an error message.
 
 **Planned enhancement:** We plan to tighten command argument validation to correctly detect and handle these special symbols.
+
+### 7. Support CSV file format
+
+**Current issue:** We currently store student information and their attendance in a JSON file. However, users may wish to export this data to CSV for easy viewing in external applications such as Excel, or even import data from Excel files to GreyBook.
+
+**Planned enhancement:** We plan to support saving and loading of data to and from CSV files.
+
+### 8. Support multiple events
+
+**Current issue:** We currently store attendance statuses and information to a JSON file. When users wish to use the application for a new event, they either have to manually run `unmark all`, or backup the JSON file to a separate directory and delete the JSON file.
+
+**Planned enhancement:** We plan to support switching to another JSON file via the application directly to support taking of attendance for multiple events.
