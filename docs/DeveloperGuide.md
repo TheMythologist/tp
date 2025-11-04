@@ -388,7 +388,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* *`    | committee member           | search students by name, student ID or tag                      | it is faster to locate students.                    |
 | `* *`    | secretary/attendance taker | bulk-mark attendance for selected students                      | I can save time for large events.                   |
 | `* *`    | committee member           | export attendance for a date range to CSV                       | I can submit readable records to others.            |
-| `* *`    | committee member           | download the full roster to CSV                                 | share with others is easy.                          |
+| `* *`    | committee member           | download the full roster to CSV                                 | sharing it with others is easy.                     |
 | `* *`    | committee member           | configure required fields (e.g. emergency contact)              | we collect essential information.                   |
 | `* *`    | committee member           | import students from a CSV (or other common formats)            | we can onboard a whole cohort quickly.              |
 | `*`      | committee member           | merge duplicate student records                                 | reports are accurate.                               |
