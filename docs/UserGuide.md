@@ -288,6 +288,8 @@ Examples:
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 #### Editing Students: `edit`
 
 **Command:**
@@ -393,8 +395,6 @@ GreyBook helps you keep track of students' attendance efficiently.
 - Provide **either** an index, a student ID **or** "all" — not both nor "all"
 - Only one attendance flag can be used at a time
 - Marking a student with the same attendance status will have no effect
-
-<div style="page-break-after: always;"></div>
 
 **Examples:**
 
