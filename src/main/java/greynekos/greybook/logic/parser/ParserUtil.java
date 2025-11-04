@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 import greynekos.greybook.commons.core.index.Index;
 import greynekos.greybook.commons.util.StringUtil;
+import greynekos.greybook.logic.commands.exceptions.CommandException;
 import greynekos.greybook.logic.parser.commandoption.OptionalSinglePreambleOption;
 import greynekos.greybook.logic.parser.commandoption.ZeroOrMorePrefixOption;
 import greynekos.greybook.logic.parser.exceptions.ParseException;
@@ -42,6 +43,8 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_PERSON_IDENTIFIER_OR_ALL =
             "Person identifier or \"all\" keyword is invalid. It should be either a positive integer index,"
                     + " a valid Student ID (format: A0000000Y), or the keyword \"all\".";
+
+    private static final String ID_FRAGMENT_INVALID = "Student ID fragments can only contain alphanumeric characters.";
 
     /**
      * Record class used by Find command.
@@ -233,9 +236,9 @@ public class ParserUtil {
      * from {@code arg}. Returns an immutable container (record) holding both lists.
      */
     public static KeywordsIdAndTagFrags parseKeywordsAndIdFrags(ArgumentParseResult arg,
-            OptionalSinglePreambleOption<String> preambleOption,
-            ZeroOrMorePrefixOption<String> studentIdFragmentsOption,
-            ZeroOrMorePrefixOption<String> tagsFragmentsOption) {
+                                                                OptionalSinglePreambleOption<String> preambleOption,
+                                                                ZeroOrMorePrefixOption<String> studentIdFragmentsOption,
+                                                                ZeroOrMorePrefixOption<String> tagsFragmentsOption) throws CommandException {
 
         requireAllNonNull(arg, preambleOption, studentIdFragmentsOption, tagsFragmentsOption);
 
@@ -244,7 +247,7 @@ public class ParserUtil {
         List<String> tagFrags = new ArrayList<>();
 
         arg.getOptionalValue(preambleOption).map(
-                s -> Arrays.stream(s.trim().split("\\s+")).filter(tok -> !tok.isBlank()).collect(Collectors.toList()))
+                        s -> Arrays.stream(s.trim().split("\\s+")).filter(tok -> !tok.isBlank()).collect(Collectors.toList()))
                 .ifPresent(keywords::addAll);
 
         for (String raw : arg.getAllValues(studentIdFragmentsOption)) {
@@ -279,6 +282,22 @@ public class ParserUtil {
                 }
             }
         }
+
+        List<String> errorMessages = new ArrayList<>();
+
+        if (keywords.stream().anyMatch(keyword -> !keyword.matches(Name.VALIDATION_REGEX))) {
+            errorMessages.add(Name.MESSAGE_CONSTRAINTS);
+        }
+        if (idFrags.stream().anyMatch(idFrag -> !idFrag.matches("\\p{Alnum}+"))) {
+            errorMessages.add(ID_FRAGMENT_INVALID);
+        }
+        if (tagFrags.stream().anyMatch(tagFrag -> !tagFrag.matches(Tag.VALIDATION_REGEX))) {
+            errorMessages.add(Tag.MESSAGE_CONSTRAINTS);
+        }
+        if (!errorMessages.isEmpty()) {
+            throw new CommandException(String.join("\n", errorMessages));
+        }
+
         return new KeywordsIdAndTagFrags(List.copyOf(keywords), List.copyOf(idFrags), List.copyOf(tagFrags));
     }
 }
