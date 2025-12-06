@@ -12,7 +12,7 @@ import greynekos.greybook.logic.parser.ParserUtil;
 import greynekos.greybook.logic.parser.commandoption.OptionalSinglePreambleOption;
 import greynekos.greybook.logic.parser.commandoption.ZeroOrMorePrefixOption;
 import greynekos.greybook.model.Model;
-import greynekos.greybook.model.person.NameOrStudentIdPredicateOrTag;
+import greynekos.greybook.model.person.NameOrStudentIdOrTagPredicate;
 
 /**
  * Finds and lists all persons in GreyBook whose name contains any of the
@@ -54,7 +54,7 @@ public class FindCommand extends Command {
             throw new CommandException(MESSAGE_EMPTY_COMMAND);
         }
         model.updateFilteredPersonList(
-                new NameOrStudentIdPredicateOrTag(parsed.keywords(), parsed.idFrags(), parsed.tagFrags()));
+                new NameOrStudentIdOrTagPredicate(parsed.keywords(), parsed.idFrags(), parsed.tagFrags()));
         return new CommandResult(
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
     }
