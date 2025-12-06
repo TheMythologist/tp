@@ -47,7 +47,6 @@ public class EmailTest {
         assertFalse(Email.isValidEmail("peterjack@example.com.")); // domain name ends with a period
         assertFalse(Email.isValidEmail("peterjack@-example.com")); // domain name starts with a hyphen
         assertFalse(Email.isValidEmail("peterjack@example.com-")); // domain name ends with a hyphen
-        assertFalse(Email.isValidEmail("PETERJACK@EXAMPLE.COM")); // uppercase not allowed in RFC regex
         assertFalse(Email.isValidEmail("a@bc")); // domain without dot not allowed
         assertFalse(Email.isValidEmail("test@localhost")); // domain without dot not allowed
         assertFalse(Email.isValidEmail("123@145")); // domain without dot not allowed
@@ -68,6 +67,7 @@ public class EmailTest {
         assertTrue(Email.isValidEmail("if.you.dream.it_you.can.do.it@example.com")); // long local part
         assertTrue(Email.isValidEmail("e1234567@u.nus.edu")); // more than one period in domain
         assertTrue(Email.isValidEmail("peterjack@example.c")); // single char TLD (valid in RFC)
+        assertTrue(Email.isValidEmail("PETERJACK@EXAMPLE.COM")); // uppercase allowed in RFC regex
     }
 
     @Test
